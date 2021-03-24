@@ -82,18 +82,15 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column
+                <!-- <el-table-column
                   :label="$t('food.common.curstom_info')">
                   <template slot-scope="scope">
                       <span v-if="!scope.row.numberPlat">{{$t('food.reset.guests')}}</span>
                       <span v-else>
-                          <!-- {{scope.row.memberTypeName}} -->
                           {{scope.row.numberPlat}}
-
-
                       </span>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
 
                 <el-table-column
                   :label="$t('food.common.order_from')"

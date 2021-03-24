@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-23 11:01:36
+ * @LastEditTime: 2021-03-24 11:45:52
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -20,7 +20,7 @@
     <el-form :model="sideForm" ref="sideForm" label-width="100px" class="demo-ruleForm">
       <el-row v-if="currentRoom2.personList&&currentRoom2.personList.length>0">
         <el-form-item :label="$t('desk.order_addDayPrice')+':'">
-          <el-input size="small" style="width:215px" type="number" v-model="sideForm.consumePrices"></el-input>
+          <el-input size="small" style="width:215px" type="number" @input="updeInputNum" v-model="sideForm.consumePrices"></el-input>
         </el-form-item>
       </el-row>
 
@@ -125,6 +125,9 @@ export default {
     this.fetchHotelattaChmealList();
   },
   methods: {
+    updeInputNum(){
+      this.$forceUpdate();
+    },
     init(checkInId) {
       this.sideForm = {
         attachMealIdBreatfast: "",
