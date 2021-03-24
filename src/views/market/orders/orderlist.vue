@@ -1,7 +1,7 @@
  <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-16 18:29:10
+ * @LastEditTime: 2021-03-24 17:20:29
  * @FilePath: \jiudian\src\views\market\orders\orderlist.vue
  -->
 
@@ -178,9 +178,13 @@
                         <span v-if="row.billType == 1 || row.billType == 5">{{$t('desk.order_alreadyCheckout')}}</span>
                     </template>
                 </el-table-column>
+                <!-- 下面是付款合计 -->
+                  <!-- <el-table-column prop :label="$t('desk.payTotalC')" >
+                    
+                  </el-table-column> -->
                 <el-table-column prop :label="$t('desk.order_checkStatusA')" >
                     <template slot-scope="{ row }">
-                        <span v-if=" !row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{ F_billType("0") }}</span>
+                        <!-- <span v-if=" !row.billType || row.billType == 2 || row.billType == 3 || row.billType == 4">{{ F_billType("0") }}</span> -->
                         <span v-if="row.billType == 1 || row.billType == 5">{{ F_billType("1") }}</span>
                     </template>
                 </el-table-column>

@@ -38,6 +38,7 @@ module.exports = {
   payTotal: '付款合计',
   payTotalB: '付款合计',
   payTotalA: '付款合计',
+  payTotalC: '付款合计',
   consumerTotal: '消费合计',
   consumerTotalA: '消费合计',
   balanceTotal: '平衡数',

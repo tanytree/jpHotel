@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-23 10:58:28
+ * @LastEditTime: 2021-03-24 17:10:14
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -221,11 +221,11 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column :label="$t('food.common.status')" show-overflow-tooltip>
+            <!-- <el-table-column :label="$t('food.common.status')" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     {{row.state == 1 ? $t('desk.customer_outStand') : $t('desk.customer_closeAccount')}}
                 </template>
-            </el-table-column>
+            </el-table-column> -->
             <!--        <el-table-column prop="enterType" :label="$t('desk.order_businessThat')" show-overflow-tooltip></el-table-column>-->
             <el-table-column prop="creatorName" :label="$t('desk.home_operator')" show-overflow-tooltip></el-table-column>
             <el-table-column :label="$t('desk.home_noteB')" show-overflow-tooltip>

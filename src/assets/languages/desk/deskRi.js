@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-19 14:40:08
+ * @LastEditTime: 2021-03-24 17:19:29
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1033,6 +1033,7 @@ module.exports = {
   editor_roomTypeAnum: '部屋タイプ/部屋番号',
   home_nameD: '宿泊者',
   payTotalA: '入金済み',
+  payTotalC: '入金金额',
   add_sureBil: 'ご注意：ご確認の上１、再計上操作を行ってください。',
   add_addMeal: 'プラン・食事追加',
   add_eatTime: '食事時間',

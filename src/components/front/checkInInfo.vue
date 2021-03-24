@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-04 16:18:40
+ * @LastEditTime: 2021-03-24 17:12:28
  * @FilePath: \jiudian\src\components\front\checkInInfo.vue
  -->
 <template>

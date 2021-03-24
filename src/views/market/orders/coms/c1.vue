@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-19 17:47:25
+ * @LastEditTime: 2021-03-24 17:14:18
  * @FilePath: \jiudian\src\views\market\orders\coms\c1.vue
 -->
 <template>
@@ -9,7 +9,7 @@
     <div class="hd">
         <div class="tit">
 <!--            <el-button type="" size="mini" class="fr" @click="liveCard_in_person_list">操作房卡</el-button>-->
-            <h3>{{ $t('frontOffice.checkInfoDesc') }}（{{$t('desk.book_house')+':'}}{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>{{ $t('desk.book_orderNum') }}：{{detailData.checkIn.orderNum}}</span>
+            <h3>{{ $t('frontOffice.checkInfoDesc') }}（{{currentRoom.houseNum}} {{F_orderSource(detailData.checkIn.orderSource)}}）</h3><span>{{ $t('desk.book_orderNum') }}：{{detailData.checkIn.orderNum}}</span>
         </div>
         <div class="customerInfo">
             <el-row class="row">
