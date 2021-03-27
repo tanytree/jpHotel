@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-17 13:32:20
+ * @LastEditTime: 2021-03-27 12:10:11
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c1.vue
  -->
 
@@ -86,7 +86,7 @@
           </el-col>
            <el-col :span="5">
             <div class="item">
-              本班payments收款：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
+              {{$t('manager.add_nowPayments')}}：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
         </div>
@@ -105,7 +105,7 @@
           </el-col>
            <el-col :span="5">
             <div class="item">
-              本班payments收款：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
+            {{$t('manager.add_nowPayments')}}：<span class="blue">{{$F.numFormate(info.npayOtherPrice)}}</span>{{$t('manager.ps_japanYen')}}
             </div>
           </el-col>
         </div>

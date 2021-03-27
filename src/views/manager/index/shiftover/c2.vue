@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-18 13:58:57
+ * @LastEditTime: 2021-03-27 12:11:09
  * @FilePath: \jiudian\src\views\manager\index\shiftover\c2.vue
  -->
 
@@ -149,7 +149,7 @@
                 <div v-if="row.subList.length>0&&row.subList[10]">{{row.subList[10].amount?row.subList[10].amount:0}}</div>
               </template>
             </el-table-column>
-             <el-table-column  label="本班payments收款">
+             <el-table-column  :label="$t('manager.add_nowPayments')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[10]">{{row.subList[10].amount?row.subList[10].amount:0}}</div>
               </template>
@@ -179,7 +179,7 @@
                 <div v-if="row.subList.length>0&&row.subList[5]">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column label="本班payments收款">
+            <el-table-column :label="$t('manager.add_nowPayments')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[5]">{{row.subList[5].amount?row.subList[5].amount:0}}</div>
               </template>
@@ -209,7 +209,7 @@
                 <div v-if="row.subList.length>0&&row.subList[4]">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
               </template>
             </el-table-column>
-            <el-table-column label="本班payments收款">
+            <el-table-column :label="$t('manager.add_nowPayments')">
               <template slot-scope="{row}">
                 <div v-if="row.subList.length>0&&row.subList[4]">{{row.subList[4].amount?row.subList[4].amount:0}}</div>
               </template>

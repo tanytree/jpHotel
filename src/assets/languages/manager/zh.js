@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-18 10:08:41
+ * @LastEditTime: 2021-03-27 12:08:58
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -610,7 +610,7 @@ module.exports = {
   add_viewPettyCash: '本班下放备用金统计查看',
   add_viewThisCard: '挂账统计查看',
   add_paymentOfTotal: '总挂账',
-  add_: '',
+  add_nowPayments: '本班payments收款',
   add_: '',
   add_: '',
   add_: '',

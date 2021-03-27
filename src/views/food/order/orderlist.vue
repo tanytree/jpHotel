@@ -97,7 +97,13 @@
                  >
                   <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
                 </el-table-column>
-
+                 <el-table-column label="付款方式">
+                   <template slot-scope="{row}">
+                      <div  v-if="row.billingType">{{row.billingType == 1 ? $t('commons.payType.'+ row.payType)  : $t('food.billingType.'+ row.billingType)}}
+                      </div>
+                      <div v-if="row.billingType==3">{{checkRoomNum(row.signRoomId)}}</div>
+                   </template>
+                </el-table-column>
                 <el-table-column
                   :label="$t('food.common.total_pay')"
                  >
@@ -165,12 +171,13 @@
 				<div class="item margin-t-10"><span>{{$t('desk.book_costFee2')}}：<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
 
                 <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
-                <div class="item margin-t-10" v-if="detail.billingType&&detail.payType!=100">
-                    {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                <div class="item margin-t-10" v-if="detail.billingType">
+                    {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('commons.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                   <span style="margin-left:10px" v-if="detail.billingType==3">{{$t('desk.customer_roomNumber')}}{{checkRoomNum(detail.signRoomId)}}</span>
                  </div>
-                  <div class="item margin-t-10" v-if="detail.billingType&&detail.payType==100">
+                  <!-- <div class="item margin-t-10" v-if="detail.billingType&&detail.payType==100">
                     {{$t('food.reset.paymoney')}}: 【payments】 ¥{{numFormate(detail.realPayPrice)}}
-                 </div>
+                 </div> -->
             </div>
             <div class="margin-t-10 text-gray">{{$t('food.reset.create_time')}}：{{detail.createTime}}</div>
             <el-table
@@ -221,6 +228,7 @@ export default {
     },
     data() {
         return {
+          romeList:[],
             dialogType:1,
             dialogShow:false,
             dialogShows:false,
@@ -260,8 +268,27 @@ export default {
     },
     mounted() {
         this.getDataList();
+        this.getSignRoomList();
     },
     methods: {
+      checkRoomNum(roomId){
+        for(let item of this.romeList ){
+          if(item.roomId==roomId){
+            return item.houseNum;
+          }
+        }
+      },
+      getSignRoomList() {
+      let params = {};
+      this.$F.doRequest(
+        this,
+        "/pms/dishes/living_rooms_list",
+        params,
+        (res) => {
+          this.romeList = res.roomListGroup;
+        }
+      );
+    },
         initForm() {
             this.searchForm = {
                 state:'',// 状态  1未结 2已结 3取消      int选填

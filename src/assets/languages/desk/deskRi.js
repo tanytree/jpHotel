@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-24 17:19:29
+ * @LastEditTime: 2021-03-27 11:17:56
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1076,6 +1076,7 @@ module.exports = {
   order_otherEnter: "他の計上",
   customer_inputRemarkA: '備考記入をしてください。',
   add_bookProject: '予約プラン',
+  add_checkoutInfo: '支払い情報',
 
 
 

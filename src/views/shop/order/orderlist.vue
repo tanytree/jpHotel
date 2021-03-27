@@ -98,6 +98,13 @@
                    :label="$t('shop.reset.salePoint')"
                 >
                 </el-table-column>
+                 <el-table-column :label="$t('desk.customer_payType')">
+                   <template slot-scope="{row}">
+                      <div  v-if="row.billingType">{{row.billingType == 1 ? $t('commons.payType.'+ row.payType)  : $t('food.billingType.'+ row.billingType)}}
+                      </div>
+                      <div v-if="row.billingType==3">{{row.roomObject?row.roomObject.houseNum:''}}</div>
+                   </template>
+                </el-table-column>
                 <el-table-column
                   :label="$t('food.reset.total_pay')"
                 >
@@ -184,15 +191,10 @@
                 {{$t('shop.realPrice')}}：  ¥{{numFormate(detail.realPayPrice)}}
             </div>
 
-            <div class="item margin-t-10 text-gray" v-if="detail.billingType&&detail.payType!=100">
-                结账信息：{{detail.billingType == 1 ? '【'+$t('food.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+            <div class="item margin-t-10 text-gray" v-if="detail.billingType">
+                {{$t('desk.add_checkoutInfo')}}：{{detail.billingType == 1 ? '【'+$t('commons.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                <span style="margin-left:10px" v-if="detail.billingType==3">{{$t('desk.customer_roomNumber')}}{{detail.roomObject?detail.roomObject.houseNum:''}}</span>
             </div>
-
-            <div class="item margin-t-10 text-gray" v-if="detail.billingType&&detail.payType==100">
-                结账信息：【payments】 ¥{{numFormate(detail.realPayPrice)}}
-            </div>
-
-
 
             <div class="margin-t-10 text-gray">{{$t('shop.payTime')}}：{{detail.updateTime}}</div>
             <el-table
