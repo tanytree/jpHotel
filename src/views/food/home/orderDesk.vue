@@ -46,8 +46,6 @@
             </div>
          </div>
       </div>
-
-
       <el-container class="right">
         <el-header>
             <el-row>

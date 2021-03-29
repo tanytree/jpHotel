@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-19 13:45:14
+ * @LastEditTime: 2021-03-29 15:14:08
  * @FilePath: \jiudian\src\assets\languages\food\ri.js
  */
 module.exports = {
@@ -385,7 +385,7 @@ module.exports = {
         servePri:'サービス料',
         constPri:'消費税',
         yhPrice:'割引',
-        paymoney:'合計',
+        paymoney:'支払方法',
         create_time:'注文時間',
         add:'注文',
         guests:'ｳｫｰｸｲﾝ',

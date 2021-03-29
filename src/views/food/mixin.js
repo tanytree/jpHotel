@@ -6,7 +6,7 @@ const mixin= {
     },
 
     methods: {
-        getNewCateList(list){
+      getNewCateList(list) {
            if(list && list.length > 0 ){
                let arr = []
                for(let i in list){
@@ -15,7 +15,7 @@ const mixin= {
                        label:list[i].name,
                        children:this.getNewCateList(list[i].childList)
                    })
-               }
+             }
                return arr
             }
         },
