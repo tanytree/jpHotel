@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-27 12:09:17
+ * @LastEditTime: 2021-03-29 16:48:50
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -261,6 +261,7 @@ module.exports = {
   grsl_importSuccess: '一括入力確認',
   grsl_managementSalePoint: '付帯登録',
   grsl_goodsShelves: '項目追加',
+  grsl_goodsShelvesA: '商品陳列',
   grsl_employeePriceJapen: '社員割引',
   grsl_inventory: '在庫数量',
   grsl_shelves: '利用削除',

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-27 12:08:58
+ * @LastEditTime: 2021-03-29 16:47:06
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -306,6 +306,7 @@ module.exports = {
   grsl_importSuccess: '导入成功',
   grsl_managementSalePoint: '管理售卖点',
   grsl_goodsShelves: '上架商品',
+  grsl_goodsShelvesA: '上架商品',
   grsl_employeePriceJapen: '员工价(日元)',
   grsl_inventory: '库存',
   grsl_shelves: '下架',

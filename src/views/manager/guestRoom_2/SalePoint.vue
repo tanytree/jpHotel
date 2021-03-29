@@ -27,7 +27,7 @@
           <el-button class="grey" @click="reset('')">{{$t('commons.resetBtn')}}</el-button>
         </el-form-item>
         <el-form-item class="form-inline-flex">
-          <el-button type="primary" @click="shelf" class="submit">{{$t('manager.grsl_goodsShelves')}}</el-button>
+          <el-button type="primary" @click="shelf" class="submit">{{$t('manager.grsl_goodsShelvesA')}}</el-button>
         </el-form-item>
       </el-form>
       <div class="components-edit">

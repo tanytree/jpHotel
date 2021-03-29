@@ -20,8 +20,8 @@
             <el-form-item :label="$t('food.common.curstom_name')">
                 <el-input v-model="searchForm.name" :placeholder="$t('food.common.curstom_name')" class="width200"></el-input>
             </el-form-item>
-            <el-form-item :label="$t('shop.salePoint')">
-                <el-select v-model="searchForm.sellingId" :placeholder="$t('shop.salePoint')">
+            <el-form-item :label="$t('shop.reset.salePoint')">
+                <el-select v-model="searchForm.sellingId" :placeholder="$t('shop.reset.salePoint')">
                     <el-option :label="$t('food.common.all')" value=""></el-option>
                     <el-option
                       v-for="item in saleData"
@@ -106,7 +106,7 @@
                    </template>
                 </el-table-column>
                 <el-table-column
-                  :label="$t('food.reset.total_pay')"
+                  :label="$t('food.reset.total_payA')"
                 >
                     <template slot-scope="scope">
                         {{scope.row.realPayPrice ?  numFormate(scope.row.realPayPrice) : '-'}}
@@ -174,8 +174,8 @@
             <!-- <div class="margin-t-10 text-gray">{{$t('food.common.order_price')}}：¥{{orderTax.sum}} </div> -->
             <div class="taxBox text-size14 text-gray">
                 <div class="item margin-t-10">{{$t('food.reset.servePri')}}： ¥{{orderTax.service}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> </div>
-                <div class="item margin-t-10">{{$t('food.reset.constPri')}}： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
-                <div class="item margin-t-10"><span>{{$t('desk.book_costFee2')}}：<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
+                <div class="item margin-t-10">消費税（込み）： ¥{{orderTax.taxFee}} <span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></div>
+                <div class="item margin-t-10"><span>消費税（抜き）：<span class="text-size12">({{orderTax.type}}  {{orderTax.tax}})</span></span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
                 <div class="item margin-t-10" v-if="detail.billingType&&detail.billingType == 1">{{$t('shop.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
             </div>
             <!-- <div v-if="!!orderTax" class="margin-t-10 text-gray">消费税：¥{{orderTax.total}}</div>
@@ -192,7 +192,7 @@
             </div>
 
             <div class="item margin-t-10 text-gray" v-if="detail.billingType">
-                {{$t('desk.add_checkoutInfo')}}：{{detail.billingType == 1 ? '【'+$t('commons.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
+                {{$t('desk.add_paymentMethod')}}：{{detail.billingType == 1 ? '【'+$t('commons.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }}  ¥{{numFormate(detail.realPayPrice)}}
                 <span style="margin-left:10px" v-if="detail.billingType==3">{{$t('desk.customer_roomNumber')}}{{detail.roomObject?detail.roomObject.houseNum:''}}</span>
             </div>
 
@@ -251,7 +251,7 @@
               </el-table-column>
               <el-table-column :label="$t('food.common.status')" width="80">
                   <template slot-scope="scope">
-                    {{$t('desk.customer_closeAccount')}}
+                    {{$t('desk.customer_closeAccountA')}}
                       <!-- {{scope.row.state == 2 ? $t('desk.customer_closeAccount') : $t('desk.customer_outStand')}} -->
                   </template>
               </el-table-column>

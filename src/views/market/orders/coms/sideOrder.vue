@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-24 14:26:36
+ * @LastEditTime: 2021-03-29 16:24:42
  * @FilePath: \jiudian\src\views\market\orders\coms\sideOrder.vue
  -->
 <template>
@@ -312,7 +312,8 @@ export default {
           let p = parseFloat(consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
           info.consumePrice =  parseFloat(p).toFixed(0)
           info.priceType = priceType
-          info.payPrice = ''
+          info.payPrice = '';
+          info.remark = this.sideForm.remark;
           this.$F.doRequest(this, "/pms/consume/consume_oper", info, (res) => {
           // this.$emit("getOrderDetail"); //暂时不执行回调订单详情等附餐选择接口完毕后重新刷新接口即可
           });
@@ -367,7 +368,7 @@ export default {
             });
           }
         }else{
-            this.$message ('请选择附餐');
+            this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
             return false
         }
     },

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-03-27 11:17:56
+ * @LastEditTime: 2021-03-29 16:19:00
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -113,7 +113,7 @@ module.exports = {
   home_checkToPlayA: '預かり証再発行',
   home_note: '備考',
   home_noteA: '入金種別「その他」を選択場合、必ず内容を記入してください。',
-  home_noteB: '理由',
+  home_noteB: '備考',
   home_noteC: '支払方法を「その他入金」の場合、必ず記入してください。',
   home_goodsGetOrder: '荷物預かり証',
   home_printTime: 'プリントアウト 時間',
@@ -533,6 +533,7 @@ module.exports = {
   customer_buyerUnit: '売掛法人名称',
   customer_buyerUnitA: '法人名称',
   customer_closeAccount: '精算済',
+  customer_closeAccountA: '支払済',
   customer_outStand: '未収',
   customer_amountPrice: '売掛金額',
   customer_amountPriceA: '利用金額',
@@ -1077,6 +1078,7 @@ module.exports = {
   customer_inputRemarkA: '備考記入をしてください。',
   add_bookProject: '予約プラン',
   add_checkoutInfo: '支払い情報',
+  add_paymentMethod: '支払方法',
 
 
 

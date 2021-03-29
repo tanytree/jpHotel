@@ -73,14 +73,14 @@
           <el-table-column :label="$t('food.common.order_from')">
             <template slot-scope="scope">{{getOrderSource(scope.row.orderSource)}}</template>
           </el-table-column>
-          <el-table-column label="付款方式">
+          <el-table-column :label="$t('desk.add_paymentMethod')">
             <template slot-scope="{row}">
               <div v-if="row.billingType">{{row.billingType == 1 ? $t('commons.payType.'+ row.payType)  : $t('food.billingType.'+ row.billingType)}}
               </div>
               <div v-if="row.billingType==3">{{checkRoomNum(row.signRoomId)}}</div>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('food.common.total_pay')">
+          <el-table-column :label="$t('food.reset.total_payA')">
             <template slot-scope="scope"> {{ scope.row.realPayPrice ? '¥'+ numFormate(scope.row.realPayPrice) : '¥'+ numFormate(scope.row.consumePrice)}}</template>
           </el-table-column>
 
