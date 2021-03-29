@@ -258,7 +258,14 @@ export default {
       //     message: this.$t("commons.request_success"),
       //   });
       // }
-        if(!!this.sideForm.attachMealIdDinner || !!this.sideForm.attachMealIdBreatfast){
+
+
+        if(!this.roomPrice || this.roomPrice < 0 || this.roomPrice == 0 | this.roomPrice == '' ){
+            this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
+            return false
+        }
+
+
           params = this.sideForm;
           params.checkInId = this.checkInId;
           params.roomId = this.currentRoom2.roomId;
@@ -315,62 +322,71 @@ export default {
           info.payPrice = '';
           info.remark = this.sideForm.remark;
           this.$F.doRequest(this, "/pms/consume/consume_oper", info, (res) => {
-          // this.$emit("getOrderDetail"); //暂时不执行回调订单详情等附餐选择接口完毕后重新刷新接口即可
+
+
+             if(!!this.sideForm.attachMealIdDinner || !!this.sideForm.attachMealIdBreatfast){
+                 params = this.sideForm;
+                 params.checkInId = this.checkInId;
+                 params.roomId = this.currentRoom2.roomId;
+                 params.roomNum = this.currentRoom2.houseNum;
+                 params.state = 1;
+                 // params.consumePrice = this.currentRoom2.personList[0].housePrice;
+                 params.consumePrice = this.roomPrice;
+                 // return
+
+                 if (this.sideForm.attachMealIdBreatfast) {
+                   let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast);
+                   // console.log('1')
+                   // console.log(all)
+                   params.priceType = 17;
+                   params.attachMealId = this.sideForm.attachMealIdBreatfast;
+                   params.consumePrice = parseFloat(
+                     this.currentHotelAttaChamealBreakfast.consumePrice + all.total
+                   ).toFixed(0);
+                   params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
+                   params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
+                   params.servicePrice = parseFloat(all.service).toFixed(0);
+                   console.log(params);
+                   // return
+                   this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+                     this.visible = false;
+                     this.$emit("getOrderDetail");
+                   });
+                 }
+                 if(this.sideForm.attachMealIdDinner) {
+                   let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
+                   // console.log('2')
+                   // console.log(att)
+                   params.priceType = 18;
+                   params.attachMealId = this.sideForm.attachMealIdDinner;
+                   params.consumePrice = parseFloat(
+                     this.currentHotelAttaChamealDinner.consumePrice + att.total
+                   ).toFixed(0);
+                   params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
+                   params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
+                   params.servicePrice = parseFloat(att.service).toFixed(0);
+                   // console.log(params)
+                   // return
+                   this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+                     this.visible = false;
+                     this.$emit("getOrderDetail");
+                   });
+                 }
+             }else{
+                this.visible = false;
+                this.$emit("getOrderDetail"); //暂时不执行回调订单详情等附餐选择接口完毕后重新刷新接口即可
+             }
+
+
           });
           // 加收全天房费
 
 
-          params = this.sideForm;
-          params.checkInId = this.checkInId;
-          params.roomId = this.currentRoom2.roomId;
-          params.roomNum = this.currentRoom2.houseNum;
-          params.state = 1;
-          // params.consumePrice = this.currentRoom2.personList[0].housePrice;
-          params.consumePrice = this.roomPrice;
-          // return
 
-          if (this.sideForm.attachMealIdBreatfast) {
-            let all = this.getTaxServerFee(this.currentHotelAttaChamealBreakfast);
-            // console.log('1')
-            // console.log(all)
-            params.priceType = 17;
-            params.attachMealId = this.sideForm.attachMealIdBreatfast;
-            params.consumePrice = parseFloat(
-              this.currentHotelAttaChamealBreakfast.consumePrice + all.total
-            ).toFixed(0);
-            params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
-            params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
-            params.servicePrice = parseFloat(all.service).toFixed(0);
-            console.log(params);
-            // return
-            this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-              this.visible = false;
-              this.$emit("getOrderDetail");
-            });
-          }
-          if(this.sideForm.attachMealIdDinner) {
-            let att = this.getTaxServerFee(this.currentHotelAttaChamealDinner);
-            // console.log('2')
-            // console.log(att)
-            params.priceType = 18;
-            params.attachMealId = this.sideForm.attachMealIdDinner;
-            params.consumePrice = parseFloat(
-              this.currentHotelAttaChamealDinner.consumePrice + att.total
-            ).toFixed(0);
-            params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
-            params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
-            params.servicePrice = parseFloat(att.service).toFixed(0);
-            // console.log(params)
-            // return
-            this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-              this.visible = false;
-              this.$emit("getOrderDetail");
-            });
-          }
-        }else{
-            this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
-            return false
-        }
+        // }else{
+        //     this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
+        //     return false
+        // }
     },
 
     //加載早餐晚餐
