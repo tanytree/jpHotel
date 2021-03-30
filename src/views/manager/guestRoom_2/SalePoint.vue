@@ -69,7 +69,7 @@
         <el-button class="submit" size="small" @click="popup('add')">{{$t('commons.newAdd')}}</el-button>
       </div>
       <el-table ref="multipleTable" :data="salePoint" height="100%" style="min-height: 250px" header-row-class-name="default" size="small">
-        <el-table-column prop="name" :label="$t('manager.grsl_salePointName')"></el-table-column>
+        <el-table-column :prop="$i18n.locale != 'ri'?'name':'jname'" :label="$t('manager.grsl_salePointName')"></el-table-column>
         <!--<el-table-column :label="$t('manager.grsl_allowedToRoom')">
                     <template slot-scope="scope">{{scope.row.allowRoom == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
                     </template>
@@ -84,7 +84,7 @@
         </el-table-column>
         <el-table-column :label="$t('commons.operating')" width="200">
           <template slot-scope="scope">
-            <el-popconfirm :title="$t('manager.surePoint')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="popup('state', scope.row)">
+            <el-popconfirm :title="$t('manager.grsl_surePoint')" icon="el-icon-warning-outline" iconColor="#FF8C00" @confirm="popup('state', scope.row)">
               <el-button type="text" size="small">{{scope.row.state == 1 ? $t('commons.disableA') : $t('commons.enable')}}</el-button>
             </el-popconfirm>
             <el-button v-if="scope.row.delFlag != 2" type="text" size="small" @click="popup('edit', scope.row)">{{$t('commons.modify')}}</el-button>
@@ -113,8 +113,8 @@
                     </el-form-item>-->
           <el-form-item v-if="pointType" :label="$t('manager.grsl_allowDelete')+':'">
             <el-radio-group v-model="point.delFlag">
-              <el-radio :label="1">{{$t('manager.hk_yes')}}</el-radio>
-              <el-radio :label="2">{{$t('manager.hk_no')}}</el-radio>
+              <el-radio :label="1">{{$t('manager.grsl_permission')}}</el-radio>
+              <el-radio :label="2">{{$t('manager.grsl_cannot')}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item :label="$t('manager.hp_loginDetail_state')+':'">
@@ -305,7 +305,9 @@ export default {
             return true;
           }
         });
+        console.log(this.salePoint);
       });
+      
     },
     manageSale() {
       this.salePointVisible = true;

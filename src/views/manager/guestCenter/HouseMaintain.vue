@@ -676,12 +676,12 @@ export default {
         }
       }
 
-      if (this.ruleForm.bedNum < 1) {
-        return this.$message({
-          message: this.$t("manager.grsl_inputMorethanOne"),
-          type: "warn",
-        });
-      }
+      // if (this.ruleForm.bedNum < 1) {
+      //   return this.$message({
+      //     message: this.$t("manager.grsl_inputMorethanOne"),
+      //     type: "warn",
+      //   });
+      // }
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
           this.$F.doUploadBatch(this, imgList, (data) => {

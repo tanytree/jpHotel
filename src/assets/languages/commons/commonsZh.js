@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-15 11:41:18
+ * @LastEditTime: 2021-03-30 11:22:52
  * @FilePath: \jiudian\src\assets\languages\commons\commonsZh.js
  */
 module.exports = {
@@ -199,10 +199,10 @@ module.exports = {
   },
   //朝向
   toward: {
-    '1': '朝南',
-    '2': '朝北',
-    '3': '朝东',
-    '4': '朝西'
+    1: '朝南',
+    2: '朝北',
+    3: '朝东',
+    4: '朝西'
   },
   //制卡状态
   markCard: {

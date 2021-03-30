@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-29 16:48:50
+ * @LastEditTime: 2021-03-30 10:50:58
  * @FilePath: \jiudian\src\assets\languages\manager\ri.js
  */
 
@@ -270,7 +270,7 @@ module.exports = {
   grsl_salePointName: '付帯名称',
   grsl_allowedToRoom: '〇 部屋付（売掛）',
   grsl_allowerToUnit: '〇法人売掛',
-  grsl_allowDelete: '削除可能',
+  grsl_allowDelete: '削除許可',
   grsl_toEnble: '利用中',
   grsl_allowedCheckUnit: '〇 法人売掛',
   grsl_allowedCheckRoom: '〇部屋付',
@@ -606,7 +606,9 @@ module.exports = {
   hk_bookProjectName: '予約プラン',
   hk_inputBookName: 'プラン名称を入力してください。',
   add_nowPayments: 'payments',
-
+  add_notHave: '無し',
+  grsl_permission: '許可',
+  grsl_cannot: '不可',
 
 
 

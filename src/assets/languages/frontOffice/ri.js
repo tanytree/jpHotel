@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-08 18:26:32
+ * @LastEditTime: 2021-03-30 10:11:18
  * @FilePath: \jiudian\src\assets\languages\frontOffice\ri.js
  */
 module.exports = {
@@ -47,8 +47,8 @@ module.exports = {
     },
     priceType: {
         "1": '前受金',
-        "2": 'デポジット',
-        "3": '支払',
+        "2": '保証金',
+        "3": '入金',
         "4": '返金',
         "5": '素泊り料金請求',
         "6": '延長料金',

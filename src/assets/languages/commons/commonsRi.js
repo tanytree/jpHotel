@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-15 11:41:41
+ * @LastEditTime: 2021-03-30 11:25:11
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
@@ -201,12 +201,12 @@ module.exports = {
     '6': 'みとう'
   },
   //朝向
-  // toward: {
-  //     "1": '南向き',
-  //     "2": '北向き',
-  //     "3": '東向き',
-  //     "4": '西向き'
-  // },
+  toward: {
+      "1": '南向き',
+      "2": '北向き',
+      "3": '東向き',
+      "4": '西向き'
+  },
   towards: {
     '1': '面山',
     '2': '面海',
