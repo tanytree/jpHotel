@@ -268,7 +268,7 @@ export default {
             priceType16 = parseFloat(element.consumePrice);
           }
 
-          console.log(priceType + ":" + this.F_priceType(priceType));
+          // console.log(priceType + ":" + this.F_priceType(priceType));
           // console.log(element.consumePrice)
           // console.log(element.servicePrice)
           // console.log(element.consumTaxPrice)
@@ -276,15 +276,15 @@ export default {
       });
 
       sum = total;
-      console.log("小计：" + total);
-      console.log("合计：" + sum);
-      console.log("消费税：" + taxFee);
-      console.log("税内消费税：" + taxInFee);
-      console.log("消费税率：" + tax.consumeTax + "%");
-      console.log("服务费：" + service);
-      console.log("服务费率：" + tax.servicePrice + "%");
-      console.log("温泉税：" + priceType15);
-      console.log("住宿税：" + priceType16);
+      // console.log("小计：" + total);
+      // console.log("合计：" + sum);
+      // console.log("消费税：" + taxFee);
+      // console.log("税内消费税：" + taxInFee);
+      // console.log("消费税率：" + tax.consumeTax + "%");
+      // console.log("服务费：" + service);
+      // console.log("服务费率：" + tax.servicePrice + "%");
+      // console.log("温泉税：" + priceType15);
+      // console.log("住宿税：" + priceType16);
       let preferentialPrice =
         this.checkoutForm.preferentialPrice != "" &&
         this.checkoutForm.preferentialPrice > 0

@@ -59,8 +59,7 @@
 
                     <span v-if="row.priceType == 9 || row.priceType == 10" style="color: red">{{row.payPrice ? $F.numFormate((0 - row.payPrice)) : ''}}</span>
                     <span v-else :class="row.richType == 1 ? 'red' : ''">
-
-                    {{$F.numFormate(getPriceStr(row.payPrice))}}
+                     {{row.priceType == 4 ? '-' : ''}} {{$F.numFormate(getPriceStr(row.payPrice))}}
                     </span>
                 </template>
             </el-table-column>
@@ -127,7 +126,7 @@
                         <span v-if="row.priceType == 5">{{$t('desk.serve_roomPrice')}} (￥{{row.consumePrice}}) </span>
                         <span v-if="row.priceType == 6">{{$t('desk.serve_roomPrice')}}(￥{{row.consumePrice}})</span>
                         <span v-if="row.priceType == 7">
-                                {{row.damageTypeName}}(￥{{$F.numFormate(row.damageInfo.damagePrice)}}) * {{row.damageCount}}
+                            {{row.damageTypeName}}(￥{{$F.numFormate(row.damageInfo.damagePrice)}}) * {{row.damageCount}}
                         </span>
                         <span v-if="row.priceType == 8">
                            <span v-if="row.goodsList&&row.goodsList.length > 0" >

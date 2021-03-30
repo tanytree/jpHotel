@@ -245,6 +245,7 @@ export default {
         localStorage.setItem('roomType','order')
       }
 
+     let roomType = localStorage.getItem('roomType')
 
       let id = this.$route.query.id; //该id为checkinId
       this.itemGuestInfo = this.$route.query.item;
@@ -253,26 +254,35 @@ export default {
       }
 
       this.$F.doRequest(this,"/pms/checkin/check_in_detail",info,(res) => {
-          this.detailData = res;
-          console.log('1131213132')
-          console.log(res.inRoomList[0]);
+          
+         
+          // console.log('1131213132')
+          // console.log(res.inRoomList[0]);
 
-          console.log('1131213132')
+          // console.log('1131213132')
           // this.$F.merge(this.detailData, res);
           //默认获取第一个房间为主账房，暂不明确主账房标识
           // ;
             // debugger
+            
+            if(roomType !== 'customer'){
+                this.detailData = res;
+            }else{
+                if(this.currentRoom&&this.currentRoom.id){
+                     // this.getSingleDetail(item);
+                      this.getSingleDetail(this.currentRoom.roomId);
+                }else{
+                    if (res.inRoomList.length > 0) {
+                      this.currentRoom = res.inRoomList[0];
+                      this.getSingleDetail(this.currentRoom.roomId);
+                      console.log(this.currentRoom.id)
+                    }
+                }
+            }
+           
 
-           if(this.currentRoom&&this.currentRoom.id){
-                // this.getSingleDetail(item);
-                 this.getSingleDetail(this.currentRoom.roomId);
-           }else{
-               if (res.inRoomList.length > 0) {
-                 this.currentRoom = res.inRoomList[0];
-                 this.getSingleDetail(this.currentRoom.roomId);
-                 console.log(this.currentRoom.id)
-               }
-           }
+
+
            this.resetDom();
            this.$forceUpdate();
 
