@@ -288,17 +288,16 @@ export default {
         this.cateList = []
         this.tabCurr = index
         this.searchForm.categoryId = ''
-       if(item.childList.length > 0){
+        this.searchForm.categoryId = v
+        this.getDataList();
+        this.intCart();
+        if(item.childList.length > 0){
             this.cateList = await this.getNewCateList(item.childList);
-       }else{
-           this.searchForm.categoryId = v
-           this.getDataList();
-           this.intCart();
-       }
+        }
     },
     //二级菜单筛选
     handleChange(value) {
-       this.searchForm.categoryId = value[value.length - 1].toString();
+        this.searchForm.categoryId = value[value.length - 1].toString();
         this.$nextTick(()=>{
             this.getDataList()
             this.intCart();
@@ -389,8 +388,8 @@ export default {
             let list = this.cart
             let dishesJson  = []
             let sum = 0
-            
-            
+
+
             list.forEach(element => {
                 dishesJson.push({
                     dishesId:element.id,
@@ -401,9 +400,9 @@ export default {
                 });
                 sum += element.count
             });
-            
-            
-            
+
+
+
             // for(let i in list){
             //     dishesJson.push({
             //         dishesId:list[i].id,
