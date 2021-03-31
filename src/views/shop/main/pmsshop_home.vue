@@ -5,7 +5,7 @@
      </el-header>
      <el-main  v-loading="loading">
         <div class="shopNavList clearfix">
-            <div class="item" v-for="(item,index) in tableData" @click="jump(item)">
+            <div class="item" v-for="(item,index) in tableData" :key="index" @click="jump(item)">
                 <div class="icon"><i class="el-icon-s-shop"></i></div>
                 <div class="title">{{item.name}}</div>
             </div>
