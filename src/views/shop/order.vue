@@ -9,9 +9,7 @@
                  :name="item.path"
                  :key="item.path"
                  v-if="$F.filterThirdMenu('frontOffice', item.path, true)"
-                 class="bg"
-
-            >
+                 class="bg">
                 <!-- 沽清管理-->
                 <orderlist :tax="taxInfos" :saleData = 'saleData' v-if="item.path == 'pmshoporder_child'"/>
             </el-tab-pane>
@@ -22,6 +20,7 @@
 <script>
     import { mapState, mapActions } from "vuex"
     import orderlist from "./order/orderlist.vue";
+    import {getLanguage} from "@/utils/auth";
     export default {
         components: {orderlist},
         data() {
@@ -63,14 +62,17 @@
             getSaleData(){
                 let params = {}
                 params.userId = this.userId
-                params.storesNum = this.storesNum
+                params.storesNum = this.storesNum;
+                let language = getLanguage();
                 this.$F.doRequest(this, "/pms/hotelgoodsSelling/list", params, (res) => {
                     console.log(res)
                    let arr = res.list
-                   let array = []
+                   let array = [];
+                    const a = this;
                    for(let i in arr){
+                       let name = language == 'ri' ? (arr[i].jname || arr[i].name) :  arr[i].name;
                         array.push({
-                            label:arr[i].name,
+                            label:name,
                             value:arr[i].id,
                         })
                     }

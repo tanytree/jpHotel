@@ -6,8 +6,8 @@ import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
 // const uploadUrl = 'http://39.104.116.153:8887'
-const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
-// const uploadUrl = 'http://47.74.52.246:8887/'
+//const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
+const uploadUrl = 'http://47.74.52.246:8887/'
 var tabsName = {}
 const languageObject = {
   'ri': '日本语',
@@ -96,10 +96,14 @@ const $F = {
         }
       }
     ).then(res => {
-      if (res.data.code === 200) {
+      if (res.data.code === 200 ) {
         res.data.data = res.data.data || 'http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcSmix0yTqHfemFI2OCIx1V2QlwRhTl6iQ1EqTWzesK267M9RD2Sr8MKvubG09PCz8Vv3BBHjDEPALf1SqI4Uqs'
         let array = newImageList.concat(res.data.data.split(','));
         callback(array.join(','))
+      } else if (res.data.code === 400) {
+          res.data.data = 'http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcSmix0yTqHfemFI2OCIx1V2QlwRhTl6iQ1EqTWzesK267M9RD2Sr8MKvubG09PCz8Vv3BBHjDEPALf1SqI4Uqs'
+          let array = newImageList.concat(res.data.data.split(','));
+          callback(array.join(','))
       } else {
         if ($instance) {
           $instance.$message.error(res.message || res.data.message)
@@ -1399,7 +1403,7 @@ const $F = {
         color: #fff;
         cursor: pointer;
       }
-      
+
       .noprint{
         display:none;
       }

@@ -25,6 +25,7 @@
     import shop from "./main/pmsshop_home.vue";
     import bookOff from "../food/home/bookOff.vue";
     import employeeRights from '@/components/employeeRights'
+    import { getLanguage, setLanguage } from "@/utils/auth";
     export default {
         components: {shop, bookOff, employeeRights},
         data() {
