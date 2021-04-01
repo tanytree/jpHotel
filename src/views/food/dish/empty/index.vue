@@ -188,15 +188,26 @@ export default {
 
     //切换菜品类型
     async changeTab(v,item,index){
+
+
         this.cateList = []
         this.tabCurr = index
-        this.searchForm.categoryId = ''
-       if(item.childList.length > 0){
-            this.cateList = await this.getNewCateList(item.childList)
-       }else{
-           this.searchForm.categoryId = v
-           this.getDataList();
-       }
+        this.searchForm.categoryId = v
+        this.getDataList();
+        if(item.childList.length > 0){
+            this.cateList = await this.getNewCateList(item.childList);
+        }
+
+
+       //  this.cateList = []
+       //  this.tabCurr = index
+       //  this.searchForm.categoryId = ''
+       // if(item.childList.length > 0){
+       //      this.cateList = await this.getNewCateList(item.childList)
+       // }else{
+       //     this.searchForm.categoryId = v
+       //     this.getDataList();
+       // }
     },
 
     handleChange(value) {

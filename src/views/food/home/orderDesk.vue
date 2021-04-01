@@ -196,6 +196,7 @@ export default {
         searchForm:{
            name:'',
            categoryId: '',
+           categoryLevel:'',
         },
         cart:[],
         tabCurr:0,
@@ -262,6 +263,7 @@ export default {
             name:'',
             categoryId: '',
             orderSource:1,
+            categoryLevel:'',
             pageIndex: 1, //当前页
             pageSize: 20, //页数
         }
@@ -274,6 +276,7 @@ export default {
         params.state = 1
         params.userId = this.userId
         params.storesNum = this.storesNum
+        console.log(params)
         this.$F.doRequest(this, "/pms/dishes/dishes_manage_list", params, (res) => {
             console.log(res)
             this.list_loading = false
@@ -284,6 +287,7 @@ export default {
     },
     //切换菜品类型
     async changeTab(v,item,index){
+       
         // this.cart = []
         this.cateList = []
         this.tabCurr = index
