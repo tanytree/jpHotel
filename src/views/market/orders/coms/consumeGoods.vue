@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-30 10:00:34
+ * @LastEditTime: 2021-04-01 15:26:04
  * @FilePath: \jiudian\src\views\market\orders\coms\consumeGoods.vue
  -->
 <template>
@@ -24,7 +24,7 @@
                         </el-form>
                         <el-table v-loading="loading" :data="tableData" :header-cell-style="{background:'#F7F7F7',color:'#1E1E1E'}" size="mini">
                             <el-table-column prop="goodsName" :label="$t('desk.order_goodsNameA')"  show-overflow-tooltip></el-table-column>
-                            <el-table-column prop="sellName" :label="$t('desk.order_goodsTypeC')" show-overflow-tooltip></el-table-column>
+                            <!-- <el-table-column prop="sellName" :label="$t('desk.order_goodsTypeC')" show-overflow-tooltip></el-table-column> -->
                             <el-table-column prop="retailPrice" :label="$t('desk.order_goodsUnit')" show-overflow-tooltip></el-table-column>
                             <el-table-column prop="employeePrice" :label="$t('desk.order_empoyeePrice')" show-overflow-tooltip></el-table-column>
                             <!-- <el-table-column prop="inventoryCount" :label="$t('desk.customer_inventory')" show-overflow-tooltip></el-table-column> -->
