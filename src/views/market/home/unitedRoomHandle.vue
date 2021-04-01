@@ -101,6 +101,11 @@ export default {
         getDataList() {
             this.loading = true
             this.$F.doRequest(this, '/pms/realtime/realtime_hotel_room_list', this.searchForm, (res) => {
+                if (res.floorList && res.floorList.length > 0) {
+                    res.floorList.forEach((floor) => {
+                        floor.roomList.sort(this.$F.compareAsc('houseNum'))
+                    })
+                }
                 let data = res.floorList;
                 this.roomList = data;
                 this.roomList.forEach(element => {

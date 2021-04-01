@@ -175,8 +175,19 @@ export default new Router({
                     path: '/booking',
                     name: 'booking',
                     meta: { title: '预订管理', pid: "13" },
-                    component: () =>
-                        import('@/views/market/booking')
+                    component: () => import('@/views/market/booking'),
+                    children: [
+                        {
+                            path: '/reception',
+                            name: 'reception',
+                            component: () => import('@/views/market/booking'),
+                        },
+                        {
+                            path: '/c2detail',
+                            name: 'c2detail',
+                            component: () => import('@/views/market/booking'),
+                        },
+                    ]
                 },
                 // c2detail 陶子添加
                 {

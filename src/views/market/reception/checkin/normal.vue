@@ -179,11 +179,11 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-<!--                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType == 'b3'">-->
-<!--                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">-->
-<!--                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>-->
-<!--                    </el-select>-->
-<!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.order_salesman') + '：'" v-if="operCheckinType == 'b3'">-->
+                <!--                    <el-select v-model="checkInForm.salesId" :placeholder="$t('commons.placeChoose')">-->
+                <!--                        <el-option v-for="item in salesList" :key="item.id" :label="item.userName" :value="item.id"></el-option>-->
+                <!--                    </el-select>-->
+                <!--                </el-form-item>-->
                 <el-form-item :label="operCheckinType == 'b3'?$t('desk.arrivalTimeA'):$t('desk.arrivalTime')" prop="checkinTime">
                     <el-date-picker
                         v-model="checkInForm.checkinTime"
@@ -218,16 +218,16 @@
                         @change="endTimeChange"
                     ></el-date-picker>
                 </el-form-item>
-<!--                <el-form-item :label="$t('desk.keepTime')" prop="keepTime">-->
-<!--                    <el-date-picker-->
-<!--                        v-model="checkInForm.keepTime"-->
-<!--                        type="datetime"-->
-<!--                        format="yyyy-MM-dd HH:mm:ss"-->
-<!--                        value-format="yyyy-MM-dd HH:mm:ss"-->
-<!--                        :picker-options="keepTime"-->
-<!--                        @change="endTimeChange"-->
-<!--                    ></el-date-picker>-->
-<!--                </el-form-item>-->
+                <!--                <el-form-item :label="$t('desk.keepTime')" prop="keepTime">-->
+                <!--                    <el-date-picker-->
+                <!--                        v-model="checkInForm.keepTime"-->
+                <!--                        type="datetime"-->
+                <!--                        format="yyyy-MM-dd HH:mm:ss"-->
+                <!--                        value-format="yyyy-MM-dd HH:mm:ss"-->
+                <!--                        :picker-options="keepTime"-->
+                <!--                        @change="endTimeChange"-->
+                <!--                    ></el-date-picker>-->
+                <!--                </el-form-item>-->
 
 
                 <el-form-item
@@ -246,14 +246,14 @@
                 <el-form-item :label="$t('desk.order_outOrder')" v-if="operCheckinType != 'b3'">
                     <el-input v-model="checkInForm.thirdOrdernum"></el-input>
                 </el-form-item>
-<!--                <template v-if="operCheckinType == 'b3'">-->
-<!--                    <el-form-item :label="$t('desk.book_meetNameA') + '：'" prop="meetingName">-->
-<!--                        <el-input v-model="checkInForm.meetingName"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">-->
-<!--                        <el-input v-model="checkInForm.enterName"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                </template>-->
+                <!--                <template v-if="operCheckinType == 'b3'">-->
+                <!--                    <el-form-item :label="$t('desk.book_meetNameA') + '：'" prop="meetingName">-->
+                <!--                        <el-input v-model="checkInForm.meetingName"></el-input>-->
+                <!--                    </el-form-item>-->
+                <!--                    <el-form-item :label="$t('frontOffice.enterpriseName') + ':'" prop="enterName">-->
+                <!--                        <el-input v-model="checkInForm.enterName"></el-input>-->
+                <!--                    </el-form-item>-->
+                <!--                </template>-->
                 <el-form-item :label="$t('desk.customer_region')" prop="prop">
                     <el-input v-model="checkInForm.region"></el-input>
                 </el-form-item>
@@ -268,7 +268,7 @@
                             <el-select v-model="value.projectName" :placeholder="$t('desk.book_projectName')+(index+1)" style="width: 300px">
                                 <el-option :value="project.projectName" v-for="(project, index) of projectList" :label="project.projectName" :key="index"></el-option>
                             </el-select>
-<!--                            <el-input :placeholder="$t('desk.book_projectName')+(index+1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>-->
+                            <!--                            <el-input :placeholder="$t('desk.book_projectName')+(index+1)" size="small" v-model="value.projectName" style="width: 300px"></el-input>-->
                             <el-input :placeholder="$t('desk.book_projectCount')" size="small" v-model="value.projectCount" style="width: 100px; margin-left: 10px"></el-input>
                             <el-input :placeholder="$t('desk.book_price')" size="small" v-model="value.price" style="width: 100px; margin-left: 10px"></el-input>
                             <img src="~@/assets/images/close.png" @click="deleteProject(index)" v-if="checkInForm.reserveProjects.length>1" class="closePng">
@@ -298,7 +298,7 @@
                                                      :label="$t('desk.home_describeText')" size="mini" style="width: 100px" v-model.number="v.num"></el-input-number>
                                 </div>
                                 <div class="row">
-<!--                                    <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>-->
+                                    <!--                                    <span class="allow">{{ $t("desk.home_canOrderText") }}{{ v.reserveTotal }}</span>-->
                                     <div style="float: right">
                                         <span>{{operCheckinType == 'b3'?$t('desk.home_onePeopleLiveA'):$t('desk.home_onePeopleLive')}}: {{ v.onePersonPrice }}</span>
                                     </div>
@@ -310,7 +310,7 @@
                 <div class="right">
                     <el-form inline size="small">
                         <el-form-item>
-<!--                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>-->
+                            <!--                            <el-button @click="empty_row_houses" v-if="!storesNum">{{ $t("desk.autoRowHouse") }}</el-button>-->
                             <el-button @click="live_in_person_list" v-if=" !operCheckinType.startsWith('b') && waitingRoom.length > 0">
                                 <i v-loading="liveLoading"></i>{{ $t("desk.order_rowHouses") }}
                             </el-button>
@@ -348,7 +348,7 @@
                 <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
                 <el-button type="primary" class="submit" @click="openPrintDialog" v-if="!this.storesNum" v-loading="loading">印刷</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum" v-loading="loading">{{ $t("commons.save") }}</el-button>
-<!--                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>-->
+                <!--                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>-->
             </div>
         </div>
 
@@ -366,7 +366,7 @@
 
         <!--        排房组件 -->
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
-       <!-- 打印客户资讯 组件 -->
+        <!-- 打印客户资讯 组件 -->
         <customerInfo  ref="customerInfo"/>
 
     </div>
@@ -416,12 +416,6 @@ export default {
     },
 
     computed: {
-        ...mapState({
-            token: (state) => state.user.token,
-            userId: (state) => state.user.userId,
-            msgKey: (state) => state.config.msgKey,
-            plat_source: (state) => state.config.plat_source,
-        }),
         rules() {
             return {
                 content: "",
@@ -523,7 +517,6 @@ export default {
                 ],
             };
         },
-
     },
     data() {
         return {
@@ -662,15 +655,25 @@ export default {
     },
 
     created() {
+
         this.initModule();
     },
 
     watch: {
+        '$route'(to,from) {
+            console.log(to,from);
+        },
         operCheckinType() {
+            debugger
             this.initForm();
             // this.handleOperCheckinType()
             console.log(this.checkInForm);
         },
+        // operCheckinType: {
+        //     handler(n, o) {
+        //         debugger
+        //     }
+        // },
         checkInForm: {
             handler(n, o) {
                 console.log(n);
@@ -763,17 +766,17 @@ export default {
             }
             this.$F.doRequest(
                 this,
-            "/pms/project/project_list",
+                "/pms/project/project_list",
                 params,
-    (res) => {
-                this.projectList = res.projectList;
-                this.$forceUpdate();
-            });
+                (res) => {
+                    this.projectList = res.projectList;
+                    this.$forceUpdate();
+                });
         },
 
-      openPrintDialog(){
-        this.$refs.customerInfo.openDialog();
-      },
+        openPrintDialog(){
+            this.$refs.customerInfo.openDialog();
+        },
         //中央预定取消和预定操作
         handleCenter(type) {
             if (type == 'centerReserve') {
@@ -898,6 +901,10 @@ export default {
             };
             this.handleOperCheckinType();
             this.getCheckinRoominfoList();
+            let checkInForm = sessionStorage.getItem("checkInForm")
+            if (checkInForm) {
+                this.checkInForm = checkInForm;
+            }
         },
 
         /**获取房间信息数据 */

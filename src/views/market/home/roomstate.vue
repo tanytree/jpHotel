@@ -436,6 +436,11 @@ export default {
                 "/pms/realtime/realtime_hotel_room_list",
                 params,
                 (res) => {
+                    if (res.floorList && res.floorList.length > 0) {
+                        res.floorList.forEach((floor) => {
+                            floor.roomList.sort(this.$F.compareAsc('houseNum'))
+                        })
+                    }
                     this.roomList = res.floorList;
                     this.$forceUpdate();
                 }
