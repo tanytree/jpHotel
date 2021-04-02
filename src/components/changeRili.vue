@@ -57,7 +57,7 @@
           </el-form-item>
           <el-row>
             <!-- 星期 -->
-            <el-form-item label="选择星期">
+            <!-- <el-form-item label="选择星期">
               <el-radio-group v-model="ruleForm_Pie.weeks">
                 <el-radio label="0">全选</el-radio>
                 <el-radio label="1">周一</el-radio>
@@ -68,6 +68,19 @@
                 <el-radio label="6">周六</el-radio>
                 <el-radio label="7">周日</el-radio>
               </el-radio-group>
+            </el-form-item> -->
+            <!-- 星期 -->
+            <el-form-item label="选择星期">
+              <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+              <el-checkbox-group v-model="ruleForm_Pie.weeks">
+                <el-checkbox :label="1">周一</el-checkbox>
+                <el-checkbox :label="2">周二</el-checkbox>
+                <el-checkbox :label="3">周三</el-checkbox>
+                <el-checkbox :label="4">周四</el-checkbox>
+                <el-checkbox :label="5">周五</el-checkbox>
+                <el-checkbox :label="6">周六</el-checkbox>
+                <el-checkbox :label="7">周日</el-checkbox>
+              </el-checkbox-group>
             </el-form-item>
           </el-row>
         </el-form>
@@ -222,6 +235,7 @@ export default {
   props: ["ruleForm"],
   data() {
     return {
+      checkAll: true,
       mealBreakfastObject: {},
       mealDinnerObject: {},
       dayPriceList: [],
@@ -240,7 +254,7 @@ export default {
 
       ruleForm_Pie: {
         time: [],
-        weeks: "0",
+        weeks: [1, 2, 3, 4, 5, 6, 7], //选择星期
         roomStrategyJson: [],
       },
       roomStrategyJson_p: [],
@@ -347,6 +361,9 @@ export default {
     // },
   },
   methods: {
+    handleCheckAllChange(val) {
+      this.ruleForm_Pie.weeks = val ? [1, 2, 3, 4, 5, 6, 7] : [];
+    },
     // 前15天
     beforeTap() {
       console.log(this.search_d.strategyTime);
@@ -493,32 +510,7 @@ export default {
         endTime: this.ruleForm_Pie.time[1],
         strategyJson: JSON.stringify(this.roomStrategyJson_p),
       };
-      switch (this.ruleForm_Pie.weeks) {
-        case "0":
-          params.weeks = "1,2,3,4,5,6,7";
-          break;
-        case "1":
-          params.weeks = "1";
-          break;
-        case "2":
-          params.weeks = "2";
-          break;
-        case "3":
-          params.weeks = "3";
-          break;
-        case "4":
-          params.weeks = "4";
-          break;
-        case "5":
-          params.weeks = "5";
-          break;
-        case "6":
-          params.weeks = "6";
-          break;
-        case "7":
-          params.weeks = "7";
-          break;
-      }
+      params.weeks = this.ruleForm_Pie.weeks.join(",");
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_price_roomtype_strategy_save",

@@ -68,16 +68,16 @@
           <el-col :span="20">
             <!-- 星期 -->
             <el-form-item label="选择星期">
-              <el-radio-group v-model="batchEditPriceForm.weeks">
-                <el-radio label="0">全选</el-radio>
-                <el-radio label="1">周一</el-radio>
-                <el-radio label="2">周二</el-radio>
-                <el-radio label="3">周三</el-radio>
-                <el-radio label="4">周四</el-radio>
-                <el-radio label="5">周五</el-radio>
-                <el-radio label="6">周六</el-radio>
-                <el-radio label="7">周日</el-radio>
-              </el-radio-group>
+              <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+              <el-checkbox-group v-model="batchEditPriceForm.weeks">
+                <el-checkbox :label="1" >周一</el-checkbox>
+                <el-checkbox :label="2" >周二</el-checkbox>
+                <el-checkbox :label="3" >周三</el-checkbox>
+                <el-checkbox :label="4" >周四</el-checkbox>
+                <el-checkbox :label="5" >周五</el-checkbox>
+                <el-checkbox :label="6" >周六</el-checkbox>
+                <el-checkbox :label="7" >周日</el-checkbox>
+              </el-checkbox-group>
             </el-form-item>
           </el-col>
         </el-form>
@@ -184,6 +184,7 @@ export default {
   mixins: [myMixin],
   data() {
     return {
+      checkAll:true,
       memberTypeLength: 0,
       star_time: "", // 列表查询的开始时间
       sel_roomTypeId: "",
@@ -207,7 +208,7 @@ export default {
         // channel: "线下",
         startTime: "",
         endTime: "",
-        weeks: "0", //选择星期
+        weeks: [1,2,3,4,5,6,7], //选择星期
         roomStrategyJson: [],
       },
       ruleForm: {
@@ -291,6 +292,9 @@ export default {
     this.star_time = this.ruleForm.date;
   },
   methods: {
+      handleCheckAllChange(val) {
+       this.batchEditPriceForm.weeks = val ? [1,2,3,4,5,6,7] : [];
+      },
     onInput() {
       this.$forceUpdate();
     },
@@ -402,34 +406,7 @@ export default {
       params.endTime = this.batchEditPriceForm.time[1];
       params.memberTypeId = this.checkbox_value_pie;
       params.channel = "线下";
-      switch (this.batchEditPriceForm.weeks) {
-        case "0":
-          params.weeks = "1,2,3,4,5,6,7";
-          break;
-        case "1":
-          params.weeks = "1";
-          break;
-        case "2":
-          params.weeks = "2";
-          break;
-        case "3":
-          params.weeks = "3";
-          break;
-        case "4":
-          params.weeks = "4";
-          break;
-        case "5":
-          params.weeks = "5";
-          break;
-        case "6":
-          params.weeks = "6";
-          break;
-           case "7":
-          params.weeks = "7";
-          break;
-      }
-      // params.weeks = "1,2,3,4,5,6,7";
-
+      params.weeks = this.batchEditPriceForm.weeks.join(',');
       let obj = {};
       let arr = [];
       this.allRoomTypeList.forEach((a, b) => {
