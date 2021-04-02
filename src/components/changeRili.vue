@@ -75,7 +75,7 @@
       <el-table :data="ruleForm_Pie.roomStrategyJson" header-row-class-name="default">
         <el-table-column prop="houseName" :label="$t('manager.hp_roomA')"></el-table-column>
         <el-table-column :label="$t('manager.add_peoAsit')" v-if="ruleForm.roomType == 1">
-          <template slot-scope="{row}">
+          <template>
             <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
                 <span v-if="value.roomType == 1">{{value.personNum}}</span>
@@ -85,14 +85,14 @@
           </template>
         </el-table-column>
         <el-table-column :label="$t('manager.hk_livePrice')" v-if="ruleForm.roomType == 1">
-          <template slot-scope="scope">
+          <template >
             <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">{{value.customPrice}}</div>
             </div>
           </template>
         </el-table-column>
         <el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
-          <template slot-scope="scope">
+          <template >
             <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
                 <div style="padding: 10px 0px;">{{value.marketPrice}}</div>
@@ -102,7 +102,7 @@
         </el-table-column>
 
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
-          <template slot-scope="scope">
+          <template >
             <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
                 <el-input v-model="value.newCustomPrice"></el-input>
@@ -111,7 +111,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPriA')" width="250" v-else>
-          <template slot-scope="scope">
+          <template >
             <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
                 <div style="padding: 10px 0px;">
@@ -151,7 +151,7 @@
       <el-table ref="multipleTable" :data="editPriceForm.roomStrategyJson" tooltip-effect="dark" default-expand-all header-row-class-name="default">
         <el-table-column prop="houseName" :label="$t('manager.hp_room')"></el-table-column>
         <el-table-column prop="personNum" :label="$t('manager.add_peoAsit')" v-if="ruleForm.roomType == 1">
-          <template slot-scope="scope">
+          <template >
             <div v-for="(value, index) in roomStrategyJson_p" :key="index">
               <div style="padding: 10px 0px;">
                 <span v-if="value.roomType == 1">{{value.personNum}}</span>
@@ -161,14 +161,14 @@
           </template>
         </el-table-column>
         <el-table-column prop="customPrice" :label="$t('manager.hk_livePrice')" v-if="ruleForm.roomType == 1">
-          <template slot-scope="scope">
+          <template >
             <div v-for="(value, index) in roomStrategyJson_p" :key="index">
               <div style="padding: 10px 0px;">{{value.customPrice}}</div>
             </div>
           </template>
         </el-table-column>
         <el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
-          <template slot-scope="scope">
+          <template >
             <div v-for="(value, index) in roomStrategyJson_p" :key="index">
               <div style="padding: 10px 0px;">{{value.marketPrice}}</div>
             </div>
@@ -176,7 +176,7 @@
         </el-table-column>
 
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
-          <template slot-scope="scope">
+          <template >
             <div v-for="(value, index) in roomStrategyJson_p" :key="index">
               <div style="padding: 10px 0px;">
                 <el-input v-model="value.newCustomPrice"></el-input>
@@ -185,7 +185,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPri')" width="250" v-else>
-          <template slot-scope="scope">
+          <template>
             <div v-for="(value, index) in roomStrategyJson_p" :key="index">
               <div style="padding: 10px 0px;">
                 <el-input v-model="value.newCustomPrice"></el-input>
