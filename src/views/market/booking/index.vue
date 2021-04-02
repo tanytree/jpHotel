@@ -54,11 +54,6 @@ export default {
         }
         console.log(this.menuList);
     },
-    watch: {
-        $route(to, from) {
-           debugger;
-        }
-    },
     methods: {
         //二级tab切片
         handleClick(tab, event) {

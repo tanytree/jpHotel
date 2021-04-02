@@ -254,17 +254,11 @@ export default {
       }
 
       this.$F.doRequest(this,"/pms/checkin/check_in_detail",info,(res) => {
-          
-         
           // console.log('1131213132')
           // console.log(res.inRoomList[0]);
-
           // console.log('1131213132')
-          // this.$F.merge(this.detailData, res);
+          this.$F.merge(this.detailData, res);
           //默认获取第一个房间为主账房，暂不明确主账房标识
-          // ;
-            // debugger
-            
             if(roomType !== 'customer'){
                 this.detailData = res;
             }else{
@@ -279,7 +273,7 @@ export default {
                     }
                 }
             }
-           
+
 
 
 

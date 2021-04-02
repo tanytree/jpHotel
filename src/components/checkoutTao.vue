@@ -546,11 +546,13 @@ export default {
       this.$F.doRequest(this, "/pms/checkin/out_check_in", params, (res) => {
         console.log(res);
       });
+      debugger
        this.$F.doRequest(
         this,
         "/pms/hotelservice/print_num",
         { typeStr: "ME" },
         (res) => {
+            debugger
           transferObj.checkOutRoomNum = res;
            this.$emit("getOrderDetail",transferObj);
         }

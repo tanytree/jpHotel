@@ -438,7 +438,7 @@ export default {
                 (res) => {
                     if (res.floorList && res.floorList.length > 0) {
                         res.floorList.forEach((floor) => {
-                            floor.roomList.sort(this.$F.compareAsc('houseNum'))
+                            floor.roomList && floor.roomList.sort(this.$F.compareAsc('houseNum'))
                         })
                     }
                     this.roomList = res.floorList;

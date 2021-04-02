@@ -405,6 +405,8 @@ import customerInfo from '@/components/table/customerInfo'
 import customer from "@/components/front/customer2";
 import guestChoose from "@/views/market/reception/checkin/guestChoose";
 import rowHouse from "@/components/front/rowHouse";
+import { beforeRouteLeave } from "vue-router";
+
 export default {
     props: ["operCheckinType", "selectStoresNum"], //b1：普通预定 b2:当日回 b3:会场预定     a1: 入住办理
     components: {
@@ -520,6 +522,7 @@ export default {
     },
     data() {
         return {
+            route: this.$route,
             storesNum: '',
             checkInDetail: {},//添加入住人 传到入住人组件值
             inRoomList: [], //添加入住人 传到入住人组件值
@@ -655,25 +658,29 @@ export default {
     },
 
     created() {
-
-        this.initModule();
+        this.initModule(null, () => {
+            // this.$router.beforeEach((to, from, next) => {
+            //     if (to.name == 'booking') {
+            //         let checkInFormStorage = sessionStorage.getItem("checkInForm");
+            //         if (checkInFormStorage) {
+            //             this.checkInForm = JSON.parse(checkInFormStorage);
+            //         }
+            //     } else {
+            //         sessionStorage.setItem("checkInForm", JSON.stringify(this.checkInForm));
+            //     }
+            //     console.log(this.checkInForm);
+            //     next();
+            // });
+        });
     },
 
     watch: {
-        '$route'(to,from) {
-            console.log(to,from);
-        },
         operCheckinType() {
             debugger
             this.initForm();
             // this.handleOperCheckinType()
             console.log(this.checkInForm);
         },
-        // operCheckinType: {
-        //     handler(n, o) {
-        //         debugger
-        //     }
-        // },
         checkInForm: {
             handler(n, o) {
                 console.log(n);
@@ -787,7 +794,7 @@ export default {
                 this.$emit("cancel");
             }
         },
-        initModule(storesNum) {
+        initModule(storesNum, callback) {
             if (storesNum) {
                 this.storesNum = storesNum;
             } else {
@@ -808,7 +815,7 @@ export default {
                 this.salesList = data.hotelUserList;
             });
             this.getCheckinRoominfoList();
-            this.initForm();
+            this.initForm(callback);
 
         },
 
@@ -847,7 +854,7 @@ export default {
             return row[newCheck];
         },
 
-        initForm() {
+        initForm(callback) {
             this.loadReserveProject();
             this.getRoomsForm = {
                 changeType: 1,
@@ -901,9 +908,8 @@ export default {
             };
             this.handleOperCheckinType();
             this.getCheckinRoominfoList();
-            let checkInForm = sessionStorage.getItem("checkInForm")
-            if (checkInForm) {
-                this.checkInForm = checkInForm;
+            if (callback) {
+                callback();
             }
         },
 
