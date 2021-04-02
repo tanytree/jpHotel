@@ -57,29 +57,16 @@
           </el-form-item>
           <el-row>
             <!-- 星期 -->
-            <!-- <el-form-item label="选择星期">
-              <el-radio-group v-model="ruleForm_Pie.weeks">
-                <el-radio label="0">全选</el-radio>
-                <el-radio label="1">周一</el-radio>
-                <el-radio label="2">周二</el-radio>
-                <el-radio label="3">周三</el-radio>
-                <el-radio label="4">周四</el-radio>
-                <el-radio label="5">周五</el-radio>
-                <el-radio label="6">周六</el-radio>
-                <el-radio label="7">周日</el-radio>
-              </el-radio-group>
-            </el-form-item> -->
-            <!-- 星期 -->
-            <el-form-item label="选择星期">
-              <el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <el-form-item :label="$t('manager.ps_selectWeekA')">
+              <el-checkbox v-model="checkAll" @change="handleCheckAllChange">All</el-checkbox>
               <el-checkbox-group v-model="ruleForm_Pie.weeks">
-                <el-checkbox :label="1">周一</el-checkbox>
-                <el-checkbox :label="2">周二</el-checkbox>
-                <el-checkbox :label="3">周三</el-checkbox>
-                <el-checkbox :label="4">周四</el-checkbox>
-                <el-checkbox :label="5">周五</el-checkbox>
-                <el-checkbox :label="6">周六</el-checkbox>
-                <el-checkbox :label="7">周日</el-checkbox>
+                <el-checkbox :label="1">{{$t('commons.weeks[0]')}}</el-checkbox>
+                <el-checkbox :label="2">{{$t('commons.weeks[1]')}}</el-checkbox>
+                <el-checkbox :label="3">{{$t('commons.weeks[2]')}}</el-checkbox>
+                <el-checkbox :label="4">{{$t('commons.weeks[3]')}}</el-checkbox>
+                <el-checkbox :label="5">{{$t('commons.weeks[4]')}}</el-checkbox>
+                <el-checkbox :label="6">{{$t('commons.weeks[5]')}}</el-checkbox>
+                <el-checkbox :label="7">{{$t('commons.weeks[6]')}}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-row>

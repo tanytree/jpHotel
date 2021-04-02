@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-07 16:34:17
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-29 16:47:06
+ * @LastEditTime: 2021-04-02 15:27:13
  * @FilePath: \jiudian\src\assets\languages\manager\zh.js
  */
 
@@ -413,6 +413,7 @@ module.exports = {
   ps_startDate: '开始日期',
   ps_endDate: '结束日期',
   ps_selectWeek: '选择星期',
+  ps_selectWeekA: '选择星期',
   ps_discount: '折扣率',
   ps_upword: '向上取整',
   ps_down: '向下取整',

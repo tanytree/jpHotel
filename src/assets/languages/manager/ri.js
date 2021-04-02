@@ -346,6 +346,7 @@ module.exports = {
   ps_startDate: '開始日',
   ps_endDate: '終了日',
   ps_selectWeek: '曜日設定',
+  ps_selectWeekA: '選択',
   ps_discount: '割引率',
   ps_upword: '切り捨て',
   ps_down: '切り上げ',
