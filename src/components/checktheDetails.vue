@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-02-19 10:37:51
+ * @LastEditTime: 2021-04-02 09:51:28
  * @FilePath: \jiudian\src\components\checktheDetails.vue
  -->
 <template>
@@ -667,8 +667,8 @@ export default {
                         serviceRooms.forEach(dirtyRoom => {
                             serviceRoomsArray.push(dirtyRoom.houseNum);
                         })
-                        this.checkInRoomTip = `脏房/维修房提醒，${dirtyRoomsArray.length > 0 ? (dirtyRoomsString.join('、') + '为脏房，') : ''}
-                        ${serviceRoomsArray.length > 0 ? (serviceRoomsArray.join('、') + '为维修房，') : ''} 是否继续办理入住`;
+                        this.checkInRoomTip = `清掃中/故障部屋状態のご確認，${dirtyRoomsArray.length > 0 ? (dirtyRoomsString.join('、') + 'は掃除中です，') : ''}
+                        ${serviceRoomsArray.length > 0 ? (serviceRoomsArray.join('、') + 'は故障部屋です，') : ''} このままC/I処理続きますか`;
                         this.checkInRoomTipVisible = true;
                     } else
                         callback();

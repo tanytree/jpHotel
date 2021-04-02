@@ -42,7 +42,7 @@
         </el-table>
       </div>
     </el-row>
-
+    <!-- 批量修改价格 -->
     <el-row v-if="!tab1_show">
       <el-row style="padding: 20px 0px;">
         <el-page-header @back="back_1" content></el-page-header>
@@ -50,6 +50,7 @@
       <el-row :gutter="20">
         <el-form :model="batchEditPriceForm" :rules="bathEditRules" ref="ruleForm" label-width="100px">
           <el-col :span="20">
+            <!-- 会员类型 -->
             <el-form-item :label="$t('desk.customer_memType')" prop="memberTypeId">
               <el-row style="display: flex;align-items: center;">
                 <el-checkbox-group v-model="batchEditPriceForm.memberTypeId" @change="handleMemberChange">
@@ -58,10 +59,25 @@
               </el-row>
             </el-form-item>
           </el-col>
-
           <el-col :span="20">
+            <!-- 选择时间 -->
             <el-form-item :label="$t('manager.grsl_selectTime')" prop="time">
               <el-date-picker v-model="batchEditPriceForm.time" type="daterange" align="right" value-format="yyyy-MM-dd" :picker-options="expireTimeOption" unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="20">
+            <!-- 星期 -->
+            <el-form-item label="选择星期">
+              <el-radio-group v-model="batchEditPriceForm.weeks">
+                <el-radio label="0">全选</el-radio>
+                <el-radio label="1">周一</el-radio>
+                <el-radio label="2">周二</el-radio>
+                <el-radio label="3">周三</el-radio>
+                <el-radio label="4">周四</el-radio>
+                <el-radio label="5">周五</el-radio>
+                <el-radio label="6">周六</el-radio>
+                <el-radio label="7">周日</el-radio>
+              </el-radio-group>
             </el-form-item>
           </el-col>
         </el-form>
@@ -82,7 +98,6 @@
             </el-row>
           </template>
         </el-table-column>
-
         <!-- 这是输入的住宿价,目的是为了会员享有一定的优惠,这里只展示一人住宿价 -->
         <el-table-column prop="name" :label="$t('manager.grsl_newLivePriA')">
           <template slot-scope="{row}">
@@ -192,7 +207,7 @@ export default {
         // channel: "线下",
         startTime: "",
         endTime: "",
-        weeks: [],
+        weeks: "0", //选择星期
         roomStrategyJson: [],
       },
       ruleForm: {
@@ -387,8 +402,33 @@ export default {
       params.endTime = this.batchEditPriceForm.time[1];
       params.memberTypeId = this.checkbox_value_pie;
       params.channel = "线下";
-
-      params.weeks = "1,2,3,4,5,6,7";
+      switch (this.batchEditPriceForm.weeks) {
+        case "0":
+          params.weeks = "1,2,3,4,5,6,7";
+          break;
+        case "1":
+          params.weeks = "1";
+          break;
+        case "2":
+          params.weeks = "2";
+          break;
+        case "3":
+          params.weeks = "3";
+          break;
+        case "4":
+          params.weeks = "4";
+          break;
+        case "5":
+          params.weeks = "5";
+          break;
+        case "6":
+          params.weeks = "6";
+          break;
+           case "7":
+          params.weeks = "7";
+          break;
+      }
+      // params.weeks = "1,2,3,4,5,6,7";
 
       let obj = {};
       let arr = [];
@@ -514,9 +554,8 @@ export default {
               item.topIndex = topIndex;
             });
             this.memberTypeList[topIndex] = array;
-           
           });
-     
+
           this.$forceUpdate();
         }
       );
@@ -577,7 +616,6 @@ export default {
             }
             this.allRoomTypeList.push(obj);
           });
-
         }
       );
     },
@@ -586,7 +624,7 @@ export default {
       switch (type) {
         case "adjust":
           this.tab1_show = false;
-         
+
           this.selectedRoomtype = this.memberTypeList;
           this.get_hotel_room_type_list();
           break;

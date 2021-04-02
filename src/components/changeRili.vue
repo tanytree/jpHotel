@@ -55,13 +55,21 @@
           <el-form-item :label="$t('manager.grsl_selectTime')+':'" prop="time">
             <el-date-picker v-model="ruleForm_Pie.time" type="daterange" align="right" value-format="yyyy-MM-dd" unlink-panels :range-separator="$t('boss.report_toText')" :start-placeholder="$t('manager.ps_startDate')" :end-placeholder="$t('manager.ps_endDate')"></el-date-picker>
           </el-form-item>
-          <!-- <el-col :span="20">
-						<el-form-item :label="$t('manager.ps_selectWeek')+':'">
-							<el-checkbox-group v-model="ruleForm_Pie.weeks" @change="handleWeekDayChange">
-								<el-checkbox v-for="(item, index) in weekDays" :label="item.value" :key="index">{{item.label}}</el-checkbox>
-							</el-checkbox-group>
-						</el-form-item>
-					</el-col> -->
+          <el-row>
+            <!-- 星期 -->
+            <el-form-item label="选择星期">
+              <el-radio-group v-model="ruleForm_Pie.weeks">
+                <el-radio label="0">全选</el-radio>
+                <el-radio label="1">周一</el-radio>
+                <el-radio label="2">周二</el-radio>
+                <el-radio label="3">周三</el-radio>
+                <el-radio label="4">周四</el-radio>
+                <el-radio label="5">周五</el-radio>
+                <el-radio label="6">周六</el-radio>
+                <el-radio label="7">周日</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-row>
         </el-form>
       </div>
       <el-table :data="ruleForm_Pie.roomStrategyJson" header-row-class-name="default">
@@ -78,39 +86,39 @@
         </el-table-column>
         <el-table-column :label="$t('manager.hk_livePrice')" v-if="ruleForm.roomType == 1">
           <template slot-scope="scope">
-           <div>
+            <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">{{value.customPrice}}</div>
-           </div>
+            </div>
           </template>
         </el-table-column>
         <el-table-column prop="customPrice" :label="$t('manager.hk_doorPriceA')" v-else>
           <template slot-scope="scope">
-           <div>
+            <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
-              <div style="padding: 10px 0px;">{{value.marketPrice}}</div>
+                <div style="padding: 10px 0px;">{{value.marketPrice}}</div>
+              </div>
             </div>
-           </div>
           </template>
         </el-table-column>
 
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_resetPrice')" width="250" v-if="ruleForm.roomType == 1">
           <template slot-scope="scope">
-           <div>
+            <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
-              <el-input v-model="value.newCustomPrice"></el-input>
+                <el-input v-model="value.newCustomPrice"></el-input>
+              </div>
             </div>
-           </div>
           </template>
         </el-table-column>
         <el-table-column prop="newCustomPrice" :label="$t('manager.add_newDoorPriA')" width="250" v-else>
           <template slot-scope="scope">
-           <div>
+            <div>
               <div v-for="(value, index) in roomStrategyJson_p" :key="index">
-              <div style="padding: 10px 0px;">
-                <el-input v-model="value.newCustomPrice"></el-input>
+                <div style="padding: 10px 0px;">
+                  <el-input v-model="value.newCustomPrice"></el-input>
+                </div>
               </div>
             </div>
-           </div>
           </template>
         </el-table-column>
 
@@ -232,7 +240,7 @@ export default {
 
       ruleForm_Pie: {
         time: [],
-        weeks: [],
+        weeks: "0",
         roomStrategyJson: [],
       },
       roomStrategyJson_p: [],
@@ -483,9 +491,34 @@ export default {
         priceCalend: this.ruleForm.roomType == 1 ? "3" : "4",
         startTime: this.ruleForm_Pie.time[0],
         endTime: this.ruleForm_Pie.time[1],
-        weeks: "1,2,3,4,5,6,7",
         strategyJson: JSON.stringify(this.roomStrategyJson_p),
       };
+      switch (this.ruleForm_Pie.weeks) {
+        case "0":
+          params.weeks = "1,2,3,4,5,6,7";
+          break;
+        case "1":
+          params.weeks = "1";
+          break;
+        case "2":
+          params.weeks = "2";
+          break;
+        case "3":
+          params.weeks = "3";
+          break;
+        case "4":
+          params.weeks = "4";
+          break;
+        case "5":
+          params.weeks = "5";
+          break;
+        case "6":
+          params.weeks = "6";
+          break;
+        case "7":
+          params.weeks = "7";
+          break;
+      }
       this.$F.doRequest(
         this,
         "/pms/hotel/hotel_price_roomtype_strategy_save",
