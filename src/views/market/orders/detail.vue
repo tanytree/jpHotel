@@ -332,6 +332,7 @@ export default {
       this.resetDom();
       this.$forceUpdate();
       console.log(v)
+      console.log(item)
       localStorage.setItem('roomType',v)
       if(v == 'customer'){
           this.getSingleDetail(item.roomId);

@@ -677,15 +677,15 @@ export default {
 
     created() {
         this.roomType = localStorage.getItem('roomType')
-        console.log(this.roomType)
+        // console.log(this.roomType)
         this.checkInId = this.$route.query.id;
         //监听单价和数量
         this.$watch('unitPrice', (value) => {
-            console.log(value)
+            // console.log(value)
             this.getDamagePrice();
         });
         this.$watch('taxCount', (value) => {
-            console.log(value)
+            // console.log(value)
             this.getDamagePrice();
         });
         this.hoteldamagetype_list()
@@ -994,11 +994,11 @@ export default {
                 // }
                 let priceTypeList = this.priceTypeList
                 if(priceTypeList.indexOf(priceType) > -1){
-                    console.log('消费类')
+                    // console.log('消费类')
                     params.payPrice = ''
                     params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrices)
                 }else{
-                    console.log('付款类')
+                    // console.log('付款类')
                     params.consumePrice = ''
                     params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.consumePrices)
                 }
