@@ -69,7 +69,7 @@
             <!-- 星期 -->
             <el-form-item :label="$t('manager.ps_selectWeekA')">
               <el-checkbox v-model="checkAll" @change="handleCheckAllChange">All</el-checkbox>
-              <el-checkbox-group v-model="batchEditPriceForm.weeks">
+              <el-checkbox-group v-model="batchEditPriceForm.weeks" @change='checkboxChange'>
                 <el-checkbox :label="1" >{{$t('commons.weeks[0]')}}</el-checkbox>
                 <el-checkbox :label="2" >{{$t('commons.weeks[1]')}}</el-checkbox>
                 <el-checkbox :label="3" >{{$t('commons.weeks[2]')}}</el-checkbox>
@@ -292,6 +292,13 @@ export default {
     this.star_time = this.ruleForm.date;
   },
   methods: {
+    checkboxChange(){
+      if(this.batchEditPriceForm.weeks.length<7){
+        this.checkAll= false;
+      }else{
+        this.checkAll = true;
+      }
+    },
       handleCheckAllChange(val) {
        this.batchEditPriceForm.weeks = val ? [1,2,3,4,5,6,7] : [];
       },
