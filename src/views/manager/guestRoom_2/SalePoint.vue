@@ -69,15 +69,11 @@
         <el-button class="submit" size="small" @click="popup('add')">{{$t('commons.newAdd')}}</el-button>
       </div>
       <el-table ref="multipleTable" :data="salePoint" height="100%" style="min-height: 250px" header-row-class-name="default" size="small">
-        <el-table-column :prop="$i18n.locale != 'ri'?'name':'jname'" :label="$t('manager.grsl_salePointName')"></el-table-column>
-        <!--<el-table-column :label="$t('manager.grsl_allowedToRoom')">
-                    <template slot-scope="scope">{{scope.row.allowRoom == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
-                    </template>
-                </el-table-column>
-                <el-table-column :label="$t('manager.grsl_allowerToUnit')">
-                    <template slot-scope="scope">{{scope.row.allowEnter == 1 ? $t('manager.hk_yes') : $t('manager.hk_no')}}
-                    </template>
-                </el-table-column>-->
+        <el-table-column  :label="$t('manager.grsl_salePointName')">
+          <template slot-scope="{row}">
+              <div>{{row.jname?row.jname:row.name}}</div>
+          </template>
+        </el-table-column>
         <el-table-column :label="$t('boss.loginDetail_state')">
           <template slot-scope="scope">{{scope.row.state == 1 ? $t('manager.grsl_toEnble') : $t("desk.customer_disableIng")}}
           </template>
