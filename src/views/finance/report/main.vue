@@ -1,6 +1,7 @@
 <template>
   <div class="boss-index">
-     <div style="margin-bottom: 20px" v-if="shopNo==number">
+     <!-- 总部报表 -->
+     <!-- <div style="margin-bottom: 20px" v-if="shopNo==number">
       <div class="diaryTable">{{$t('desk.book_HQtable')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -13,8 +14,9 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+    </div> -->
+    <!-- 估价单 请款单 消费明细 收据 -->
+    <!-- <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
       <div class="diaryTable">
         {{ $t("boss.report_valueBill") }}
         {{ $t("boss.report_pleaseInvoice") }} {{ $t("boss.report_constDetail") }} {{ $t("boss.report_receipt") }}
@@ -30,8 +32,9 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+    </div> -->
+    <!-- 预约相关表 -->
+    <div style="margin-bottom: 20px" >
       <div class="diaryTable">{{$t('boss.report_reservation')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -45,7 +48,8 @@
         </div>
       </div>
     </div>
-    <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
+    <!-- 前台报表 -->
+    <!-- <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
       <div class="diaryTable">{{$t('boss.report_deskForm')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -58,7 +62,8 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
+    <!-- 日计表 -->
     <div style="margin-bottom: 20px" >
       <div class="diaryTable">{{$t('boss.report_dailyAccount')}}</div>
       <el-divider></el-divider>
@@ -73,6 +78,7 @@
         </div>
       </div>
     </div>
+    <!-- 月度报表 -->
     <div style="margin-bottom: 20px" >
       <div class="diaryTable">{{$t('boss.report_monthReport')}}</div>
       <el-divider></el-divider>
@@ -144,11 +150,11 @@ export default {
             reportType: 38,
             reportNum: 1007,
           },
-          {
-            title: this.$t("boss.report_teamForm"),
-            reportType: 42,
-            reportNum: 1007,
-          },
+          // {
+          //   title: this.$t("boss.report_teamForm"),
+          //   reportType: 42,
+          //   reportNum: 1007,
+          // },
         ],
         [
           {
@@ -156,35 +162,35 @@ export default {
             reportType: 35,
             reportNum: 1007,
           },
-          {
-            title: this.$t("boss.report_bookSureBook"),
-            reportType: 39,
-            reportNum: 1007,
-          },
+          // {
+          //   title: this.$t("boss.report_bookSureBook"),
+          //   reportType: 39,
+          //   reportNum: 1007,
+          // },
         ],
-        [
-          {
-            title: this.$t("boss.report_threeMonth"),
-            reportType: 36,
-            reportNum: 1007,
-          },
-          {
-            title: this.$t("boss.report_bookCard"),
-            reportType: 40,
-            reportNum: 1007,
-          },
-        ],
+        // [
+        //   {
+        //     title: this.$t("boss.report_threeMonth"),
+        //     reportType: 36,
+        //     reportNum: 1007,
+        //   },
+        //   {
+        //     title: this.$t("boss.report_bookCard"),
+        //     reportType: 40,
+        //     reportNum: 1007,
+        //   },
+        // ],
         [
           {
             title: this.$t("boss.report_individual"),
             reportType: 37,
             reportNum: 1007,
           },
-          {
-            title: this.$t("boss.report_liveCard"),
-            reportType: 41,
-            reportNum: 1007,
-          },
+          // {
+          //   title: this.$t("boss.report_liveCard"),
+          //   reportType: 41,
+          //   reportNum: 1007,
+          // },
         ],
       ];
     },
@@ -235,14 +241,19 @@ export default {
             reportType: 1,
             reportNum: 1001,
           },
-          {
-            title: this.$t("boss.report_saleLook"),
-            reportType: 5,
-            reportNum: 1001,
-          },
+          // {
+          //   title: this.$t("boss.report_saleLook"),
+          //   reportType: 5,
+          //   reportNum: 1001,
+          // },
           {
             title: this.$t("boss.report_constDetailSure"),
             reportType: 7,
+            reportNum: 1001,
+          },
+          {
+            title: this.$t('boss.report_goodAserve'),
+            reportType: 5,
             reportNum: 1001,
           },
         ],
@@ -281,11 +292,11 @@ export default {
             reportType: 4,
             reportNum: 1001,
           },
-          {
-            title: this.$t("boss.report_confirmation"),
-            reportType: 8,
-            reportNum: 1001,
-          },
+          // {
+          //   title: this.$t("boss.report_confirmation"),
+          //   reportType: 8,
+          //   reportNum: 1001,
+          // },
         ],
       ];
     },
@@ -373,6 +384,7 @@ export default {
   },
   created() {
     console.log(this.shopNo);
+    console.log(this.sourcePage);
   },
   methods: {
     addReport(item) {

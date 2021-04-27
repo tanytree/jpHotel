@@ -294,6 +294,7 @@ module.exports = {
   add_editorEmploy: 'アカウント編集',
   add_deleteEmploy: 'アカウント削除',
   compensation_selectStateA: '選択してください。',
+  report_goodAserve: '商品別・付帯別売上一覧（日次）',
 
 
 
