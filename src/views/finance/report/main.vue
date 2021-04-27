@@ -253,7 +253,7 @@ export default {
           },
           {
             title: this.$t('boss.report_goodAserve'),
-            reportType: 5,
+            reportType: 43,
             reportNum: 1001,
           },
         ],
