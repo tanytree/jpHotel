@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2021-01-13 15:16:06
+ * @LastEditTime: 2021-04-28 18:12:30
  * @FilePath: \jiudian\src\store\modules\taozi.js
  */
 
@@ -37,6 +37,7 @@ const actions = {
 
 };
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,
