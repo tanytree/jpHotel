@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 11:46:50
+ * @LastEditTime: 2021-04-28 18:50:31
  * @FilePath: \jiudian\src\views\market\customer\children\detail.vue
  -->
 <template>
@@ -723,8 +723,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      resetMemberTab: "resetMemberTab",
-      resetActive: "resetActive",
+      resetMemberTab: "taozi/resetMemberTab",
+      resetActive: "taozi/resetActive",
     }),
        checkIdCardType(idCardType) {
       let obj = this.$t('commons.idCardType');

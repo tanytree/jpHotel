@@ -237,7 +237,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      resetActive: "resetActive",
+      resetActive: "taozi/resetActive",
     }),
     checkinPersonList(row) {
       console.log(row);

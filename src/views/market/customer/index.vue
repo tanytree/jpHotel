@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:01:35
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-18 11:50:17
+ * @LastEditTime: 2021-04-28 18:50:18
  * @FilePath: \jiudian\src\views\market\customer\index.vue
  -->
 
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      resetActive:'resetActive',
+      resetActive:'taozi/resetActive',
     }),
     //二级tab切片
     handleClick(tab, event) {

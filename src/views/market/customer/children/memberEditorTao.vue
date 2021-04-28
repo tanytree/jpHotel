@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-20 11:45:44
+ * @LastEditTime: 2021-04-28 18:50:09
  * @FilePath: \jiudian\src\views\market\customer\children\memberEditorTao.vue
  -->
 <template>
@@ -755,8 +755,8 @@ export default {
 
   methods: {
     ...mapMutations({
-      resetMemberTab: "resetMemberTab",
-      resetActive: "resetActive",
+      resetMemberTab: "taozi/resetMemberTab",
+      resetActive: "taozi/resetActive",
     }),
     checktype(type){
       for(let i in this.$t('commons.paymentMethod')){

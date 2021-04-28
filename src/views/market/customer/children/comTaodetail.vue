@@ -233,7 +233,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      resetActive: "resetActive",
+      resetActive: "taozi/resetActive",
     }),
     danweiClick() {
       this.resetActive("company");

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-03-10 13:58:24
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-13 15:19:20
+ * @LastEditTime: 2021-04-28 18:48:19
  * @FilePath: \jiudian\src\views\sale\order\index.vue
  -->
 <template>
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
       ...mapMutations({
-      resetMemberTab:'resetMemberTab',
+      resetMemberTab:'taozi/resetMemberTab',
     }),
     //二级tab切片
     handleClick() {

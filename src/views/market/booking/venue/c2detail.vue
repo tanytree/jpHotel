@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-09-14 10:55:10
  * @Author: 陶子
- * @LastEditTime: 2020-11-04 17:15:32
+ * @LastEditTime: 2021-04-28 18:49:02
  * @FilePath: \jiudian\src\views\market\booking\venue\c2detail.vue
 -->
 <template>
@@ -374,8 +374,8 @@ export default {
 
     methods: {
         ...mapMutations({
-            resetBookingName: "resetBookingName",
-            resetBookSub: "resetBookSub",
+            resetBookingName: "taozi/resetBookingName",
+            resetBookSub: "taozi/resetBookSub",
         }),
         getOrderDetail(params = {}) {
             this.$F.merge(params, {
