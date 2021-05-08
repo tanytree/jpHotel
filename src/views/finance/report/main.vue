@@ -248,7 +248,8 @@ export default {
           // },
           {
             title: this.$t("boss.report_constDetailSure"),
-            reportType: 7,
+            // reportType: 7,
+            reportType: 9,
             reportNum: 1001,
           },
           {
@@ -265,7 +266,7 @@ export default {
           },
           {
             title: this.$t("boss.report_notGet"),
-            reportType: 4,
+            reportType: 6,
             reportNum: 1001,
           },
           {
@@ -277,12 +278,12 @@ export default {
         [
           {
             title: this.$t("boss.report_freshType"),
-            reportType: 1,
+            reportType: 3,
             reportNum: 1001,
           },
           {
             title: this.$t("boss.report_accountBalance"),
-            reportType: 4,
+            reportType: 7,
             reportNum: 1001,
           },
         ],
