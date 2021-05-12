@@ -1,7 +1,7 @@
 <template>
   <div class="boss-index">
-     <!-- 总部报表 -->
-     <!-- <div style="margin-bottom: 20px" v-if="shopNo==number">
+    <!-- 总部报表 -->
+    <!-- <div style="margin-bottom: 20px" v-if="shopNo==number">
       <div class="diaryTable">{{$t('desk.book_HQtable')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -15,6 +15,21 @@
         </div>
       </div>
     </div> -->
+    <!-- 总部销售日报 -->
+    <div style="margin-bottom: 20px" v-if="shopNo==number">
+      <div class="diaryTable">总部销售日报</div>
+      <el-divider></el-divider>
+      <div class="reportHome">
+        <div class="listBox">
+          <ul v-for="(item, index) in headSealList" :key="index">
+            <li v-for="(each, i) in item" :key="index + '_' + i" @click="addReport(each)">
+              <img src="../../../assets/images/star.png" alt width="20" />
+              <span>{{ each.title }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <!-- 估价单 请款单 消费明细 收据 -->
     <!-- <div style="margin-bottom: 20px" v-if="sourcePage == 'desk'">
       <div class="diaryTable">
@@ -34,7 +49,7 @@
       </div>
     </div> -->
     <!-- 预约相关表 -->
-    <div style="margin-bottom: 20px" >
+    <div style="margin-bottom: 20px">
       <div class="diaryTable">{{$t('boss.report_reservation')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -64,7 +79,7 @@
       </div>
     </div> -->
     <!-- 日计表 -->
-    <div style="margin-bottom: 20px" >
+    <div style="margin-bottom: 20px">
       <div class="diaryTable">{{$t('boss.report_dailyAccount')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -79,7 +94,7 @@
       </div>
     </div>
     <!-- 月度报表 -->
-    <div style="margin-bottom: 20px" >
+    <div style="margin-bottom: 20px">
       <div class="diaryTable">{{$t('boss.report_monthReport')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -93,13 +108,11 @@
         </div>
       </div>
     </div>
-   
+
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-
 export default {
   props: ["sourcePage", "shopNo"],
   computed: {
@@ -253,7 +266,7 @@ export default {
             reportNum: 1001,
           },
           {
-            title: this.$t('boss.report_goodAserve'),
+            title: this.$t("boss.report_goodAserve"),
             reportType: 43,
             reportNum: 1001,
           },
@@ -372,6 +385,18 @@ export default {
             title: this.$t("desk.book_HQsale"),
             reportType: 24,
             reportNum: 1004,
+          },
+        ],
+      ];
+    },
+     //总部销售日报
+    headSealList() {
+      return [
+        [
+          {
+            title: '总部销售日报表',
+            reportType: 44,
+            reportNum: 1001,
           },
         ],
       ];
