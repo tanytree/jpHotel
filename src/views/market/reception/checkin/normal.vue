@@ -346,7 +346,7 @@
             <div class="wrap">
                 <el-button type="white" @click="handleCenter('cancel')" v-if="this.storesNum">{{$t('commons.cancel')}}</el-button>
                 <el-button type="primary" class="submit" @click="handleCenter('centerReserve')" v-if="this.storesNum">{{$t('desk.book_bookText')}}</el-button>
-                <el-button type="primary" class="submit" @click="openPrintDialog" v-if="!this.storesNum" v-loading="loading">印刷</el-button>
+                <el-button type="primary" class="submit" @click="openPrintDialog" v-if="!this.storesNum" v-loading="loading">{{$t('commons.print')}}</el-button>
                 <el-button type="primary" class="submit" @click="hotel_check_in(2)" v-if="!this.storesNum" v-loading="loading">{{ $t("commons.save") }}</el-button>
                 <!--                <el-button class="white" @click="hotel_check_in(3)" v-if="!this.storesNum">{{ $t("frontOffice.saveGoon") }}</el-button>-->
             </div>
@@ -367,7 +367,7 @@
         <!--        排房组件 -->
         <rowHouse  @rowHouseCallback="rowHouseCallback" ref="rowHouse" @db_row_houses="db_row_houses" @rowRoomCurrentListItemAdd="rowRoomCurrentListItemAdd"></rowHouse>
         <!-- 打印客户资讯 组件 -->
-        <customerInfo  ref="customerInfo"/>
+        <customerInfo  ref="customerInfo" :checkInForm="checkInForm"/>
 
     </div>
 </template>
@@ -782,7 +782,9 @@ export default {
         },
 
         openPrintDialog(){
-            this.$refs.customerInfo.openDialog();
+            // let params = this.$F.deepClone(this.checkInForm);
+            // this.makeRoomArr(params, true);
+            this.$refs.customerInfo.openDialog({});
         },
         //中央预定取消和预定操作
         handleCenter(type) {
@@ -1075,27 +1077,34 @@ export default {
                         }
                     } else {
                         params.checkInRoomJson = [];
-                        this.waitingRoom.forEach((item) => {
-                            let temp = {
-                                roomTypeId: item.roomTypeId,
-                                reservePrice: item.onePersonPrice || item.reservePrice,
-                                realPrice: item.realPrice || item.onePersonPrice,
-                            };
-                            if (item.roomsArr && item.roomsArr.length > 0) {
-                                let array = [];
-                                item.roomsArr.forEach((room) => {
-                                    array.push(room.roomId);
-                                });
-                                temp.roomId = array.join(",");
-                            }
-                            params.checkInRoomJson.push(temp);
-                        });
+                        this.makeRoomArr(params);
                     }
                     ajax();
                 } else {
                     console.log("error submit!!");
                     return false;
                 }
+            });
+        },
+
+        makeRoomArr(params, houseNumsFlag) {
+            this.waitingRoom.forEach((item) => {
+                let temp = {
+                    roomTypeId: item.roomTypeId,
+                    reservePrice: item.onePersonPrice || item.reservePrice,
+                    realPrice: item.realPrice || item.onePersonPrice,
+                };
+                if (item.roomsArr && item.roomsArr.length > 0) {
+                    let array = [], array2 = [];
+                    item.roomsArr.forEach((room) => {
+                        array.push(room.roomId);
+                        array2.push(room.houseNum);
+                    });
+                    temp.roomId = array.join(",");
+                    if (houseNumsFlag)
+                        temp.houseNums = array2.join(",");
+                }
+                params.checkInRoomJson.push(temp);
             });
         },
 

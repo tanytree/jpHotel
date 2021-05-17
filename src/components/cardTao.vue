@@ -67,7 +67,6 @@ export default {
     data() {
         return {
             paymentVisible: false,
-            paymentForm: {},
             hotelenterList: [], //挂账企业列表
             paymentForm: {
                 payPrice: "", //挂账金额

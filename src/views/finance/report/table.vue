@@ -303,17 +303,20 @@ export default {
               return item.reportNum == this.searchForm.reportNum;
             });
             this.currentReport = array[0];
-            this.showReport(array[0].reportHttpUrl);
+            this.showReport(array[0]);
           }
           this.exportPrintShow = true;
         }
       );
     },
-    showReport(url) {
+    showReport(item) {
       // var url = "https://pms-api-dev.sgi-smacha.tokyo/report/fs/20201202123355.xlsx" //放在public目录下的文件可以直接访问
       //               https://pms-api-dev.sgi-smacha.tokyo/report/fs/1001/20201203/%E6%97%A5%E8%A8%88%E8%A1%A8201203.xlsx
       //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
-      axios
+        var reportHttpUrl = item.reportHttpUrl;
+        var reportLocalUrl = item.reportLocalUrl;
+        let url = "/pms-server/pms/system/download?platSource=1005&fileName=" + reportLocalUrl;
+        axios
         .get(url, { responseType: "arraybuffer" })
         .then((res) => {
           var data = new Uint8Array(res.data);

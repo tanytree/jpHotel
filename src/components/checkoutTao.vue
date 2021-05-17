@@ -10,7 +10,7 @@
   <div>
 
 
-    <el-dialog top="0" width="65%" :title="$t('desk.order_checkout')" :visible.sync="checkoutVisible" append-to-body>
+    <el-dialog top="0" width="75%" height="80%" :title="$t('desk.order_checkout')" :visible.sync="checkoutVisible" append-to-body>
 
     <div class="innerBoxTop">
       <span>{{$t('desk.home_roomType')}}：{{currentRoom.roomTypeName}} </span>
@@ -315,10 +315,9 @@ export default {
         "/pms/hotelservice/print_num",
         { typeStr: "SE" },
         (res) => {
-         this.$refs.expenseDetail.openDialog(res);
+            this.$refs.expenseDetail.openDialog(res, this.detailData, this.currentRoom);
         }
       );
-
     },
     resetVisibel() {
       this.checkoutVisible = true;
