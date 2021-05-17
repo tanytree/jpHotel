@@ -108,7 +108,21 @@
         </div>
       </div>
     </div>
-
+    <!-- 菜品准备 -->
+    <div style="margin-bottom: 20px">
+      <div class="diaryTable">菜品准备</div>
+      <el-divider></el-divider>
+      <div class="reportHome">
+        <div class="listBox">
+          <ul v-for="(item, index) in goodList" :key="index">
+            <li v-for="(each, i) in item" :key="index + '_' + i" @click="addReport(each)">
+              <img src="../../../assets/images/star.png" alt width="20" />
+              <span>{{ each.title }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -389,16 +403,49 @@ export default {
         ],
       ];
     },
-     //总部销售日报
+    //总部销售日报
     headSealList() {
       return [
         [
           {
-            title: '总部销售日报表',
+            title: "总部销售日报表",
             reportType: 44,
             reportNum: 1001,
           },
         ],
+      ];
+    },
+    //菜品准备
+    goodList() {
+      return [
+        [
+          {
+            title: "10日間料理通し",
+            reportType: 30,
+            reportNum: 1006,
+          },
+        ],
+        [
+          {
+            title: "料理通し（夕食）",
+            reportType: 31,
+            reportNum: 1006,
+          },
+        ],
+        [
+          {
+            title: "料理通し（朝食）",
+            reportType: 32,
+            reportNum: 1006,
+          },
+        ],
+        [
+          {
+            title: "料金通し（日替わり）",
+            reportType: 33,
+            reportNum: 1006,
+          },
+        ]
       ];
     },
   },
@@ -445,7 +492,7 @@ export default {
     flex: 1;
     overflow: auto;
     display: flex;
-
+    font-size: 15px;
     ul {
       display: flex;
       flex-direction: column;
@@ -458,7 +505,7 @@ export default {
       }
 
       li {
-        line-height: 40px;
+        line-height: 30px;
         display: flex;
         align-items: center;
         cursor: pointer;

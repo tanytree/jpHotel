@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-08-27 13:25:04
  * @Author: 陶子
- * @LastEditTime: 2021-01-14 16:51:42
+ * @LastEditTime: 2021-05-17 13:36:26
  * @FilePath: \jiudian\src\views\finance\report\table.vue
 -->
 <template>
@@ -16,7 +16,7 @@
       <el-card class="box-card2" :body-style="{ height: 'min: 600px' }">
         <el-form ref="searchForm" :model="searchForm" inline>
           <!-- 日计表-->
-          <el-form-item :label="$t('boss.report_businessHours')+':'" v-if="searchForm.reportNum == '1001'">
+          <el-form-item :label="$t('boss.report_businessHours')+':'" v-if="searchForm.reportNum == '1001'||reportType == '31'||reportType == '32'||reportType == '33'">
             <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('boss.report_businessHours')"></el-date-picker>
           </el-form-item>
           <!-- 月报账表-->
@@ -29,7 +29,8 @@
               reportType == '12' ||
               reportType == '37' ||
               reportType == '38'||
-              reportType == '24'
+              reportType == '24' ||
+              reportType == '30'
             ">
             <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('manager.hp_startTime')"></el-date-picker>
             <span style="margin: 0 5px">-</span>
@@ -365,7 +366,6 @@ export default {
 <style lang='less' scoped>
 .box-card {
   width: 100%;
-
 }
 
 .el-card .el-card__body {
