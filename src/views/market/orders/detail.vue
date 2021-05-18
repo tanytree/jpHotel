@@ -135,8 +135,7 @@
     <priviewDocuments ref="priviewDocuments" />
      <!-- 结账退房单据打印 -->
     <checkOutRoom ref="checkOutRoom"/>
-    <!-- 收款条打印 -->
-      <articleCollection ref="articleCollection"/>
+
   </div>
 </template>
 
@@ -148,7 +147,7 @@ import myMixin from "@/utils/filterMixin";
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
 import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import priviewDocuments from "@/components/table/priviewDocuments";
-import checkOutRoom from "@/components/table/checkOutRoom";      
+import checkOutRoom from "@/components/table/checkOutRoom";
 import articleCollection from "@/components/table/articleCollection";  //打印收款条组件
 
 
@@ -209,8 +208,8 @@ export default {
   methods: {
       openDialog(name){
        console.log('detail页面：'+name);
-      this.$refs.articleCollection.openDialog() 
-       
+      this.$refs.articleCollection.openDialog()
+
       },
       handleClick() {
           if (this.activeName == 'customer') {
@@ -283,28 +282,23 @@ export default {
                     }
                 }
             }
-
-
-
-
            this.resetDom();
            this.$forceUpdate();
-
-
-        }
-      );
-       console.log('detail：'+transferObj);
-      if(transferObj&&transferObj.checked){
-        console.log(transferObj);
-          switch (transferObj.type) {
-            case 'checkoutPartPay':   //部分结账
-               this.$refs.priviewDocuments.openDialog(transferObj);
-              break;
-            case "checkoutTao":
-              this.$refs.checkOutRoom.openDialog(transferObj);
-            break;
+          console.log('detail：'+transferObj);
+          if(transferObj&&transferObj.checked){
+              console.log(transferObj);
+              switch (transferObj.type) {
+                  case 'checkoutPartPay':   //部分结账
+                      this.$refs.priviewDocuments.openDialog(transferObj);
+                      break;
+                  case "checkoutTao":
+                      this.$refs.checkOutRoom.openDialog(this.detailData, this.currentRoom, transferObj);
+                      break;
+              }
           }
         }
+      );
+
     },
 
     F_salesId(v) {

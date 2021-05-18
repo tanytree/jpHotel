@@ -320,11 +320,6 @@
                    <!-- <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span> -->
                    <span class="margin-l-8">{{$t('desk.book_printDocumentsB')}}</span>
                 </div>
-
-
-                         <!--  <el-form-item label="打印单据：">
-                               <el-checkbox v-model="consumeOperForm.name"></el-checkbox>
-                           </el-form-item> -->
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="entryShow = false">{{ $t('commons.close') }}</el-button>
@@ -491,7 +486,8 @@
         <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!-- 附餐 -->
         <sideOrder ref='sideOrder' :tax="taxInfo" :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" @get_consume_order_list="consume_order_list"></sideOrder>
-     
+        <!-- 收款条打印 -->
+        <articleCollection ref="articleCollection" @initDetail="initDetail"/>
     </div>
 </template>
 
@@ -519,6 +515,7 @@ Date.prototype.Format = function (fmt) {
             );
     return fmt;
 };
+
 import {mapState,mapActions} from "vuex";
 import myMixin from '@/utils/filterMixin';
 import consumeGoods from './consumeGoods'
@@ -528,6 +525,8 @@ import invoicing from './invoicing'
 import sideOrder from './sideOrder'
 import cardTao from "@/components/cardTao";
 import checkoutTao from "@/components/checkoutTao";
+import articleCollection from "@/components/table/articleCollection";
+
 
 export default {
     mixins: [myMixin],
@@ -538,8 +537,8 @@ export default {
         invoicing,
         sideOrder,
         cardTao,
-        checkoutTao
-        
+        checkoutTao,
+        articleCollection
     },
     computed: {
         ...mapState({
@@ -923,32 +922,6 @@ export default {
                 }else{
                     params.reserveId = ''
                 }
-                // [{"projectName":"洗脚","projectCount":1,"price":33.3}]
-                // let reserve = []
-                // let obj = {}
-                // obj.projectName = this.reserveProjects.projectName
-                // obj.projectCount = this.reserveProjects.projectCount
-                // obj.price = this.reserveProjects.price
-                // reserve.push(obj)
-
-                // params.reserveProjects = reserve
-
-
-
-                // console.log(consumePrices)
-                // return
-
-                // console.log(tax)
-                // console.log(this.consumeOperForm.consumePrices)
-                // console.log(this.currentRoom.taxStatus)
-                // console.log(this.currentRoom.seviceStatus)
-                // console.log(this.consumeOperForm.priceType)
-
-
-
-
-
-
 
                 if (!params.priceType) {
                     this.$message.error(this.$t('desk.order_selectEntryItem'));
@@ -975,10 +948,7 @@ export default {
                         params.payType = 0
                     }
                 }
-                // 选择打印单据
-                if(this.isUseSeserve){
-                 this.$emit('openDialog', 'taozi');
-                }
+
             }
             //挂账
             if (type == 2) {
@@ -1047,14 +1017,21 @@ export default {
                             payType: '',
                             name: ''
                         }
-                        this.consume_order_list()
-                        this.getOrderDetail()
+                        // 选择打印单据
+                        if(this.isUseSeserve){
+                            this.$refs.articleCollection.openDialog(this.detailData, this.currentRoom, params);
+                        }
                     })
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
+        },
+
+        initDetail() {
+            this.consume_order_list()
+            this.getOrderDetail();
         },
 
         //判断数组中的值是否相同

@@ -22,6 +22,7 @@ module.exports = {
         port: 8008,
         proxy: {
             '/system': {
+                // target: 'http://localhost:8887/',
                 target: 'http://39.104.116.153:8887/',
                 // target: 'https://pms-api-dev.sgi-smacha.tokyo/',
                 ws: true,

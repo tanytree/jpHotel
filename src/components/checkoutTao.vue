@@ -451,15 +451,11 @@ export default {
         remark: checkoutForm.remark,
         state: 2
       };
-
       // if(localStorage.getItem('roomType') == 'customer'){
       //     params.state = 2
       // }else{
       //     params.state = 1
       // }
-
-
-
       if (checkoutForm.putUp) {
         params.putUp = checkoutForm.putUp;
       }
@@ -482,19 +478,17 @@ export default {
             params.priceType = 4
         }
       console.log(params);
-
-
-      // return
-
-      this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-        console.log(res);
+      // this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+      //   console.log(res);
+      //
+      // });
         let transferObj ={
-          checked:this.checkoutForm.checked,
-          orderId:res.orderId,
-          type:'checkoutTao'   //退房结账
+            checked:this.checkoutForm.checked,
+            // orderId: res.orderId,
+            consumeSum: this.numFormate(this.getPriceStr(this.getRealPayFee.sum - this.detailData.payPrice  - this.checkoutForm.preferentialPrice)),
+            type:'checkoutTao'   //退房结账
         }
         this.set_out_check_in(transferObj);
-      });
     },
 
     set_out_check_in(transferObj) {
@@ -540,21 +534,10 @@ export default {
       //    params.billType = 4
       // }
       console.log(params);
-      // return
-
       this.$F.doRequest(this, "/pms/checkin/out_check_in", params, (res) => {
-        console.log(res);
+          this.$emit("getOrderDetail", transferObj);
       });
-       this.$F.doRequest(
-        this,
-        "/pms/hotelservice/print_num",
-        { typeStr: "ME" },
-        (res) => {
-          transferObj.checkOutRoomNum = res;
-          console.log('checkOutTao：'+transferObj);
-           this.$emit("getOrderDetail",transferObj);
-        }
-      );
+
     },
     //判断数组中的值是否相同
     isArrSame(array, state) {

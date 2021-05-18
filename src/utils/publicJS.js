@@ -6,8 +6,8 @@ import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
 const uploadUrl = 'http://39.104.116.153:8887'
-// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
-// const uploadUrl = 'http://47.74.52.246:8887/'
+//const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
+// const uploadUrl = 'http://localhost:8887/'
 var tabsName = {}
 const languageObject = {
     'ri': '日本语',
@@ -17,6 +17,23 @@ const HQCODE = '0000000000'  //总部账号定义
 const platSource = 1005;
 var NATIONALITYLIST = []  //国籍列表
 const $F = {
+
+    getAccountName() {
+        return JSON.parse(sessionStorage.userData).user.account;
+    },
+    findHotelInfo(callback) {
+        this.doRequest(this, "/pms/hotelservice/findone", {}, (res) => {
+            callback(res);
+        });
+    },
+    getCurrentDate() {
+        return this.formatDate("yyyy-MM-dd");
+    },
+    getPrintNum(typeStr, callback) {
+        this.doRequest(null, "/pms/hotelservice/print_num", { typeStr: typeStr }, (res) => {
+           callback(res);
+        });
+    },
     compareAsc(propertyName) {
         return function(object1, object2) {
             var value1 = object1[propertyName];

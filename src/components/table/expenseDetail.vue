@@ -26,15 +26,15 @@
           <div class="title_rightBox">
             <div> No.: {{ expenseDetailNum }}</div>
             <div>Rsv.: {{ detailData.checkIn.orderNum }}</div>
-            <div>Date: {{ getCurrentDate() }}</div>
-            <div>担当者: {{accountName}}</div>
+            <div>Date: {{ $F.getCurrentDate() }}</div>
+            <div>担当者: {{$F.getAccountName()}}</div>
           </div>
         </div>
         <!-- 下面是表格 -->
         <div class="firstTable">
           <div class="nameInfo">
             <div>お名前</div>
-            <div>Name 田中太朗様</div>
+            <div>Name {{ detailData.checkIn.name }}様</div>
           </div>
           <div class="firstBox">
             <table border="1">
@@ -74,9 +74,9 @@
               </tr>
             </table>
             <div class="rightOfTable">
-              <div>ホテル名：小圆客商大酒店</div>
-              <div>ホテル住所：安徽</div>
-              <div>ホテル電話：888888</div>
+                <div>ホテル名：{{ hotelData.name }}</div>
+                <div>ホテル住所：{{ hotelData.address }}</div>
+                <div>ホテル電話：{{ hotelData.phone }}</div>
             </div>
           </div>
         </div>
@@ -236,6 +236,8 @@ export default {
       currentRoom: {},
       consumeOrderList: [],
       taxList: [],
+        hotelData: {},
+        consumTaxPrice: 0
     };
   },
   mounted() {},
@@ -268,23 +270,15 @@ export default {
       return count;
     },
 
-    getCurrentDate() {
-      return this.$F.formatDate("yyyy-MM-dd");
-    },
-
-    findHotelInfo() {
-      this.$F.doRequest(this, "/pms/hotelservice/findone", {}, (res) => {
-        this.hotelData = res;
-        console.log(res);
-      });
-    },
     openDialog(expenseDetailNum, detailData, currentRoom) {
       console.log(JSON.parse(JSON.stringify(detailData)));
       console.log(JSON.parse(JSON.stringify(currentRoom)));
       this.detailData = detailData;
       this.currentRoom = currentRoom;
+        this.$F.findHotelInfo((res) => {
+            this.hotelData = res;
+        });
       this.consume_order_list(detailData.checkIn.id);
-      this.accountName = JSON.parse(sessionStorage.userData).user.account;
       this.expenseDetailNum = expenseDetailNum;
       this.printDialog = true;
     },
@@ -293,6 +287,7 @@ export default {
     },
 
     consume_order_list(checkInId) {
+        let a = this;
       this.$F.doRequest(
         this,
         "/pms/consume/consume_order_list",
@@ -309,7 +304,11 @@ export default {
             if ([6, 8, 14, 22].indexOf(element.priceType) != -1) {
               arr.push(element);
             }
+              if (element.consumTaxPrice) {
+                  a.consumTaxPrice += element.consumTaxPrice
+              }
           }
+
           this.consumeOrderList = arr;
 
           // 把预定项目搞进来
@@ -331,6 +330,11 @@ export default {
             }
           }
           this.taxList = arr;
+          this.taxList.push({
+              unitPrice: a.consumTaxPrice,
+              taxCount: 1,
+              priceType: 102
+          })
         }
       );
     },
