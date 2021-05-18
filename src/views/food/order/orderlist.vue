@@ -150,7 +150,8 @@
       <!-- {{detail}} -->
 
     </el-dialog>
-
+ <!-- 单据预览 -->
+    <priviewDocuments ref="priviewDocuments" />
   </div>
 </template>
 
@@ -159,10 +160,11 @@ import { mapState, mapActions } from "vuex";
 import detail from "./detail";
 import action from "./action";
 import mixin from "../mixin";
+import priviewDocuments from "@/components/table/priviewDocuments";
 export default {
   mixins: [mixin],
   props: ["categroyList", "tax"],
-  components: { action, detail },
+  components: { action, detail,priviewDocuments},
   computed: {
     ...mapState({
       token: (state) => state.user.token,
@@ -382,7 +384,10 @@ export default {
         })
         .catch(() => {});
     },
-    closeDialog() {
+    closeDialog(isOpen) {
+      if(isOpen){
+        this.$refs.priviewDocuments.openDialog()
+      }
       this.dialogShow = false;
       this.dialogShows = false;
       this.getDataList();

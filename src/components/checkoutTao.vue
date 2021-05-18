@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-12-28 10:31:06
  * @Author: 陶子
- * @LastEditTime: 2021-03-17 11:03:27
+ * @LastEditTime: 2021-05-18 13:51:37
  * @FilePath: \jiudian\src\components\checkoutTao.vue
 -->
   <!-- 结账退房dialog组件-->
@@ -545,14 +545,13 @@ export default {
       this.$F.doRequest(this, "/pms/checkin/out_check_in", params, (res) => {
         console.log(res);
       });
-      debugger
        this.$F.doRequest(
         this,
         "/pms/hotelservice/print_num",
         { typeStr: "ME" },
         (res) => {
-            debugger
           transferObj.checkOutRoomNum = res;
+          console.log('checkOutTao：'+transferObj);
            this.$emit("getOrderDetail",transferObj);
         }
       );

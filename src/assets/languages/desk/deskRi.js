@@ -1006,6 +1006,7 @@ module.exports = {
   book_discountAmount: '割引金額',
   book_printDocuments: '帳票印刷',
   book_printDocumentsA: '領収書印刷',
+  book_printDocumentsB: '受領書',
   book_billAback: '精算及びC/O',
   book_billAbackA: '確認',
   book_HQtable: '本部帳票',

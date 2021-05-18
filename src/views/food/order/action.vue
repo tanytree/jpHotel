@@ -459,9 +459,13 @@ export default {
     },
 
     closeDialog() {
+      let isOpen = false;
+      if (this.isPrint) {
+       isOpen=true;
+      }
       this.info = {};
       this.intForm();
-      this.$emit("closeDialog");
+      this.$emit("closeDialog",isOpen);
     },
   },
 };

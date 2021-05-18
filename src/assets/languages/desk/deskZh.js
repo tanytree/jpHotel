@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-03-23 10:01:47
+ * @LastEditTime: 2021-05-18 10:43:01
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -417,6 +417,7 @@ module.exports = {
   book_liveFee: '住宿税',
   book_discountAmount: '优惠金额',
   book_printDocuments: '打印单据',
+  book_printDocumentsB: '打印单据',
   book_printDocumentsA: '打印单据',
   book_billAback: '结账并退房',
   book_billAbackA: '结账并退房',

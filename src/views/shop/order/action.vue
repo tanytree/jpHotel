@@ -4,7 +4,7 @@
     <div class="margin-t-10">
       <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label-width="30px">
-          <el-checkbox v-model="outFlag">{{$t('shop.reset.sureFlag')}}</el-checkbox>
+          <el-checkbox v-model="outFlag">{{$t('shop.reset.sureFlag')}}0000</el-checkbox>
         </el-form-item>
         <el-form-item label-width="0px">
           <div class="money">
@@ -575,9 +575,13 @@ export default {
       }
     },
     closeDialog() {
+       let isOpen = false;
+      if (this.isPrint) {
+       isOpen=true;
+      }
       this.info = {};
       this.intForm();
-      this.$emit("closeDialog");
+        this.$emit("closeDialog",isOpen);
     },
   },
   watch: {

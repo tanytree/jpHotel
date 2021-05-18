@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-30 10:08:02
+ * @LastEditTime: 2021-05-18 14:55:00
  * @FilePath: \jiudian\src\views\market\orders\coms\finance.vue
  -->
 <template>
@@ -312,12 +312,13 @@
                     <el-input type="number" :disabled="consumeOperForm.priceType == 7 || consumeOperForm.priceType == 15 || consumeOperForm.priceType == 16 " style="width: 100px;" v-else v-model="consumeOperForm.consumePrices" autocomplete="off" :placeholder="$t('desk.customer_sum')"></el-input>
                 </el-form-item>
 
-                <el-form-item :label="isType == 0 ? $t('desk.home_note') + ':' :  $t('desk.order_consumptionProject') + ':'">
+                <el-form-item :label="isType == 0 ? $t('desk.home_note') + ':' :  $t('desk.home_note') + ':'">
                     <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
                 </el-form-item>
                 <div style="padding-left: 100px;" v-if="isType == 1">
                    <el-checkbox v-model="isUseSeserve"></el-checkbox>
-                   <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span>
+                   <!-- <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span> -->
+                   <span class="margin-l-8">{{$t('desk.book_printDocumentsB')}}</span>
                 </div>
 
 
@@ -490,6 +491,7 @@
         <invoicing ref="invoicing" :detailData = "detailData" @get_consume_order_list="consume_order_list" :currentRoom="currentRoom" />
         <!-- 附餐 -->
         <sideOrder ref='sideOrder' :tax="taxInfo" :currentRoom="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" @get_consume_order_list="consume_order_list"></sideOrder>
+     
     </div>
 </template>
 
@@ -537,6 +539,7 @@ export default {
         sideOrder,
         cardTao,
         checkoutTao
+        
     },
     computed: {
         ...mapState({
@@ -670,7 +673,8 @@ export default {
             isType:0,
             reserveId:'',//预定项目ID
             reserveProjects:{},//预定项目
-            isUseSeserve:true, //是否使用预定项目
+            // isUseSeserve:true, //是否使用预定项目
+            isUseSeserve:true, //是否打印单据
             roomType:''
         };
     },
@@ -911,7 +915,7 @@ export default {
                 params.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
                 params.servicePrice  = parseFloat(service).toFixed(0)
                 // console.log(rzSum)else
-                debugger
+                // debugger
                 let p = parseFloat(this.consumeOperForm.consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
                 params.consumePrice =  parseFloat(p).toFixed(0)
                 if(params.priceType == 5){
@@ -970,6 +974,10 @@ export default {
                     if(params.priceType == 5 || params.priceType == 6 || params.priceType == 7 ){
                         params.payType = 0
                     }
+                }
+                // 选择打印单据
+                if(this.isUseSeserve){
+                 this.$emit('openDialog', 'taozi');
                 }
             }
             //挂账
@@ -1397,7 +1405,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(transferObj){
-          console.log(transferObj);
+           console.log('finance：'+transferObj);
             // console.log(111)
             this.$emit('getOrderDetail',transferObj)
         },

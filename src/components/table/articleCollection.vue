@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-03-02 10:00:25
  * @Author: 陶子
- * @LastEditTime: 2021-03-23 14:18:12
+ * @LastEditTime: 2021-05-18 11:13:23
  * @FilePath: \jiudian\src\components\table\articleCollection.vue
  * @pageName: 这是--（收款条  组件）--页面
 -->
@@ -105,7 +105,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 900;
+  z-index:99999;
   .flex();
   .innerDialogBox {
     border-radius: 6px;

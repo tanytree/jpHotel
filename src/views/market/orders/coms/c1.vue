@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-07-07 16:59:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-24 17:14:18
+ * @LastEditTime: 2021-05-18 13:47:19
  * @FilePath: \jiudian\src\views\market\orders\coms\c1.vue
 -->
 <template>
@@ -45,7 +45,7 @@
     </div>
     <div class="bd margin-t-10">
         <div class="wrap">
-            <finance ref="finance" :currentRoom2="currentRoom" :detailData="detailData" @getOrderDetail="getOrderDetail" />
+            <finance ref="finance" :currentRoom2="currentRoom" :detailData="detailData" @openDialog='openDialog'  @getOrderDetail="getOrderDetail" />
         </div>
     </div>
     <el-dialog top="0" :show-close='false'  :title="$t('desk.home_roomCardOpreat')" :visible.sync="mackcade" width="60%">
@@ -74,20 +74,20 @@
             <el-button size="small" @click="mackcade=false">{{ $t('commons.cancel') }}</el-button>
         </span>
     </el-dialog>
-
-
-
+ 
 </div>
 </template>
 
 <script>
 import finance from './finance'
 import myMixin from '@/utils/filterMixin';
+
 export default {
     mixins: [myMixin],
     props: ['detailData', 'currentRoom'],
     components: {
-        finance
+        finance,
+        
     },
     data() {
         return {
@@ -127,6 +127,10 @@ export default {
     },
 
     methods: {
+      openDialog(name){
+         console.log('C1页面：'+name);
+        this.$emit('openDialog', name);
+      },
         get_user_enterprise(id) {
             // 加载组件
             let params = {
@@ -240,10 +244,10 @@ export default {
             this.searchForm.page = val;
             this.getDataList();
         },
-        getOrderDetail(v){
+        getOrderDetail(transferObj){
           // 如果要打印退房结账，把v传入$emit中即可
-            console.log(v)
-            this.$emit('getOrderDetail')
+             console.log('C1：'+transferObj);
+            this.$emit('getOrderDetail',transferObj)
         }
 
     }

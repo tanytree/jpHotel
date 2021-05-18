@@ -1,13 +1,10 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-03-19 18:24:07
+ * @LastEditTime: 2021-05-18 14:37:29
  * @FilePath: \jiudian\src\components\table\priviewDocuments.vue
- * @pageName: 这是--（单据预览  组件）--页面
+ * @pageName: 这是--（餐饮商店单据预览  组件）--页面
 -->
-
-
-
 <template>
   <div v-if="printDialog" class="dialogBox" id="priviewDocuments">
     <div class="innerDialogBox">

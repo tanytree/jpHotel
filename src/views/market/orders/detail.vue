@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-03-02 11:38:56
+ * @LastEditTime: 2021-05-18 13:47:46
  * @FilePath: \jiudian\src\views\market\orders\detail.vue
  -->
 <template>
@@ -71,7 +71,7 @@
         <el-col :span="18">
           <div class="grid-content">
             <template v-if="checkType == 'customer'">
-              <c1 v-if="isReset" :detailData="detailData" :currentRoom="currentRoom" @getOrderDetail="getDetail"></c1>
+              <c1 v-if="isReset" :detailData="detailData" :currentRoom="currentRoom" @openDialog='openDialog' @getOrderDetail="getDetail"></c1>
             </template>
             <template v-if="checkType == 'order'">
               <div class="detailTabWrap">
@@ -135,6 +135,8 @@
     <priviewDocuments ref="priviewDocuments" />
      <!-- 结账退房单据打印 -->
     <checkOutRoom ref="checkOutRoom"/>
+    <!-- 收款条打印 -->
+      <articleCollection ref="articleCollection"/>
   </div>
 </template>
 
@@ -146,7 +148,9 @@ import myMixin from "@/utils/filterMixin";
 import unitedRoomHandle from "@/views/market/home/unitedRoomHandle";
 import checkInInfo from "@/components/front/checkInInfo";   //客人信息
 import priviewDocuments from "@/components/table/priviewDocuments";
-import checkOutRoom from "@/components/table/checkOutRoom";
+import checkOutRoom from "@/components/table/checkOutRoom";      
+import articleCollection from "@/components/table/articleCollection";  //打印收款条组件
+
 
 export default {
   mixins: [myMixin],
@@ -157,7 +161,8 @@ export default {
     customer,
     unitedRoomHandle,
     priviewDocuments,
-    checkOutRoom
+    checkOutRoom,
+    articleCollection
   },
   data() {
     return {
@@ -202,6 +207,11 @@ export default {
     });
   },
   methods: {
+      openDialog(name){
+       console.log('detail页面：'+name);
+      this.$refs.articleCollection.openDialog() 
+       
+      },
       handleClick() {
           if (this.activeName == 'customer') {
               console.log(this.detailData);
@@ -283,7 +293,7 @@ export default {
 
         }
       );
-      console.log(transferObj);
+       console.log('detail：'+transferObj);
       if(transferObj&&transferObj.checked){
         console.log(transferObj);
           switch (transferObj.type) {

@@ -339,7 +339,8 @@ export default {
           },
           {
             title: this.$t("boss.report_freshClass"),
-            reportType: 19,
+            // reportType: 19,
+            reportType: 45,
             reportNum: 1003,
           },
           {
@@ -361,7 +362,8 @@ export default {
           },
           {
             title: this.$t("boss.report_goodsKinds"),
-            reportType: 19,
+            // reportType: 19,
+            reportType: 45,
             reportNum: 1003,
           },
         ],
@@ -445,7 +447,7 @@ export default {
             reportType: 33,
             reportNum: 1006,
           },
-        ]
+        ],
       ];
     },
   },
