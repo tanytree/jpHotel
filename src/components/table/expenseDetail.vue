@@ -34,7 +34,7 @@
                 <div class="firstTable">
                     <div class="nameInfo">
                         <div>お名前</div>
-                        <div>Name 田中太朗様</div>
+                        <div>Name {{ detailData.checkIn.name }}</div>
                     </div>
                     <div class="firstBox">
                         <table border="1">

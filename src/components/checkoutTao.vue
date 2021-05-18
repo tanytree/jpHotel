@@ -313,7 +313,7 @@ export default {
       this.$F.doRequest(
         this,
         "/pms/hotelservice/print_num",
-        { typeStr: "SE" },
+        { typeStr: "ME" },
         (res) => {
             this.$refs.expenseDetail.openDialog(res, this.detailData, this.currentRoom);
         }
