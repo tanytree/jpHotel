@@ -350,9 +350,14 @@ export default {
           },
         ],
         [
-          {
-            title: this.$t("boss.report_weekLook"),
-            reportType: 16,
+          // {
+          //   title: this.$t("boss.report_weekLook"),
+          //   reportType: 16,
+          //   reportNum: 1003,
+          // },
+           {
+            title: this.$t("boss.report_monthDepartment"),
+            reportType: 18,
             reportNum: 1003,
           },
           {
@@ -373,18 +378,14 @@ export default {
             reportType: 17,
             reportNum: 1003,
           },
-          {
-            title: this.$t("boss.report_printedPaper"),
-            reportType: 21,
-            reportNum: 1003,
-          },
+          // {
+          //   title: this.$t("boss.report_printedPaper"),
+          //   reportType: 21,
+          //   reportNum: 1003,
+          // },
         ],
         [
-          {
-            title: this.$t("boss.report_monthDepartment"),
-            reportType: 18,
-            reportNum: 1003,
-          },
+         
           {
             title: this.$t("boss.report_roomType"),
             reportType: 22,
