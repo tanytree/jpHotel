@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-02-22 14:24:59
  * @Author: 陶子
- * @LastEditTime: 2021-05-18 14:35:53
+ * @LastEditTime: 2021-05-18 15:59:46
  * @FilePath: \jiudian\src\components\table\expenseDetail.vue
  * @pageName: 这是--（消费明细预览  组件）--页面
 -->
@@ -22,146 +22,6 @@
             <div style="text-align: center">
               <span style="font-weight:bold;">ご利用明細書</span><br /><span>Bill Information</span>
             </div>
-<<<<<<< Updated upstream
-            <div class="contentBox">
-                <div class="titleBox">
-                    <div class="title_leftBox">
-                        <img src="~@/assets/images/print/good_print.png" alt="">
-                        <div class="urlPath">https://okura-club-hotels.com</div>
-                    </div>
-                    <div class="title_centerBox">
-                        <div style="text-align: center">
-                            <span style="font-weight:bold;">請求書</span><br/><span>Invoice</span>
-                        </div>
-                    </div>
-                    <div class="title_rightBox">
-                        <div> No.: {{ expenseDetailNum }}</div>
-                        <div>Rsv.: {{ detailData.checkIn.orderNum }}</div>
-                        <div>Date: {{ getCurrentDate() }}</div>
-                        <div>担当者: {{accountName}}</div>
-                    </div>
-                </div>
-                <!-- 下面是表格 -->
-                <div class="firstTable">
-                    <div class="nameInfo">
-                        <div>お名前</div>
-                        <div>Name {{ detailData.checkIn.name }}</div>
-                    </div>
-                    <div class="firstBox">
-                        <table border="1">
-                            <tr class="row_one">
-                                <td>
-                                    <div>部屋番号</div>
-                                    <div>Room No.</div>
-                                </td>
-                                <td>
-                                    <div>ご利用日</div>
-                                    <div>C/I</div>
-                                </td>
-                                <td>
-                                    <div>泊数</div>
-                                    <div>Nights</div>
-                                </td>
-                                <td>
-                                    <div>ご出発日</div>
-                                    <div>C/O</div>
-                                </td>
-                                <td>
-                                    <div>人数</div>
-                                    <div>Person</div>
-                                </td>
-                                <td>
-                                    <div>ページ数</div>
-                                    <div>Page</div>
-                                </td>
-                            </tr>
-                            <tr class="row_two">
-                                <td>{{ getHouseNums() }}</td>
-                                <td>{{ $F.formatDate('yyyy.MM.dd', null, detailData.checkIn.checkinTime) }}</td>
-                                <td>{{detailData.checkIn.checkInDays}}</td>
-                                <td>{{$F.formatDate('yyyy.MM.dd', null, detailData.checkIn.checkoutTime)}}</td>
-                                <td>{{getPersons()}}</td>
-                                <td>1-1</td>
-                            </tr>
-                        </table>
-                        <div class="rightOfTable">
-                            <div>ホテル名：小圆客商大酒店</div>
-                            <div>ホテル住所：安徽</div>
-                            <div>ホテル電話：888888</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="secondTable">
-                    <table border="1">
-                        <tr class="second_rowOne">
-                            <td>
-                                <div>日付</div>
-                                <div>Date</div>
-                            </td>
-                            <td>
-                                <div>部屋</div>
-                                <div>Room No.</div>
-                            </td>
-                            <td>
-                                <div>ご利用明細</div>
-                                <div>Description</div>
-                            </td>
-                            <td>
-                                <div>単価（税込）</div>
-                                <div>Price</div>
-                            </td>
-                            <td>
-                                <div>数量</div>
-                                <div>Qty</div>
-                            </td>
-                            <td>
-                                <div>金額（税込)</div>
-                                <div>Amount</div>
-                            </td>
-                            <td>
-                                <div>備考入金</div>
-                                <div>Note／Received</div>
-                            </td>
-                        </tr>
-                        <tr class="second_roTwo" v-for="(order, orderIndex) in consumeOrderList" :key="orderIndex" v-if="consumeOrderList.length > 0">
-                            <td>
-                                <div>{{$F.formatDate('MM-dd', null, order.createTime)}}</div>
-                            </td>
-                            <td>
-                                <div>{{ order.houseNum || (order.checkInPerson && order.checkInPerson.houseNum) }}</div>
-                            </td>
-                            <td style="width:30%;">
-                                <div v-if="order.priceType == 22">
-                                    <span v-for="(shopOrder, shopOrderIndex) in order.shopOrderSubList" :key="shopOrderIndex">
-                                        {{shopOrder.goods.categoryName}}
-                                        <span v-if="shopOrderIndex != order.shopOrderSubList.length - 1">，</span>
-                                    </span>
-                                </div>
-                                <div v-if="order.priceType == 6 || order.priceType == 8 || order.priceType == 14">
-                                    {{$t('frontOffice.priceType')[order.priceType]}}
-                                </div>
-                                <div v-if="order.priceType == 101">
-                                    {{order.projectName}}
-                                </div>
-                            </td>
-                            <td>
-                                <div>¥{{ order.price || order.consumePrice || 0}}</div>
-                            </td>
-                            <td>
-                                <div>{{order.projectCount || 1}}</div>
-                            </td>
-                            <td>
-                                <div v-if="order.priceType != 101">¥{{ order.consumePrice || 0}}</div>
-                                <div v-else>¥{{ order.price * order.projectCount}}</div>
-                            </td>
-                            <td style="width:20%;" v-if="orderIndex == 0" :rowspan="consumeOrderList.length">
-                                <div>{{detailData.payPrice}}</div>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <div class="second_bottom">小計：¥{{getConsumeSum()}}</div>
-=======
           </div>
           <div class="title_rightBox">
             <div> No.: {{ expenseDetailNum }}</div>
@@ -265,7 +125,6 @@
                     {{shopOrder.goods.categoryName}}
                     <span v-if="shopOrderIndex != order.shopOrderSubList.length - 1">，</span>
                   </span>
->>>>>>> Stashed changes
                 </div>
                 <div v-if="order.priceType == 6 || order.priceType == 8 || order.priceType == 14">
                   {{$t('frontOffice.priceType')[order.priceType]}}
