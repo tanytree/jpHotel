@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-07 20:49:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-10 19:19:27
+ * @LastEditTime: 2021-05-18 17:38:09
  * @FilePath: \jiudian\src\components\front\rowHouse.vue
  -->
 <template>

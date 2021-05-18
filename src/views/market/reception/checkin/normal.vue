@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-04-01 12:03:17
+ * @LastEditTime: 2021-05-18 17:39:34
  * @FilePath: \jiudian\src\views\market\reception\checkin\normal.vue
  -->
 <template>
@@ -1226,6 +1226,7 @@ export default {
 
         //手动排房添加
         rowRoomCurrentListItemAdd(item) {
+          console.log(item);
             this.rowRoomCurrentItem.roomsArr = this.rowRoomCurrentItem.roomsArr || [];
             let exist = false;
 

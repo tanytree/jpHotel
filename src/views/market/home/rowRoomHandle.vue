@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-02-16 14:34:08
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-01-07 10:27:28
+ * @LastEditTime: 2021-05-18 17:34:58
  * @FilePath: \jiudian\src\views\market\home\rowRoomHandle.vue
  -->
 <template>
@@ -589,6 +589,8 @@ export default {
             this.$forceUpdate()
         },
         rowRoomCurrentListItemAdd(item) {
+          console.log('rowRoomHandle');
+
             if (!this.rowRoomCurrentItem.roomsArr) {
                 this.rowRoomCurrentItem.roomsArr = [];
             }

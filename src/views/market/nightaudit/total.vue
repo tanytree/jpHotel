@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-11-05 15:17:57
+ * @LastEditTime: 2021-05-18 18:11:00
  * @FilePath: \jiudian\src\views\market\nightaudit\total.vue
  -->
 
@@ -108,10 +108,10 @@ export default {
                             type: "success",
                         });
                     }, 3000)
-                }, res => {
+                }, err => {
                     this.nightAuditShow = false;
-                    if (res.code == 406) {
-                        this.$message.error(res.message)
+                    if (err.code == 406) {
+                        this.$message.error(err.message)
                     }
 
                 });
