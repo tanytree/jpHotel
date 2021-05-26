@@ -541,7 +541,7 @@ export default {
                                 .replace(/-/g, "/")
                         );
                         if (this.operCheckinType == "b2" || this.operCheckinType == "a2") {
-                            return timeStr.getTime() > timeStr - 8.64e6
+                            return timeStr.getTime() >= timeStr - 8.64e6
                         }
                         if (this.operCheckinType == "b3") {
                             return (
@@ -1505,9 +1505,9 @@ export default {
                     // if (this.operCheckinType == "b3") {
                     //     nowDate.setDate(nowDate.getDate() + 1);
                     // }
-                    nowDate.setHours(12);
-                    nowDate.setMinutes(0);
-                    nowDate.setSeconds(0);
+                    nowDate.setHours(23);
+                    nowDate.setMinutes(59);
+                    nowDate.setSeconds(59);
                     this.checkInForm.checkoutTime = nowDate.Format("yyyy-MM-dd HH:mm:ss");
                 }
                 // this.checkInForm.keepTime =
