@@ -339,8 +339,8 @@ export default {
           },
           {
             title: this.$t("boss.report_freshClass"),
-            // reportType: 19,
-            reportType: 45,
+            reportType: 19,
+            // reportType: 45,
             reportNum: 1003,
           },
           {
@@ -355,7 +355,7 @@ export default {
           //   reportType: 16,
           //   reportNum: 1003,
           // },
-           {
+          {
             title: this.$t("boss.report_monthDepartment"),
             reportType: 18,
             reportNum: 1003,
@@ -385,7 +385,6 @@ export default {
           // },
         ],
         [
-         
           {
             title: this.$t("boss.report_roomType"),
             reportType: 22,
@@ -423,28 +422,28 @@ export default {
       return [
         [
           {
-            title: this.$t('desk.add_tenDay'),
+            title: this.$t("desk.add_tenDay"),
             reportType: 30,
             reportNum: 1006,
           },
         ],
         [
           {
-            title: this.$t('desk.add_foodDinner'),
+            title: this.$t("desk.add_foodDinner"),
             reportType: 31,
             reportNum: 1006,
           },
         ],
         [
           {
-            title: this.$t('desk.add_foodFirst'),
+            title: this.$t("desk.add_foodFirst"),
             reportType: 32,
             reportNum: 1006,
           },
         ],
         [
           {
-           title: this.$t('desk.add_foodLanch'),
+            title: this.$t("desk.add_foodLanch"),
             reportType: 33,
             reportNum: 1006,
           },
