@@ -107,8 +107,8 @@
               <th style="background:#938965;fontSize:24px;" v-for="h in content[0]" :key="h.id" :colspan="content.slice(1)[content.slice(1).length-2].length">{{ h }}</th>
             </tr>
             <!-- 循环读取数据并显示 -->
-            <tr v-for="row in content.slice(1)" :key="row.id">
-              <td v-for="item in row" :key="item.id">{{ $F.numFormate(item) }}</td>
+            <tr v-for="(row, topIndex) in content.slice(1)" :key="topIndex">
+              <td v-for="item in row" :key="item.id">{{ topIndex > 2 ? $F.numFormate(item) : item}}</td>
             </tr>
           </table>
         </div>
