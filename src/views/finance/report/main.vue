@@ -423,28 +423,28 @@ export default {
       return [
         [
           {
-            title: "10日間料理通し",
+            title: this.$t('desk.add_tenDay'),
             reportType: 30,
             reportNum: 1006,
           },
         ],
         [
           {
-            title: "料理通し（夕食）",
+            title: this.$t('desk.add_foodDinner'),
             reportType: 31,
             reportNum: 1006,
           },
         ],
         [
           {
-            title: "料理通し（朝食）",
+            title: this.$t('desk.add_foodFirst'),
             reportType: 32,
             reportNum: 1006,
           },
         ],
         [
           {
-            title: "料金通し（日替わり）",
+           title: this.$t('desk.add_foodLanch'),
             reportType: 33,
             reportNum: 1006,
           },

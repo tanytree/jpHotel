@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-05-08 08:16:07
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-05-18 18:11:00
+ * @LastEditTime: 2021-05-26 17:45:10
  * @FilePath: \jiudian\src\views\market\nightaudit\total.vue
  -->
 
@@ -93,6 +93,7 @@ export default {
         this.initForm();
     },
     methods: {
+      // 点击 夜审 按钮
         nightAudit() {
             this.$confirm( this.$t('frontOffice.nightAudit.auditTip'), this.$t('food.common.tip'), {
                 confirmButtonText: this.$t('food.common.ok'),

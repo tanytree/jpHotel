@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:23
  * @Author: 陶子
- * @LastEditTime: 2021-05-18 10:43:01
+ * @LastEditTime: 2021-05-26 17:40:58
  * @FilePath: \jiudian\src\assets\languages\desk\deskZh.js
  */
 //  前台部 中文
@@ -1110,10 +1110,10 @@ module.exports = {
   add_bookProject: '预约项目',
   add_checkoutInfo: '结账信息',
   add_paymentMethod: '付款方式',
-  add_: '',
-  add_: '',
-  add_: '',
-  add_: '',
+  add_tenDay: '10天用餐一览',
+  add_foodDinner: '用餐一览（晚餐）',
+  add_foodFirst: '用餐一览（早餐）',
+  add_foodLanch: '用餐一览（午餐）',
   add_: '',
   add_: '',
   add_: '',
