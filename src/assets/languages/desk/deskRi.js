@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-13 14:03:12
  * @Author: 陶子
- * @LastEditTime: 2021-05-26 17:38:07
+ * @LastEditTime: 2021-05-28 10:13:45
  * @FilePath: \jiudian\src\assets\languages\desk\deskRi.js
  */
 //前台部 日文
@@ -1083,7 +1083,7 @@ module.exports = {
   add_tenDay: '10日間料理通し',
   add_foodDinner: '料理通し（夕食）',
   add_foodFirst: '料理通し（朝食）',
-  add_foodLanch: '料金通し（日替わり）',
+  add_foodLanch: '料金通し（昼食）',
 
 
 
