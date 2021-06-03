@@ -252,7 +252,7 @@
                         params,
                         (res) => {
                             this.goodsInVisible = false;
-                            this.$message.success('success');
+                            this.$message.success(this.$t('commons.successTip'));
                             this.initData(this.pageForm, this.form.name, this.form.category, this.form.status);
                         }
                     );

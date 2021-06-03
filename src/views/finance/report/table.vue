@@ -14,7 +14,7 @@
     </el-card>
     <div style="margin-top: 10px" v-loading="loading">
       <el-card class="box-card2" :body-style="{ height: 'min: 600px' }">
-        <el-form ref="searchForm" :model="searchForm" inline>
+        <el-form ref="searchForm" :model="searchForm" inline :rules="rules">
           <!-- 日计表-->
           <el-form-item :label="$t('boss.report_businessHours')+':'" v-if="searchForm.reportNum == '1001'||reportType == '31'||reportType == '32'||reportType == '33'">
             <el-date-picker v-model="searchForm.startTime" type="date" value-format="yyyy-MM-dd" :placeholder="$t('boss.report_businessHours')"></el-date-picker>
@@ -108,7 +108,7 @@
             </tr>
             <!-- 循环读取数据并显示 -->
             <tr v-for="(row, topIndex) in content.slice(1)" :key="topIndex">
-              <td v-for="item in row" :key="item.id">{{ topIndex > 2 ? $F.numFormate(item) : item}}</td>
+              <td v-for="item in row" :key="item.id">{{ valueFormat(item)}}</td>
             </tr>
           </table>
         </div>
@@ -126,6 +126,10 @@ import XLSX from "xlsx";
 export default {
   data() {
     return {
+        rules: {
+            startTime: [{ required: true, message: this.$t('commons.lostParams'), trigger: "blur" }],
+            endTime: [{ required: true, message: this.$t('commons.lostParams'), trigger: "blur" }],
+        },
       loading: false,
       reportType: "", //报表类型  reportNum 的子集
       currentReport: {}, //当前report
@@ -174,6 +178,21 @@ export default {
     }
   },
   methods: {
+      valueFormat(value) {
+          if (value) {
+              console.log(value);
+              value = value.toString();
+              if (value.length >= 10 ) {
+                  var r = new RegExp("^[1-2]\\d{3}-(0?[1-9]||1[0-2])-(0?[1-9]||[1-2][1-9]||3[0-1])$");
+                  let tempValue = value.substring(0, 10)
+                  console.log("tempValue:" + tempValue + " r.test(tempValue):" + r.test(tempValue));
+                  if (r.test(tempValue)) {
+                      return value;
+                  }
+              }
+          }
+          return this.$F.numFormate(value);
+      },
     stores_list() {
       this.$F.doRequest(this, "/pms/freeuser/stores_list", {}, (data) => {
         this.storeList = data;
@@ -267,17 +286,26 @@ export default {
         this.reportType == 29 ||
         this.reportType == 28
       ) {
+          if (!this.searchForm.startTime) {
+              return this.$message.warning(this.$t('commons.lostParams'));
+          }
         //日计表
         this.searchForm.endTime = this.searchForm.startTime;
       }
       if (this.searchForm.reportNum == 1003 || this.reportType == 34) {
         //月度报表
+          if (!this.searchForm.startTime) {
+              return this.$message.warning(this.$t('commons.lostParams'));
+          }
         let year = this.searchForm.startTime.substr(0, 4);
         let month = this.searchForm.startTime.substr(-2, 2);
         this.searchForm.startTime = this.monthStartTime(year, month);
         this.searchForm.endTime = this.monthEndTime(year, month);
       }
       if (this.reportType == 36) {
+          if (!this.searchForm.startTime) {
+              return this.$message.warning(this.$t('commons.lostParams'));
+          }
         let yearA = this.searchForm.startTime.substr(0, 4);
         let monthA = this.searchForm.startTime.substr(-2, 2);
         let yearB = this.searchForm.endTime.substr(0, 4);

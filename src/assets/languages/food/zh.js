@@ -100,6 +100,7 @@ module.exports = {
         yes:'是',
         no:'否',
         success:'操作成功',
+
         //点餐
         is_choose_food:'已选菜品',
         food_title:'菜品名称',
@@ -349,7 +350,7 @@ module.exports = {
 
   },
   reset: {
-    each: '件', 
+    each: '件',
     submit: '提交',
     outOfSomething: '该菜品已经沽清啦，不能再售卖啦，您可以前往菜品管理>沽清管理取消该商品的沽清!',
     soldOut: ' 该菜品已经卖完啦，不能再售卖啦，您可以前往菜品管理给该菜品添加预估份数!',

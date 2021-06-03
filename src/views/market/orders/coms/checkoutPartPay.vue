@@ -194,7 +194,7 @@ transferObj:{}
                 // }
                 // if(element.seviceStatus == 1){
             service += parseFloat(element.servicePrice)
-            
+
             if(priceType == 15){
                 console.log(priceType +':' +this.F_priceType(priceType))
                 priceType15 = parseFloat(consume)
@@ -407,7 +407,7 @@ transferObj:{}
         }
       );
         console.log('part')
-      
+
     },
     get_consume_tax(){
         let params = {

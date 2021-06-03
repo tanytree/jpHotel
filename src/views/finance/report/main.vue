@@ -17,7 +17,7 @@
     </div> -->
     <!-- 总部销售日报 -->
     <div style="margin-bottom: 20px" v-if="shopNo==number">
-      <div class="diaryTable">总部销售日报</div>
+      <div class="diaryTable">{{$t('desk.book_HQsale')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
         <div class="listBox">
@@ -49,7 +49,7 @@
       </div>
     </div> -->
     <!-- 预约相关表 -->
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="storesNum != number">
       <div class="diaryTable">{{$t('boss.report_reservation')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -79,7 +79,7 @@
       </div>
     </div> -->
     <!-- 日计表 -->
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="storesNum != number">
       <div class="diaryTable">{{$t('boss.report_dailyAccount')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -94,7 +94,7 @@
       </div>
     </div>
     <!-- 月度报表 -->
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="storesNum != number">
       <div class="diaryTable">{{$t('boss.report_monthReport')}}</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -109,7 +109,7 @@
       </div>
     </div>
     <!-- 菜品准备 -->
-    <div style="margin-bottom: 20px">
+    <div style="margin-bottom: 20px" v-if="storesNum != number">
       <div class="diaryTable">菜品准备</div>
       <el-divider></el-divider>
       <div class="reportHome">
@@ -410,7 +410,7 @@ export default {
       return [
         [
           {
-            title: "总部销售日报表",
+            title: this.$t('desk.book_HQsale'),
             reportType: 44,
             reportNum: 1001,
           },
@@ -454,7 +454,8 @@ export default {
 
   data() {
     return {
-      number: "0000000000",
+        storesNum: sessionStorage.storesNum,
+        number: this.$F.getHQCode(),
     };
   },
   created() {

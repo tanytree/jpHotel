@@ -5,6 +5,7 @@
  * @FilePath: \jiudian\src\assets\languages\commons\commonsRi.js
  */
 module.exports = {
+    lostParams: 'パラメータ不足',
   mustChoose: '必ず入力',
   mustInput: '必ず入力してください',
   checkInTypeDesc: '入居類型',
@@ -37,6 +38,7 @@ module.exports = {
   week: '曜日',
   time: '時間',
   confirm: '確認',
+    successTip:'注文確認',
   saveSuccess: '保存成功',
   disable: '停止',
   disableA: '停止中',

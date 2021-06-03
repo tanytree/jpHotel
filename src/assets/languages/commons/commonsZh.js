@@ -8,7 +8,8 @@ module.exports = {
   roomAttribles: {
 
   },
-
+    lostParams: '缺少参数',
+  successTip: '操作成功',
   mustChoose: '必填',
   mustInput: '必须输入',
   checkInTypeDesc: '入住类型',

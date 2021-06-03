@@ -47,7 +47,7 @@ export default {
                 if (valid) {
                     this.loading2 = true;
                     this.$F.doRequest(this, '/pms/hotelparam/integralconvert', this.ruleForm, (res) => {
-                        this.$message.success('Success')
+                        this.$message.success(this.$t('commons.successTip'))
                         this.loading2 = false;
                     })
                 }

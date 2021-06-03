@@ -100,6 +100,7 @@ module.exports = {
         yes:'はい',
         no:'いいえ',
         success:'注文確認',
+        lostParams: 'パラメータ不足',
         //点餐
         is_choose_food:'注文受取',
         food_title:'料理名',
@@ -226,7 +227,7 @@ module.exports = {
         read_member_card:'会員カード読み取り',
       remark: '備考',
       remarkA:'支払方法を「その他入金」の場合、必ず記入してください。',
-        
+
         order_count:'レシート部数',
         order_print:'領収書印刷',
         pay_order_deal:'確認',
@@ -292,7 +293,7 @@ module.exports = {
         viewer_name:'審査員 ',
         storage_detail:'明細',
         taxStatus:'消費税',
-        seviceStatus:'サービス料',   
+        seviceStatus:'サービス料',
         costPrice:'コスト',
         costPrice_desc:'コストを入力してください',
         is_tax:'税込',
@@ -306,7 +307,7 @@ module.exports = {
 
       tabs_title_1: '交替前の基本情報',
       tabs_title_A:'基本情報',
-        
+
         tabs_time_1:'シフト時間',
         to:'-',
         tabs_num:'シフト番号',
@@ -340,7 +341,7 @@ module.exports = {
 
       selectOnDutyer: '次シフト担当を選択してください',
       selectOnDutyerA:'引継・担当者',
-        
+
         password:'パワワード'
 
 
@@ -350,9 +351,9 @@ module.exports = {
 
     },
     reset: {
-      each: '件', 
+      each: '件',
         submit:'確認',
-        outOfSomething:'該当料理品が品切れになっています、メニュー管理>品切れ設定のページに調整してください。', 
+        outOfSomething:'該当料理品が品切れになっています、メニュー管理>品切れ設定のページに調整してください。',
         soldOut:' 在庫がなくなりましたので、該当品の注文を受け取れません。',
         cancel_all:'一括取消',
         yes:'◎',
@@ -403,6 +404,6 @@ module.exports = {
 
 
 
-    
+
       }
 }

@@ -270,7 +270,7 @@ export default {
         //禁用/启用
         changeStatus(row, val) {
             this.$F.doRequest(this, '/pms/membertypeupdate/enable_disable', { id: row.id, state: val}, (res) => {
-                this.$message.success('Success');
+                this.$message.success(this.$t('commons.successTip'));
             })
         },
 

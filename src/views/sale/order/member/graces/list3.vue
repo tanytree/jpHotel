@@ -93,7 +93,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$F.doRequest(this, '/pms/hotelparam/integraldiscount', this.ruleForm, (res) => {
-                        this.$message.success('Success')
+                        this.$message.success(this.$t('commons.successTip'))
                     })
                 }
             })

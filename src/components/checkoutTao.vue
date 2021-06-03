@@ -74,9 +74,9 @@
           <el-option v-for="(item, index) in unitList" :key="index" :label="item.enterName" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('desk.book_discountAmount')">
-        <el-input size="small" type="number" v-model="checkoutForm.preferentialPrice" style="width: 260px" @change="changPreferentialPrice"></el-input>
-      </el-form-item>
+<!--      <el-form-item :label="$t('desk.book_discountAmount')">-->
+<!--        <el-input size="small" type="number" v-model="checkoutForm.preferentialPrice" style="width: 260px" @change="changPreferentialPrice"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item :label="$t('desk.customer_sum')" prop="name">
         <!-- <el-input  size="small" v-model="checkoutForm.payPrice" :disabled="true" style="width: 260px"></el-input> -->
 
@@ -122,7 +122,7 @@ export default {
         priceType: "3",
         payPrice: "",
         payType: "1",
-        preferentialPrice: "",
+        preferentialPrice: "0",
         enterId: "",
         creditName: "",
         putUp: "",

@@ -6,7 +6,7 @@ import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
 const uploadUrl = 'http://39.104.116.153:8887'
-//const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
+// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
 // const uploadUrl = 'http://localhost:8887/'
 var tabsName = {}
 const languageObject = {
@@ -213,8 +213,13 @@ const $F = {
                 } else {
                     callback()
                 }
-
             } else {
+                if (res.message == '缺少参数') {
+                    res.message = 'パラメータ不足';
+                }
+                if (res.data.message == '缺少参数') {
+                    res.data.message = 'パラメータ不足';
+                }
                 if (errorCallback) {
                     errorCallback(res);
                 } else {
@@ -384,7 +389,7 @@ const $F = {
                 });
             });
         } else {
-            return num;
+            return num || '';
         }
     },
     //将yyyy-MM-dd HH:mm:ss格式的时间分割成数组
