@@ -57,7 +57,6 @@ export default {
     methods: {
         //二级tab切片
         handleClick(tab, event) {
-            debugger
             // console.log(tab.index);
         },
     },

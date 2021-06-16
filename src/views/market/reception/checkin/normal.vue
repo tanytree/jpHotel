@@ -1165,7 +1165,9 @@ export default {
             let hadReadyCheckArray = [];
             if (currRommTypeData.roomsArr) {
                 currRommTypeData.roomsArr.forEach(item => {
-                    hadReadyCheckArray.push(item.houseNum);
+                    if (item.houseNum) {
+                        hadReadyCheckArray.push(item.houseNum);
+                    }
                 })
             }
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));

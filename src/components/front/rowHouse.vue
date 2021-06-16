@@ -13,7 +13,8 @@
                     <div class="eackTitle">{{item.building.name}}  {{item.name}}  {{item.roomList.length}} {{$t('manager.hk_space')}}</div>
                     <div style="margin-top: 10px">
                         <el-checkbox-group v-model="selectList" size="small" :max="maxSelect">
-                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index" :disabled="room.checkInRoomType == 2"
+                            <el-checkbox-button style="margin-right: 15px" v-for="(room, index) in item.roomList" :label="room.houseNum" :key="index"
+                                                :disabled="room.checkInRoomType == 2"
                                                 @change="rowRoomCurrentListItemAdd(room)">
                                 {{ room.houseNum }}</el-checkbox-button>
                         </el-checkbox-group>
@@ -84,6 +85,7 @@ export default {
         init(roomTypeId, num, hadReadyCheckArray, checkinTime, checkoutTime, storesNum) {
             this.storesNum = storesNum;
             this.roomList = [];
+            debugger
             this.selectList = hadReadyCheckArray;
             this.hadReadyCheckArray = hadReadyCheckArray;
             this.startTime = this.$F.formatDate('yyyy-MM-dd');
@@ -101,7 +103,8 @@ export default {
             console.log(this.dates);
             this.nowDateString= this.startTime;
             this.roomTypeId = roomTypeId;
-            this.maxSelect = num;
+            debugger
+            this.maxSelect = num || 1;
             this.calendar();
         },
 
@@ -205,14 +208,21 @@ export default {
         initRoomPlan() {
             this.dates = [''];
             let tempArray = this.getDateStr(this.startTime, this.endTime, 0);
+
             tempArray.forEach((value, index) => {
-                let array = value.split('-').splice(1)
+                let dateString;
+                if (value.indexOf("-") != -1) {
+                    dateString = value.split('-').splice(1)
+                } else {
+                    dateString = value;
+                }
                 this.dates.push({
-                    date: array.join('/'),
-                    week: this.$F.getWeekNumber(this, value)
+                    date: dateString,
+                    week: this.$F.getWeekNumber(this, value, '/')
                 });
             })
             //TODO 调用后续接口
+            this.calendar();
         },
 
         dateLater14() {

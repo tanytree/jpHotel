@@ -5,9 +5,6 @@ import merge from 'lodash/merge'
 import httpRequest from "@/utils/httpRequest";
 
 var publicDict = {}
-const uploadUrl = 'http://39.104.116.153:8887'
-// const uploadUrl = 'https://pms-api-dev.sgi-smacha.tokyo/'
-// const uploadUrl = 'http://localhost:8887/'
 var tabsName = {}
 const languageObject = {
     'ri': '日本语',
@@ -70,8 +67,8 @@ const $F = {
         return languageObject[langKey]
     },
 
-    getUploadUrl() {
-        return uploadUrl
+    getUploadUrl(url) {
+        return httpRequest.systemUrl(url);
     },
 
     deepClone(obj, copyObject) {
@@ -123,7 +120,7 @@ const $F = {
             $instance.dataListLoading = true
             $instance.loading = true
         }
-        axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
+        axios.post(httpRequest.systemUrl('pms/upload/batch_upload_img'), formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -153,7 +150,7 @@ const $F = {
         formData.append('platSource', platSource);
         formData.append('filename', data.filename, data.filename.name);
 
-        axios.post(uploadUrl + '/pms/upload/batch_upload_img', formData,
+        axios.post(httpRequest.systemUrl('pms/upload/batch_upload_img'), formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -161,7 +158,6 @@ const $F = {
             }
         ).then(res => {
             if (res.data.code === 200) {
-                debugger
                 callback(res.data)
             } else {
                 if ($instance) {

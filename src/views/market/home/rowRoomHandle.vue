@@ -363,7 +363,6 @@ export default {
             this.reservedRoom = reservedRoom;
             this.handleType = handleType;
             this.orderType = orderType;
-            debugger
             let inRoomListLength = detailData.inRoomList.length;
             if (inRoomListLength > 0 && detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId']) {
                 checkInId = detailData.inRoomList[detailData.inRoomList.length - 1]['checkinId'] || checkInId;
@@ -372,29 +371,37 @@ export default {
             }
             console.log(this.checkInForm.checkInReserveId);
             console.log(this.checkInForm.checkInId);
-            debugger
             let that = this
             that.waitingRoom = [];
             //初始化已排房
+            debugger
             for (let item of reservedRoom) {
                 let exist = false
                 for (let i = 0; i < that.waitingRoom.length; i++) {
                     if (that.waitingRoom[i].roomTypeId == item.roomTypeId) {
                         that.waitingRoom[i].num++
-                        that.waitingRoom[i]['roomsArr'].push({
-                            houseNum: item.houseNum,
-                            id: item.roomId
-                        })
+                        if (!that.waitingRoom[i]['roomsArr']) {
+                            that.waitingRoom[i]['roomsArr'] = [];
+                        }
+                        if (item.houseNum) {
+                            that.waitingRoom[i]['roomsArr'].push({
+                                houseNum: item.houseNum,
+                                id: item.roomId
+                            })
+                        }
                         exist = true
                     }
                 }
                 if (!exist) {
                     item.num = 1
                     item.roomsArr = []
-                    item.roomsArr.push({
-                        houseNum: item.houseNum,
-                        id: item.roomId
-                    })
+                    if (item.houseNum) {
+                        item.roomsArr.push({
+                            houseNum: item.houseNum,
+                            id: item.roomId
+                        })
+                    }
+
                     that.waitingRoom.push(item)
                 }
             }
@@ -481,7 +488,9 @@ export default {
             let hadReadyCheckArray = [];
             if (currRommTypeData.roomsArr) {
                 currRommTypeData.roomsArr.forEach(item => {
-                    hadReadyCheckArray.push(item.houseNum);
+                    if (item.houseNum) {
+                        hadReadyCheckArray.push();
+                    }
                 })
             }
             this.rowRoomCurrentItem = JSON.parse(JSON.stringify(item));
@@ -503,6 +512,7 @@ export default {
         },
         //手动排房确定
         db_row_houses() {
+            debugger
             if (this.rowRoomCurrentItem.roomsArr.length > this.rowRoomCurrentItem.num) {
                 this.$message.error(this.$t('desk.home_morethenNum'));
                 return
@@ -690,7 +700,6 @@ export default {
                             // checkinReserveId: this.checkInForm.checkInReserveId,
                             checkInRoomJson: this.checkInForm.checkInRoomJson
                         }
-                        debugger
                         this.$F.doRequest(this, '/pms/checkin/checkin_add_room', params, (data) => {
                             this.rowRoomHandleShow = false
                             this.$emit('baseInfoChange', '');

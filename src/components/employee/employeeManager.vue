@@ -907,7 +907,7 @@ export default {
             let formData = new FormData();
             formData.append('filename', file);
             formData.append('platSource', 1005);
-            axios.post(this.$F.getUploadUrl() + ('/pms/employee/upload'), formData,
+            axios.post((httpRequest.systemUrl('/pms/employee/upload')), formData,
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data'

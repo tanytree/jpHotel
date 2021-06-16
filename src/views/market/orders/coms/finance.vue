@@ -1017,10 +1017,11 @@ export default {
                             payType: '',
                             name: ''
                         }
+                        this.getOrderDetail();
                         // 选择打印单据
-                        if(this.isUseSeserve){
-                            this.$refs.articleCollection.openDialog(this.detailData, this.currentRoom, params);
-                        }
+                        // if(this.isUseSeserve){
+                        //     this.$refs.articleCollection.openDialog(this.detailData, this.currentRoom, params);
+                        // }
                     })
                 } else {
                     console.log('error submit!!');

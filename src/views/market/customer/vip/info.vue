@@ -274,7 +274,7 @@ export default {
             formData.append("storesNum", storesNum);
             axios
               .post(
-                this.$F.getUploadUrl() + "/pms/hotelmember/upload",
+                this.$F.getUploadUrl("pms/hotelmember/upload"),
                 formData,
                 {
                   headers: {

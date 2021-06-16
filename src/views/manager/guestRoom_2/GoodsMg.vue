@@ -517,7 +517,7 @@ export default {
       formData.append("filename", params.file);
       formData.append("platSource", 1005);
       axios
-        .post(this.$F.getUploadUrl() + "/pms/hotelgoods/upload", formData, {
+        .post(this.$F.getUploadUrl("pms/hotelgoods/upload"), formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
