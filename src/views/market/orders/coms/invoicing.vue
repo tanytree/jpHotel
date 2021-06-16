@@ -25,11 +25,11 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('desk.order_payCompanyName') + ':'" prop="companyName">
-              <el-input class="width150" type="text" v-model="openInvoiceForm.companyName" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-col>
+<!--          <el-col :span="8">-->
+<!--            <el-form-item :label="$t('desk.order_payCompanyName') + ':'" prop="companyName">-->
+<!--              <el-input class="width150" type="text" v-model="openInvoiceForm.companyName" autocomplete="off"></el-input>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
           <el-col :span="8">
             <el-form-item :label="$t('desk.order_constProject') + ':'" prop="projectName">
               <el-input class="width150" type="text" v-model="openInvoiceForm.projectName" autocomplete="off"></el-input>
@@ -47,11 +47,11 @@
               <el-input class="width150" type="number" v-model="openInvoiceForm.invoicePrice" autocomplete="off"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('desk.customer_constPrice') + ':'">
-              <el-input class="width150" type="number" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-col>
+<!--          <el-col :span="8">-->
+<!--            <el-form-item :label="$t('desk.customer_constPrice') + ':'">-->
+<!--              <el-input class="width150" type="number" v-model="openInvoiceForm.consumePrice" autocomplete="off"></el-input>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
         </el-row>
         <el-row>
            <el-col :span="12">

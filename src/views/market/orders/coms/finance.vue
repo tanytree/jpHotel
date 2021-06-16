@@ -23,7 +23,7 @@
                     <el-button type="danger" size="mini" :disabled="currentRoom.state == 2" @click="entryShow=true,isType=1">{{$t('desk.customer_collection')}}</el-button>
                     <el-button type="danger" size="mini" @click="checkOutHandle" :disabled="currentRoom.state == 2">{{ $t('desk.order_checkout') }}</el-button>
                     <el-button type="primary" size="mini" @click="onAccountShow" :disabled="currentRoom.state == 2">{{ $t('desk.charge') }}</el-button>
-<!--                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>-->
+                    <!--                    <el-button type="primary" size="mini" @click="invoicingHandle">{{ $t('desk.order_invoice') }}</el-button>-->
                     <!-- <el-button type="primary" size="mini" @click="out_check_in_cancel" >撤销退房</el-button> -->
                 </el-form-item>
             </el-row>
@@ -69,17 +69,17 @@
                     <span v-else :class="row.richType == 1 ? 'red' : ''">{{$F.numFormate(row.consumePrice)}}</span>
                 </template>
             </el-table-column>
-             <el-table-column  :label="$t('desk.book_costFee')">
-                 <template slot-scope="{ row }">
-                     {{$F.numFormate(row.consumTaxPrice)}}
-                 </template>
-             </el-table-column>
-             <el-table-column  :label="$t('desk.book_serveFee')">
-                 <template slot-scope="{ row }">
-                     {{$F.numFormate(row.servicePrice)}}
-                 </template>
-             </el-table-column>
-             <el-table-column  :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
+            <el-table-column  :label="$t('desk.book_costFee')">
+                <template slot-scope="{ row }">
+                    {{$F.numFormate(row.consumTaxPrice)}}
+                </template>
+            </el-table-column>
+            <el-table-column  :label="$t('desk.book_serveFee')">
+                <template slot-scope="{ row }">
+                    {{$F.numFormate(row.servicePrice)}}
+                </template>
+            </el-table-column>
+            <el-table-column  :label="$t('desk.order_yewu')" width="200" show-overflow-tooltip>
                 <template slot-scope="{row}">
                     <!-- "1": '订金',
                      "2": '押金',
@@ -100,8 +100,8 @@
                      "100": '其他' -->
 
                     <div :class="row.richType == 1 ? 'text-blue' : ''">
-                       <span v-if="row.richType == 1 ? 'text-blue' : ''"> {{F_priceType(9)}}--</span>
-                       <span v-if="row.priceType == 1">
+                        <span v-if="row.richType == 1 ? 'text-blue' : ''"> {{F_priceType(9)}}--</span>
+                        <span v-if="row.priceType == 1">
                             <span v-if="row.payType == 1">{{$t('desk.add_cashDeposit')}}</span>
                             <span v-if="row.payType == 2">{{$t('desk.add_cardDeposit')}}</span>
                             <span v-if="row.payType == 4">{{$t('desk.add_otherDeposit')}} </span>
@@ -234,22 +234,22 @@
                     </span>
                 </template>
             </el-table-column>
-           <el-table-column :label="$t('commons.operating')">
-               <template slot-scope="{row}">
-                   <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
-               </template>
-           </el-table-column>
+            <el-table-column :label="$t('commons.operating')">
+                <template slot-scope="{row}">
+                    <el-button type="text" size="mini" @click="consume_move(row)">{{$t('desk.customer_remove')}}</el-button>
+                </template>
+            </el-table-column>
         </el-table>
         <div style="margin-top:10px"></div>
         <!-- 分页 -->
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="searchForm.pageIndex" :page-sizes="[10, 50, 100, 200]" :page-size="searchForm.pageSize" layout=" sizes, prev, pager, next, jumper" :total="listTotal"></el-pagination>
 
-        <!--入账 -->
+        <!--入账 收款 -->
         <el-dialog width="600px" top='0' :title="isType == 0 ? $t('desk.enterAccountB') : $t('desk.customer_collection') " :visible.sync="entryShow">
             <el-form :model="consumeOperForm" ref="entry" :rules="rules" size="mini" label-width="100px">
-                 <p><b style="padding-left: 30px;">{{$t('desk.book_firstInto')}}</b></p>
-                  <!-- <el-form-item :label="$t('desk.book_firstInto')"></el-form-item> -->
-                 <el-form-item :label="$t('desk.order_consumptionProject')+':'" v-show="isType == 0">
+                <p><b style="padding-left: 30px;">{{$t('desk.book_firstInto')}}</b></p>
+                <!-- <el-form-item :label="$t('desk.book_firstInto')"></el-form-item> -->
+                <el-form-item :label="$t('desk.order_consumptionProject')+':'" v-show="isType == 0">
                     <el-radio-group v-model="consumeOperForm.priceType" @change="priceTypeChange">
                         <!-- <el-radio-button :label="5" :value="5">{{$t('desk.order_addDayPrice')}}</el-radio-button> -->
                         <el-radio-button :label="6" :value="6">{{$t('desk.order_addHalfPrice')}}</el-radio-button>
@@ -316,9 +316,9 @@
                     <el-input type="textarea" v-model="consumeOperForm.remark" autocomplete="off"></el-input>
                 </el-form-item>
                 <div style="padding-left: 100px;" v-if="isType == 1">
-                   <el-checkbox v-model="isUseSeserve"></el-checkbox>
-                   <!-- <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span> -->
-                   <span class="margin-l-8">{{$t('desk.book_printDocumentsB')}}</span>
+                    <el-checkbox v-model="isUseSeserve"></el-checkbox>
+                    <!-- <span class="margin-l-8">{{$t('desk.add_useSelectPro')}}</span> -->
+                    <span class="margin-l-8">{{$t('desk.book_printDocumentsB')}}</span>
                 </div>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -673,7 +673,7 @@ export default {
             reserveId:'',//预定项目ID
             reserveProjects:{},//预定项目
             // isUseSeserve:true, //是否使用预定项目
-            isUseSeserve:true, //是否打印单据
+            isUseSeserve:false, //是否打印单据
             roomType:''
         };
     },
@@ -701,6 +701,7 @@ export default {
     },
 
     mounted() {
+        this.isUseSeserve = false;
         let id = this.$route.query.id;
         this.fetchHotelattaChmealList();
         this.get_consume_tax();
@@ -883,13 +884,13 @@ export default {
                 if(priceType == 5 || priceType == 6){
                     if(this.currentRoom.taxStatus == 1){
                         if(this.currentRoom.seviceStatus == 1){
-                           //不包含服务税
-                           //  1,1,fasle,in
+                            //不包含服务税
+                            //  1,1,fasle,in
                             taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
                             // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
                         }else{
-                           //1,2,false,in
-                           taxFee += parseFloat(consumePrices * consumeTax)
+                            //1,2,false,in
+                            taxFee += parseFloat(consumePrices * consumeTax)
                         }
                     }
                     //不包含服务税
@@ -913,8 +914,6 @@ export default {
                 }
                 params.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
                 params.servicePrice  = parseFloat(service).toFixed(0)
-                // console.log(rzSum)else
-                // debugger
                 let p = parseFloat(this.consumeOperForm.consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
                 params.consumePrice =  parseFloat(p).toFixed(0)
                 if(params.priceType == 5){
@@ -1008,26 +1007,41 @@ export default {
 
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
-                        this.entryShow = false
-                        this.destructionShow = false;
-                        this.consumeOperForm = {
-                            consumePrice: '',
-                            priceType: '',
-                            payType: '',
-                            name: ''
-                        }
-                        this.getOrderDetail();
-                        // 选择打印单据
-                        // if(this.isUseSeserve){
-                        //     this.$refs.articleCollection.openDialog(this.detailData, this.currentRoom, params);
-                        // }
-                    })
+                    this.getPrintNum(params, () => {
+                        this.$F.doRequest(this, '/pms/consume/consume_oper', params, (res) => {
+                            this.entryShow = false
+                            this.destructionShow = false;
+                            this.consumeOperForm = {
+                                consumePrice: '',
+                                priceType: '',
+                                payType: '',
+                                name: ''
+                            }
+                            // 选择打印单据
+                            if(this.isUseSeserve){
+                                this.$refs.articleCollection.openDialog(this.detailData, this.currentRoom, params, params.printNum);
+                            } else {
+                                this.getOrderDetail();
+                            }
+                            this.isUseSeserve = false;
+                        })
+                    });
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
+        },
+
+        getPrintNum(params = {}, callback) {
+            if(this.isUseSeserve){
+                this.$F.getPrintNum('PAY', (expenseDetailNum) => {
+                    params.printNum = expenseDetailNum;
+                    callback();
+                })
+            } else {
+                callback();
+            }
         },
 
         initDetail() {
@@ -1141,7 +1155,7 @@ export default {
                         return person.personType == 2
                     }) || [];
 
-                   this.consumeOperForm.consumePrices = tempArray[0].housePrice
+                    this.consumeOperForm.consumePrices = tempArray[0].housePrice
                 }
                 if (e == 6) {
                     this.consumeOperForm.consumePrices = this.consumeOperForm.consumePrices * 0.5;
@@ -1190,16 +1204,16 @@ export default {
                     //     this.consumeOperForm.consumePrices = p
                     //     this.consumeOperForm.consumePrice = p
                     // }else{
-                        for(let i in list){
-                            if(this.consumeOperForm.damageId == list[i].id){
-                                // console.log(list[i])
-                                // console.log(this.consumeOperForm.damageCount)
-                                let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
-                                this.consumeOperForm.consumePrices = p
-                                this.consumeOperForm.consumePrice = p
-                                this.consumeOperForm.damageName = list[i].name
-                            }
+                    for(let i in list){
+                        if(this.consumeOperForm.damageId == list[i].id){
+                            // console.log(list[i])
+                            // console.log(this.consumeOperForm.damageCount)
+                            let p = parseFloat(list[i].damagePrice)  * parseFloat(this.consumeOperForm.damageCount)
+                            this.consumeOperForm.consumePrices = p
+                            this.consumeOperForm.consumePrice = p
+                            this.consumeOperForm.damageName = list[i].name
                         }
+                    }
                     // }
 
 
@@ -1383,7 +1397,7 @@ export default {
             this.consume_order_list();
         },
         getOrderDetail(transferObj){
-           console.log('finance：'+transferObj);
+            console.log('finance：'+transferObj);
             // console.log(111)
             this.$emit('getOrderDetail',transferObj)
         },

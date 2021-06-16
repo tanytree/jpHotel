@@ -28,10 +28,10 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableDatas" border height="100%" header-row-class-name="default" size="small">
-        <el-table-column prop="name" :label="$t('desk.home_customerName')" width="140"></el-table-column>
-        <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="100"></el-table-column>
-         <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="150"></el-table-column>
-        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>
+        <el-table-column prop="name" :label="$t('desk.home_customerName')" width="160"></el-table-column>
+        <el-table-column prop="roomNum" :label="$t('desk.home_roomNum')" width="120"></el-table-column>
+         <el-table-column prop="receiptNumber" :label="$t('desk.add_receiptNo')" width="250"></el-table-column>
+<!--        <el-table-column prop="companyName" :label="$t('desk.home_payCompanyName')" width="120"></el-table-column>-->
         <el-table-column  :label="$t('desk.customer_sum')" width="100">
           <template slot-scope="{row}">
             {{$F.numFormate(row.prices)}}
@@ -79,24 +79,24 @@
                         }}</span>
             {{ $F.numFormate(invoiceDetail.prices) }}
           </el-col>
+<!--          <el-col :span="12" style="margin-bottom: 10px">-->
+<!--            <span style="color: #888888">{{-->
+<!--                            $t("desk.order_receiptTime") +  "："-->
+<!--                        }}</span>-->
+<!--            {{ invoiceDetail.createTime }}-->
+<!--          </el-col>-->
           <el-col :span="12" style="margin-bottom: 10px">
-            <span style="color: #888888">{{
-                            $t("desk.order_receiptTime") +  "："
-                        }}</span>
-            {{ invoiceDetail.createTime }}
-          </el-col>
-          <el-col :span="8" style="margin-bottom: 10px">
             <span style="color: #888888">{{
                             $t("desk.order_constProject") + "："
                         }}</span>
             {{ invoiceDetail.projectName }}
           </el-col>
-           <el-col :span="12" style="margin-bottom: 10px">
+           <el-col :span="8" style="margin-bottom: 10px">
             <span style="color: #888888">{{$t('desk.order_invoicedAmount')}}：</span>{{ $F.numFormate(invoiceDetail.invoicePrice) }}
           </el-col>
-           <el-col :span="8" style="margin-bottom: 10px">
-            <span style="color: #888888">{{$t('desk.customer_constPrice')}}：</span>{{ $F.numFormate(invoiceDetail.consumePrice) }}
-          </el-col>
+<!--           <el-col :span="8" style="margin-bottom: 10px">-->
+<!--            <span style="color: #888888">{{$t('desk.customer_constPrice')}}：</span>{{ $F.numFormate(invoiceDetail.consumePrice) }}-->
+<!--          </el-col>-->
           <el-col :span="12">
             <span style="color: #888888">{{
                             $t("desk.home_note") +  "："

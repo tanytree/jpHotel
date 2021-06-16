@@ -94,7 +94,8 @@ export default {
           this.printDialog = false;
            this.$emit('initDetail');
         },
-        openDialog(detailData, currentRoom, params) {
+        openDialog(detailData, currentRoom, params, expenseDetailNum) {
+            this.expenseDetailNum = expenseDetailNum;
             console.log(JSON.parse(JSON.stringify(params)));
             console.log(JSON.parse(JSON.stringify(detailData)));
             console.log(JSON.parse(JSON.stringify(currentRoom)));
@@ -102,9 +103,9 @@ export default {
             this.params = params;
             this.currentRoom = currentRoom;
             this.printDialog = true;
-            this.$F.getPrintNum('PAY', (res) => {
-                this.expenseDetailNum = res;
-            })
+            // this.$F.getPrintNum('PAY', (res) => {
+            //     this.expenseDetailNum = expenseDetailNum;
+            // })
             this.$F.findHotelInfo((res) => {
                 this.hotelData = res;
             });
