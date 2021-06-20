@@ -80,7 +80,7 @@
                 <img src="../assets/images/storeLookTao/housePrice.png" class="boxLeft" />
                 <div class="boxRight">
                   <div class="boxRight_top">{{$t('boss.add_averageRoomprice')}}</div>
-                  <div class="botRight_bottom">{{$F.numFormate((itemInfo.room_avg_prices).toFixed(2))}}</div>
+                  <div class="botRight_bottom">{{$F.numFormate(itemInfo.room_avg_prices)}}</div>
                 </div>
               </div>
             </el-col>

@@ -775,16 +775,7 @@ export default {
             //该id为checkinId
             this.$refs.cardTao.resetVisibel(this.$route.query.id);
         },
-        //撤销结账
-        // undoCheckoutA() {
-        //     this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', {
-        //         checkInId: this.checkInId
-        //     }, res => {
-        //         this.$router.push("/orders?type=order");
-        //     }, res => {
-        //         this.$message(res.message);
-        //     })
-        // },
+
 
         //加载财务列表
         consume_order_list(state) {
@@ -1104,16 +1095,6 @@ export default {
         //     });
         //
         // },
-        //撤销退款
-        out_check_in_cancel(){
-            let params = {
-                checkInId:this.$route.query.id
-            };
-            this.$F.doRequest(this, '/pms/checkin/out_check_in_cancel', params, (res) => {
-                this.getOrderDetail()
-            })
-
-        },
 
 
         hoteldamagetype_list() {

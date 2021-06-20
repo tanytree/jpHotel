@@ -37,19 +37,19 @@
                                     <table>
                                         <tr>
                                             <td>合計領収金額</td>
-                                            <td>¥{{$F.numFormate(hotTaxPrice + hotelTaxPrice + consumTaxPrice)}}</td>
+                                            <td>¥{{$F.numFormate((hotTaxPrice || 0) + (hotelTaxPrice || 0) + (consumTaxPrice || 0))}}</td>
                                         </tr>
                                         <tr>
                                             <td>内入湯税</td>
-                                            <td>（¥{{ $F.numFormate(hotTaxPrice) }}）</td>
+                                            <td>（¥{{ $F.numFormate(hotTaxPrice || 0) }}）</td>
                                         </tr>
                                         <tr>
                                             <td>内宿泊税</td>
-                                            <td>（¥{{$F.numFormate(hotelTaxPrice)}}）</td>
+                                            <td>（¥{{$F.numFormate(hotelTaxPrice || 0)}}）</td>
                                         </tr>
                                         <tr>
                                             <td>内消費税</td>
-                                            <td>（¥{{$F.numFormate(consumTaxPrice)}}）</td>
+                                            <td>（¥{{$F.numFormate(consumTaxPrice || 0)}}）</td>
                                         </tr>
                                     </table>
                                 </div>

@@ -283,7 +283,7 @@ module.exports = {
   add_allSaleRoom: '总销售客房数',
   add_allSaleCustormer: '总销售客数',
   add_rents: '入住率',
-  add_averageRoomprice: '平均房价',
+  add_averageRoomprice: 'DOR',
   add_averageCoustormerprice: '平均客单价',
   add_roomSaleNum: '客房销售额',
   add_foodAstore: '餐饮/商店部销售',

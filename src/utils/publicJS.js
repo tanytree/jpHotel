@@ -385,7 +385,10 @@ const $F = {
                 });
             });
         } else {
-            return num || '';
+            if (num === 0) {
+                return 0
+            }
+            return '';
         }
     },
     //将yyyy-MM-dd HH:mm:ss格式的时间分割成数组

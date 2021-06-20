@@ -343,6 +343,7 @@ export default {
       //读取二进制excel文件,参考https://github.com/SheetJS/js-xlsx#utility-functions
         var reportHttpUrl = item.reportHttpUrl;
         var reportLocalUrl = item.reportLocalUrl;
+        // let url = "/pms/system/download?platSource=1005&fileName=" + reportLocalUrl;
         let url = "/pms-server/pms/system/download?platSource=1005&fileName=" + reportLocalUrl;
         axios
         .get(url, { responseType: "arraybuffer" })
@@ -356,9 +357,24 @@ export default {
           this.err = err;
         });
     },
+    addRangeBorder(range,ws){
+        let arr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+        range.forEach(item=>{
+            let startRowNumber = Number(item.s.c),
+                endRowNumber = Number(item.e.c);
+
+            for(let i = startRowNumber +1;i<= endRowNumber;i++){
+                ws[arr[i]+(Number(item.e.r)+1)]= {s:{border:{top:{style:'thin'}, left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}}}};
+            }
+        })
+        return ws;
+    },
 
     transformSheets(sheets) {
-      let a = this;
+        let a = this;
+        // for (let key in sheets) {
+        //     sheets = a.addRangeBorder(sheets[key]['!merges'], sheets[key]);
+        // }
       var content = [];
       var content1 = [];
       var tmplist = [];
@@ -371,12 +387,19 @@ export default {
       }
       var maxLength = Math.max.apply(Math, tmplist);
       //进行行列转换
+        console.log(tmplist);
+        console.log(content1);
+        debugger
       for (let y in [...Array(maxLength)]) {
         content.push([]);
         for (let x in [...Array(tmplist.length)]) {
           try {
             for (let z in content1[x][y]) {
-              content[y].push(content1[x][y][z]);
+                if (content1[x][y][z] || content1[x][y][z] == 0) {
+                    content[y].push( content1[x][y][z]);
+                } else {
+                    content[y].push(' ');
+                }
             }
           } catch (error) {
             content[y].push(" ");

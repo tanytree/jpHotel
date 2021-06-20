@@ -478,17 +478,17 @@ export default {
             params.priceType = 4
         }
       console.log(params);
-      // this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-      //   console.log(res);
-      //
-      // });
-        let transferObj ={
-            checked:this.checkoutForm.checked,
-            // orderId: res.orderId,
-            consumeSum: this.numFormate(this.getPriceStr(this.getRealPayFee.sum - this.detailData.payPrice  - this.checkoutForm.preferentialPrice)),
-            type:'checkoutTao'   //退房结账
-        }
-        this.set_out_check_in(transferObj);
+      this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
+          console.log(res);
+          let transferObj ={
+              checked:this.checkoutForm.checked,
+              // orderId: res.orderId,
+              consumeSum: this.numFormate(this.getPriceStr(this.getRealPayFee.sum - this.detailData.payPrice  - this.checkoutForm.preferentialPrice)),
+              type:'checkoutTao'   //退房结账
+          }
+          this.set_out_check_in(transferObj);
+      });
+
     },
 
     set_out_check_in(transferObj) {
