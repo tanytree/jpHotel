@@ -16,8 +16,8 @@
                 <div class="taxBox text-size14">
                   <div class="item"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('desk.book_serveFee')}} <span class="text-size12">({{orderTax.servicePrice}})</span></span> <span class="text-right">￥{{orderTax.service == 0 ? '0' :numFormate(orderTax.service)}}</span> </div>
-                  <div class="item"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div>
-                  <div class="item"><span class="w70">{{$t('desk.book_costFee2')}}（{{orderTax.tax}}）</span><span>¥{{numFormate(orderTax.taxInFee)}}</span></div>
+                  <!-- <div class="item"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div> -->
+                  <div class="item"><span class="w70">{{$t('desk.book_costFee')}}<span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span> </span><span>¥{{numFormate(orderTax.taxInFee)}}</span></div>
                   <div class="item"><span class="w70">{{$t('desk.serve_heji')}}</span> <span class="text-right">￥{{numFormate(orderTax.sum)}}</span> </div>
                 </div>
               </span>
@@ -32,9 +32,9 @@
           <el-button style="margin-left: 10px;" size="small">{{$t('food.common.read_member_card')}}</el-button>
         </el-form-item>
 
-        <el-form-item :label="$t('shop.yhPrice')" v-if="form.billingType == 1">
+        <!-- <el-form-item :label="$t('shop.yhPrice')" v-if="form.billingType == 1">
           <el-input size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item v-if="form.billingType == 1" :label="$t('food.reset.payPrice')">
           ￥{{numFormate(orderTax.sum - form.preferentialPrice)}}
         </el-form-item>
@@ -238,11 +238,8 @@ export default {
 
     //订单各种税后价格
     getOrderTax() {
-      this.orderTax = this.getTaxInfo(
-        this.taxInfo,
-        this.orderSubList,
-        this.outFlag
-      );
+      this.orderTax = this.getTaxInfo(this.taxInfo,this.orderSubList,this.outFlag);
+      console.log(this.orderTax)
     },
     //获取传过来的值
     getInfo(data) {

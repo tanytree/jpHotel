@@ -4,12 +4,12 @@
                 <el-input size="small" v-model="info.name" :placeholder="$t('food.common.food_title')"></el-input>
               </el-form-item>
               <el-form-item  size="small" :label="$t('food.common.taxStatus')" required>
-                   <el-radio v-model="info.taxStatus" :label="1">{{$t('food.reset.noTax')}}</el-radio>
+                   <!-- <el-radio v-model="info.taxStatus" :label="1">{{$t('food.reset.noTax')}}</el-radio> -->
                    <el-radio v-model="info.taxStatus" :label="2">{{$t('food.reset.haveTax')}}</el-radio>
               </el-form-item>
               <el-form-item  size="small"  :label="$t('food.common.seviceStatus')" required>
                    <el-radio v-model="info.seviceStatus" :label="1">{{$t('food.reset.noServe')}}</el-radio>
-                   <el-radio v-model="info.seviceStatus" :label="2">{{$t('food.reset.haveServe')}}</el-radio>
+                   <!-- <el-radio v-model="info.seviceStatus" :label="2">{{$t('food.reset.haveServe')}}</el-radio> -->
               </el-form-item>
               <el-form-item  size="small"  :label="$t('food.common.cate')" prop="categoryId">
                 <el-cascader
@@ -84,7 +84,7 @@
                    name:'',
                    categoryId:'',
                    categoryName:'',
-                   taxStatus:1,
+                   taxStatus:2,
                    seviceStatus:1,
                    costPrice:'',
                    price:'',
@@ -148,7 +148,7 @@
                      state:data.state,
                      dishesId:data.id,
                      state:data.state,
-                     taxStatus:data.taxStatus ? data.taxStatus : 1 ,
+                     taxStatus:data.taxStatus ? data.taxStatus : 2 ,
                      seviceStatus:data.seviceStatus ? data.seviceStatus : 1,
                      costPrice:data.costPrice
                 }
@@ -170,6 +170,10 @@
                      images:'',
                      dishesId:'',
                      state:1,
+                     taxStatus:2,
+                     seviceStatus:1
+                     
+                     
                 }
                 this.files = []
             },

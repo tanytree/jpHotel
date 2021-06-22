@@ -159,14 +159,14 @@
 
             <!-- 是否含消费税 -->
             <el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
-              <el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
+              <!-- <el-radio v-model="ruleForm.taxStatus" :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio> -->
               <el-radio v-model="ruleForm.taxStatus" :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
             </el-form-item>
 
             <!-- 是否包含服务费 -->
             <el-form-item v-if="active_tag == 'one'" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
               <el-radio v-model="ruleForm.seviceStatus" :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
-              <el-radio v-model="ruleForm.seviceStatus" :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
+              <!-- <el-radio v-model="ruleForm.seviceStatus" :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio> -->
             </el-form-item>
 
             <!-- 早餐 -->
@@ -330,11 +330,11 @@ export default {
         personPrice: "", //住宿价格
         mealBreakfast: "",
         mealDinner: "",
-        otaFeizhuPrice: "", 
+        otaFeizhuPrice: "",
         otaXiechengPrice: "",
         otaMeituan: "",
-        taxStatus: 0,
-        seviceStatus: 2,
+        taxStatus:2,
+        seviceStatus: 1,
       },
       selectedInfo: {}, // 选中的某条
       formData: {},

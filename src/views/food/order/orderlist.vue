@@ -120,10 +120,9 @@
         <div class="margin-t-10 text-gray">{{$t('food.reset.order_price')}}：¥{{orderTax.sum}} </div>
         <div class="taxBox text-size14 text-gray">
           <div class="item margin-t-10">{{$t('food.reset.servePri')}}({{orderTax.servicePrice}})： ¥{{orderTax.service}} </div>
-          <div class="item margin-t-10">消費税（込み）<span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span>： ¥{{orderTax.taxFee}} </div>
-          <div class="item margin-t-10"><span>消費税（抜き）<span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span>：</span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
-
-          <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div>
+          <!-- <div class="item margin-t-10">消費税<span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span>： ¥{{orderTax.taxFee}} </div> -->
+          <div class="item margin-t-10"><span>{{$t('desk.book_costFee')}}<span class="text-size12">({{orderTax.type}} {{orderTax.tax}})</span>：</span><span>¥{{numFormate(orderTax.taxInFee)}}；</span></div>
+          <!-- <div class="item margin-t-10" v-if="detail.billingType == 1">{{$t('food.reset.yhPrice')}}： ¥{{detail.preferentialPrice ? detail.preferentialPrice : 0}}</div> -->
           <div class="item margin-t-10" v-if="detail.billingType">
             {{$t('food.reset.paymoney')}}: {{detail.billingType == 1 ? '【'+$t('commons.payType.'+ detail.payType) + '】' : '【'+$t('food.billingType.'+ detail.billingType) + '】' }} ¥{{numFormate(detail.realPayPrice)}}
             <span style="margin-left:10px" v-if="detail.billingType==3">{{$t('desk.customer_roomNumber')}}{{checkRoomNum(detail.signRoomId)}}</span>

@@ -59,14 +59,14 @@
                 </el-form-item>
                 <el-form-item :label="$t('food.common.taxStatus')" prop="taxStatus">
                     <el-radio-group v-model="meal.taxStatus">
-                        <el-radio :label="1">{{$t('food.common.no_tax')}}</el-radio>
+                        <!-- <el-radio :label="1">{{$t('food.common.no_tax')}}</el-radio> -->
                         <el-radio :label="2">{{$t('food.common.is_tax')}}</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item :label="$t('food.common.seviceStatus')" prop="seviceStatus">
                     <el-radio-group v-model="meal.seviceStatus">
                         <el-radio :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
-                        <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
+                        <!-- <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio> -->
                     </el-radio-group>
                 </el-form-item>
                 <!--<el-form-item :label="$t('boss.loginDetail_state')+ '：'">
@@ -99,7 +99,7 @@
                 },
                 mealTime: 0, list: [], total: 0,
                 mealTitle: this.$t('desk.customer_newAdd'), mealVisible: false,
-                meal: {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 1, seviceStatus: 1, remark: ''},
+                meal: {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 2, seviceStatus: 1, remark: ''},
                 rules: {
                     mealName: [{ required: true, message: this.$t('manager.add_inputPackageName'), trigger: 'blur' }],
                     mealPrice: [{ required: true, message: this.$t('manager.add_inputPackagePrice'), trigger: 'blur' }],
@@ -138,7 +138,7 @@
                 this.getMealList(this.pageForm, this.mealTime);
             },
             addMeal() {
-                this.meal = {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 1, seviceStatus: 1, remark: ''};
+                this.meal = {mealName: '', mealPrice: '', costPrice: '', mealTime: 1, taxStatus: 2, seviceStatus: 1, remark: ''};
                 this.mealTitle = this.$t('desk.customer_newAdd');
                 this.mealVisible = true;
             },

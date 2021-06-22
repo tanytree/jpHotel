@@ -97,7 +97,7 @@
           <el-col :span="8">
             <el-form-item label-width="120px" :label="$t('manager.grsl_goodsTax')+':'" prop="taxStatus">
               <el-radio-group v-model="rowData.taxStatus">
-                <el-radio :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio>
+                <!-- <el-radio :label="1">{{$t('manager.grsl_goodsTaxN')}}</el-radio> -->
                 <el-radio :label="2">{{$t('manager.grsl_goodsTaxY')}}</el-radio>
               </el-radio-group>
             </el-form-item>
@@ -106,7 +106,7 @@
             <el-form-item label-width="120px" :label="$t('manager.grsl_goodsService')+':'" prop="seviceStatus">
               <el-radio-group v-model="rowData.seviceStatus">
                 <el-radio :label="1">{{$t('manager.grsl_goodsServiceN')}}</el-radio>
-                <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio>
+                <!-- <el-radio :label="2">{{$t('manager.grsl_goodsServiceY')}}</el-radio> -->
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -231,7 +231,7 @@ export default {
         minutePrice: "",
         capsPrice: "",
         depositPrice: "",
-        taxStatus: 1,
+        taxStatus:2,
         seviceStatus: 1,
       },
       threerules: {
@@ -489,7 +489,7 @@ export default {
           minutePrice: "",
           capsPrice: "",
           depositPrice: "",
-          taxStatus: 1,
+          taxStatus: 2,
           seviceStatus: 1,
         };
       });
