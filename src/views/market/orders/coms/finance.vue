@@ -961,14 +961,22 @@ export default {
                 //     return false
                 // }
                 let priceTypeList = this.priceTypeList
-                if(priceTypeList.indexOf(priceType) > -1){
-                    // console.log('消费类')
-                    params.payPrice = ''
-                    params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrices)
-                }else{
-                    // console.log('付款类')
-                    params.consumePrice = ''
-                    params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.consumePrices)
+                params.payPrice = ''
+                params.consumePrice = ''
+                // if(priceTypeList.indexOf(priceType) > -1){
+                //     // console.log('消费类')
+                //     params.payPrice = ''
+                //     params.consumePrice = 0 - this.getPriceStr(this.consumeOperForm.consumePrices)
+                // }else{
+                //     // console.log('付款类')
+                //     params.consumePrice = ''
+                //     params.payPrice = 0 -  this.getPriceStr(this.consumeOperForm.consumePrices)
+                // }
+                if (this.destructionList[0].payPrice) {
+                    params.payPrice = -this.destructionList[0].payPrice
+                }
+                if (this.destructionList[0].consumePrice) {
+                    params.consumePrice = -this.destructionList[0].consumePrice
                 }
                 params.richIds = this.destructionList[0].id
                 params.priceType = this.consumeOperForm.priceType
