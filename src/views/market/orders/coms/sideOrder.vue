@@ -216,56 +216,54 @@ export default {
       // let outConsumeTax = tax.outConsumeTax ?  tax.outConsumeTax / 100 : 0 //out对应的税率 type:true
       let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0;
       let service = 0; //服务费
-      let taxFee = 0; //消费税
+      let taxInFee = 0; //消费税
       let total = 0;
-      if (obj.taxStatus == 1) {
-        if (obj.seviceStatus == 1) {
-          //不包含服务税
-          //  1,1,fasle,in
-          taxFee +=
-            (obj.consumePrice + obj.consumePrice * servicePrice) * consumeTax;
-          // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
-        } else {
-          //1,2,false,in
-          taxFee += obj.consumePrice * consumeTax;
-        }
+      let outFlag = false
+
+      if(obj.taxStatus == 2 && obj.seviceStatus == 1){
+              total += obj.consumePrice
+          if(outFlag){
+              taxInFee +=  this.getTaxIn_2(outFlag,servicePrice,outConsumeTax,obj.totalPrice)
+          }else{
+              taxInFee += this.getTaxIn_2(outFlag,servicePrice,consumeTax,obj.consumePrice)
+              service +=  this.getTaxService(servicePrice,consumeTax,obj.consumePrice)
+          }
       }
-      //不包含服务税
-      if (obj.seviceStatus == 1) {
-        //不包含消费税
-        if (obj.taxStatus == 1) {
-          service += obj.consumePrice * servicePrice;
-        } else {
-          //包含消费税
-          let f = 1.0 + consumeTax;
-          service += (obj.consumePrice / f) * servicePrice;
-        }
-      }
+
+      // if (obj.taxStatus == 1) {
+      //   if (obj.seviceStatus == 1) {
+      //     //不包含服务税
+      //     //  1,1,fasle,in
+      //     taxFee +=
+      //       (obj.consumePrice + obj.consumePrice * servicePrice) * consumeTax;
+      //     // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+      //   } else {
+      //     //1,2,false,in
+      //     taxFee += obj.consumePrice * consumeTax;
+      //   }
+      // }
+      // //不包含服务税
+      // if (obj.seviceStatus == 1) {
+      //   //不包含消费税
+      //   if (obj.taxStatus == 1) {
+      //     service += obj.consumePrice * servicePrice;
+      //   } else {
+      //     //包含消费税
+      //     let f = 1.0 + consumeTax;
+      //     service += (obj.consumePrice / f) * servicePrice;
+      //   }
+      // }
+
       let pms = {
         service: service ? parseFloat(service) : 0,
-        taxFee: taxFee ? parseFloat(taxFee) : 0,
-        total: service + taxFee,
+        taxFee: taxInFee ? parseFloat(taxInFee) : 0,
+        total: service + total,
       };
-      // console.log(pms)
+      console.log(pms)
       return pms;
     },
 
-
     consumeOper(params = {}) {
-      // if (!this.currentHotelAttaChameal.id) {
-      //   return this.$message({
-      //     type: "warning",
-      //     message: this.$t("commons.request_success"),
-      //   });
-      // }
-
-
-        // if(!this.roomPrice || this.roomPrice < 0 || this.roomPrice == 0 | this.roomPrice == '' ){
-        //     this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
-        //     return false
-        // }
-
-
             params = this.sideForm;
             params.checkInId = this.checkInId;
             params.roomId = this.currentRoom2.roomId;
@@ -291,40 +289,64 @@ export default {
                 let priceType =  5
                 let service = 0 //服务费
                 let taxFee = 0 //消费税
+                let outFlag = false
+                let total = 0
+
+                console.log(this.sideForm.priceType)
                 if(priceType == 5){
-                  if(this.currentRoom2.taxStatus == 1){
-                      if(this.currentRoom2.seviceStatus == 1){
-                         //不包含服务税
-                         //  1,1,fasle,in
-                          taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
-                      }else{
-                         //1,2,false,in
-                         taxFee += parseFloat(consumePrices * consumeTax)
-                      }
-                  }
-                  //不包含服务税
-                  if(this.currentRoom2.seviceStatus == 1){
-                      //不包含消费税
-                      if(this.currentRoom2.taxStatus == 1){
-                          service += parseFloat(consumePrices * servicePrice)
-                      }else{
-                          //包含消费税
-                          let f = 1.00 + consumeTax
-                          service += parseFloat((consumePrices / f) * servicePrice)
-                      }
-                  }
-                  let pms = {
-                      service: service ? parseFloat(service).toFixed(0) :0,
-                      taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
-                  }
+
+
+                    if(this.currentRoom2.taxStatus == 2 && this.currentRoom2.seviceStatus == 1){
+                        if(outFlag){
+                            taxFee +=  this.getTaxIn_2(outFlag,servicePrice,outConsumeTax,consumePrices)
+                        }else{
+                            taxFee += this.getTaxIn_2(outFlag,servicePrice,consumeTax,consumePrices)
+                            service +=  this.getTaxService(servicePrice,consumeTax,consumePrices)
+                        }
+                    }
+
+
+
+                  // if(this.currentRoom2.taxStatus == 1){
+                  //     if(this.currentRoom2.seviceStatus == 1){
+                  //        //不包含服务税
+                  //        //  1,1,fasle,in
+                  //         taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
+                  //     }else{
+                  //        //1,2,false,in
+                  //        taxFee += parseFloat(consumePrices * consumeTax)
+                  //     }
+                  // }
+                  // //不包含服务税
+                  // if(this.currentRoom2.seviceStatus == 1){
+                  //     //不包含消费税
+                  //     if(this.currentRoom2.taxStatus == 1){
+                  //         service += parseFloat(consumePrices * servicePrice)
+                  //     }else{
+                  //         //包含消费税
+                  //         let f = 1.00 + consumeTax
+                  //         service += parseFloat((consumePrices / f) * servicePrice)
+                  //     }
+                  // }
+                  // let pms = {
+                  //     service: service ? parseFloat(service).toFixed(0) :0,
+                  //     taxFee:0
+                  //     // taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
+                  // }
                 }
                 info.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
                 info.servicePrice  = parseFloat(service).toFixed(0)
-                let p = parseFloat(consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
+                let p = parseFloat(consumePrices || 0)  +  parseFloat(service) //+  parseFloat(taxFee)
+                console.log(consumePrices)
+                console.log(service)
+                console.log(taxFee)
                 info.consumePrice =  parseFloat(p).toFixed(0)
                 info.priceType = priceType
                 info.payPrice = '';
                 info.remark = this.sideForm.remark;
+                console.log(info)
+
+
                 this.$F.doRequest(this, "/pms/consume/consume_oper", info, (res) => {
                     this.visible = false;
                     this.$emit("getOrderDetail");
@@ -341,15 +363,15 @@ export default {
               // console.log(all)
                 params.priceType = 17;
                 params.attachMealId = this.sideForm.attachMealIdBreatfast;
-                params.consumePrice = parseFloat(this.currentHotelAttaChamealBreakfast.consumePrice + all.total).toFixed(0);
+                params.consumePrice = parseFloat(this.currentHotelAttaChamealBreakfast.consumePrice + all.service).toFixed(0);
                 params.attachMealCount = this.currentHotelAttaChamealBreakfast.attachMealCount;
                 params.consumTaxPrice = parseFloat(all.taxFee).toFixed(0);
                 params.servicePrice = parseFloat(all.service).toFixed(0);
                 console.log(params);
                 // return
                 this.$F.doRequest(this, "/pms/consume/consume_oper", params, (res) => {
-                this.visible = false;
-                this.$emit("getOrderDetail");
+                    this.visible = false;
+                    this.$emit("getOrderDetail");
                 });
             }
             if(this.sideForm.attachMealIdDinner) {
@@ -358,7 +380,7 @@ export default {
               // console.log(att)
               params.priceType = 18;
               params.attachMealId = this.sideForm.attachMealIdDinner;
-              params.consumePrice = parseFloat(this.currentHotelAttaChamealDinner.consumePrice + att.total).toFixed(0);
+              params.consumePrice = parseFloat(this.currentHotelAttaChamealDinner.consumePrice + att.service).toFixed(0);
               params.attachMealCount = this.currentHotelAttaChamealDinner.attachMealCount;
               params.consumTaxPrice = parseFloat(att.taxFee).toFixed(0);
               params.servicePrice = parseFloat(att.service).toFixed(0);
@@ -369,18 +391,6 @@ export default {
                 this.$emit("getOrderDetail");
               });
             }
-            // }
-
-            // else{
-            //    this.visible = false;
-            //    this.$emit("getOrderDetail"); //暂时不执行回调订单详情等附餐选择接口完毕后重新刷新接口即可
-            // }
-
-
-        // }else{
-        //     this.$message ('プラン食事を選択してください。素泊まりの場合：「無し」を選択してください。');
-        //     return false
-        // }
     },
 
     //加載早餐晚餐

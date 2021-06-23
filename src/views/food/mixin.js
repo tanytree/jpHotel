@@ -160,6 +160,7 @@ const mixin= {
                     sum +=  parseFloat(parms[s])
                 }
                 parms.sum = sum
+                parms.taxFee = 0
                 parms.taxInFee = taxInFee
                 parms.servicePrice = tax.servicePrice+'%'
                 parms.tax =  outFlag ? tax.outConsumeTax+'%' : tax.consumeTax+'%'

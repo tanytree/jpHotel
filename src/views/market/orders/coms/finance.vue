@@ -787,11 +787,12 @@ export default {
                 this.searchForm.roomId = ''
             }
             this.$F.doRequest(this, '/pms/consume/consume_order_list', this.searchForm, (res) => {
+                console.log(res.consumeOrderList)
                 let list = res.consumeOrderList
                 let arr = []
                 for(let i =0;i<list.length;i++){
                     let element = list[i]
-                    if(element.priceType !== 9&&element.priceType !== 10){
+                    if(element.priceType !== 9 && element.priceType !== 10){
                         arr.push(element)
                     }
                 }
@@ -864,6 +865,7 @@ export default {
                 let servicePrice = tax.servicePrice ? tax.servicePrice / 100 : 0
                 let consumePrices = this.consumeOperForm.consumePrices
                 let priceType =  this.consumeOperForm.priceType
+                let outFlag = false
                 // let rzSum = 0
                 // let rzSerFee = 0
 
@@ -873,28 +875,41 @@ export default {
 
 
                 if(priceType == 5 || priceType == 6){
-                    if(this.currentRoom.taxStatus == 1){
-                        if(this.currentRoom.seviceStatus == 1){
-                            //不包含服务税
-                            //  1,1,fasle,in
-                            taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
-                            // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+
+
+                    if(this.currentRoom.taxStatus == 2 && this.currentRoom.seviceStatus == 1){
+                        if(outFlag){
+                            taxFee +=  this.getTaxIn_2(outFlag,servicePrice,outConsumeTax,consumePrices)
                         }else{
-                            //1,2,false,in
-                            taxFee += parseFloat(consumePrices * consumeTax)
+                            taxFee += this.getTaxIn_2(outFlag,servicePrice,consumeTax,consumePrices)
+                            service +=  this.getTaxService(servicePrice,consumeTax,consumePrices)
                         }
                     }
-                    //不包含服务税
-                    if(this.currentRoom.seviceStatus == 1){
-                        //不包含消费税
-                        if(this.currentRoom.taxStatus == 1){
-                            service += parseFloat(consumePrices * servicePrice)
-                        }else{
-                            //包含消费税
-                            let f = 1.00 + consumeTax
-                            service += parseFloat((consumePrices / f) * servicePrice)
-                        }
-                    }
+
+
+
+                    // if(this.currentRoom.taxStatus == 1){
+                    //     if(this.currentRoom.seviceStatus == 1){
+                    //         //不包含服务税
+                    //         //  1,1,fasle,in
+                    //         taxFee += ( parseFloat(consumePrices) + parseFloat(consumePrices * servicePrice) ) * consumeTax
+                    //         // taxFee += ( element.totalPrice + element.totalPrice * servicePrice ) * consumeTax
+                    //     }else{
+                    //         //1,2,false,in
+                    //         taxFee += parseFloat(consumePrices * consumeTax)
+                    //     }
+                    // }
+                    // //不包含服务税
+                    // if(this.currentRoom.seviceStatus == 1){
+                    //     //不包含消费税
+                    //     if(this.currentRoom.taxStatus == 1){
+                    //         service += parseFloat(consumePrices * servicePrice)
+                    //     }else{
+                    //         //包含消费税
+                    //         let f = 1.00 + consumeTax
+                    //         service += parseFloat((consumePrices / f) * servicePrice)
+                    //     }
+                    // }
                     let pms = {
                         service: service ? parseFloat(service).toFixed(0) :0,
                         taxFee:taxFee ? parseFloat(taxFee).toFixed(0) : 0
@@ -905,7 +920,7 @@ export default {
                 }
                 params.consumTaxPrice  =  parseFloat(taxFee).toFixed(0)
                 params.servicePrice  = parseFloat(service).toFixed(0)
-                let p = parseFloat(this.consumeOperForm.consumePrices || 0)  +  parseFloat(service) +  parseFloat(taxFee)
+                let p = parseFloat(this.consumeOperForm.consumePrices || 0)  +  parseFloat(service)// +  parseFloat(taxFee)
                 params.consumePrice =  parseFloat(p).toFixed(0)
                 if(params.priceType == 5){
                     params.reserveId = this.reserveProjects.id

@@ -76,8 +76,8 @@
                     <el-row class="">
                        <div class="item mb10"><span class="w70">{{$t('desk.customer_xiaoJi')}}</span> <span class="text-right">￥{{taxInfo.total}}</span> </div>
                        <div class="item mb10"><span class="w70">{{$t('desk.book_serveFee')}} </span> <span class="text-right">￥{{taxInfo.service}}</span> </div>
-                       <div class="item mb10"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{taxInfo.tax}} {{taxInfo.type=='in'?'税抜':''}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div>
-                       <div class="item mb10"><span class="w70">消費税 <span class="text-size12">({{taxInfo.tax}} 税込)</span> </span> <span class="text-right">￥{{numFormate(taxInfo.taxInFee)}}</span></div>
+                       <!-- <div class="item mb10"><span class="w70">{{$t('desk.book_costFee')}} <span class="text-size12">({{taxInfo.tax}} {{taxInfo.type=='in'?'税抜':''}})</span> </span> <span class="text-right">￥{{taxInfo.taxFee}}</span> </div> -->
+                       <div class="item mb10"><span class="w70">消費税 <span class="text-size12">({{taxInfo.tax}} )</span> </span> <span class="text-right">￥{{numFormate(taxInfo.taxInFee)}}</span></div>
                        <div class="item padding-tb-10"><span class="w70 text-size20">{{$t('desk.serve_heji')}}</span> <span class="text-right text-size20">￥{{taxInfo.sum}}</span> </div>
                     </el-row>
 
@@ -467,9 +467,9 @@ export default {
             //     });
             //     return false
             // }
-            
-            
-            
+
+
+
             let params = {}
             params.checkInId = this.$route.query.id
             params.priceType = 8

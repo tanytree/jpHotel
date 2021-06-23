@@ -39,9 +39,9 @@
         <img src="~@/assets/images/moreThan.png" class="rightTopImg" />
         <div class="hoverBox">
           <div><span>{{$t('desk.customer_xiaoJi')}}</span><span>¥ {{numFormate(getRealPayFee.total)}}；</span></div>
-          <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxFee)}}；</span></div>
+          <!-- <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxFee)}}；</span></div> -->
           <div><span>{{$t('desk.book_costFee')}}（{{getRealPayFee.servicePrice}}）</span><span>¥{{numFormate(getRealPayFee.service)}}；</span></div>
-          <div><span>{{$t('desk.book_costFee2')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxInFee)}}；</span></div>
+          <div><span>{{$t('desk.book_serveFee')}}（{{getRealPayFee.consumeTax}}）</span><span>¥{{numFormate(getRealPayFee.taxInFee)}}；</span></div>
           <div><span>{{$t('desk.book_wenquan')}}</span><span>¥{{numFormate(getRealPayFee.priceType15)}}；</span></div>
           <div><span>{{$t('desk.book_liveFee')}}</span><span>¥{{numFormate(getRealPayFee.priceType16)}}；</span></div>
           <div><span>{{$t('desk.serve_heji')}}</span><span>¥{{numFormate(getRealPayFee.sum)}}；</span></div>
@@ -192,8 +192,10 @@ export default {
         // console.log(element)
         if (element.state == 1) {
           let priceType = element.priceType;
-          // console.log("财务类型" + priceType);
-          total += parseFloat(element.consumePrice ? element.consumePrice : 0);
+          console.log("财务类型" + priceType);
+          if(priceType !== 9 || priceType !== 10 || !element.richType == 1){
+            total += parseFloat(element.consumePrice ? element.consumePrice : 0);
+          }
           //---------------------------
           //计算包含消费税的明细中的商品
 

@@ -4,7 +4,7 @@
     <div class="margin-t-10">
       <el-form :model="form" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label-width="30px">
-          <el-checkbox v-model="outFlag">{{$t('shop.reset.sureFlag')}}0000</el-checkbox>
+          <el-checkbox v-model="outFlag">{{$t('shop.reset.sureFlag')}}</el-checkbox>
         </el-form-item>
         <el-form-item label-width="0px">
           <div class="money">
@@ -16,8 +16,8 @@
                 <div class="taxBox text-size14">
                   <div class="item"><span class="w70">{{$t('shop.reset.xiaoji')}}</span> <span class="text-right">￥{{numFormate(orderTax.total)}}</span> </div>
                   <div class="item"><span class="w70">{{$t('food.reset.servePri')}} <span class="text-size12">{{orderTax.servicePrice}}</span></span> <span class="text-right">￥{{numFormate(orderTax.service)}}</span> </div>
-                  <div class="item"><span class="w70">{{$t('food.reset.constPri')}} <span class="text-size12">({{orderTax.tax}} 税抜)</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div>
-                  <div class="item"><span class="w70">{{$t('food.reset.constPri')}}（{{orderTax.tax}} 税込）</span><span>￥{{numFormate(orderTax.taxInFee)}}</span></div>
+                  <!-- <div class="item"><span class="w70">{{$t('food.reset.constPri')}} <span class="text-size12">({{orderTax.tax}})</span> </span> <span class="text-right">￥{{numFormate(orderTax.taxFee)}}</span> </div> -->
+                  <div class="item"><span class="w70">{{$t('food.reset.constPri')}}（{{orderTax.type}} {{orderTax.tax}}）</span><span>￥{{numFormate(orderTax.taxInFee)}}</span></div>
                   <div class="item"><span class="w70">{{$t('food.common.product_total')}}</span> <span class="text-right">￥{{numFormate(orderTax.sum)}}</span> </div>
                 </div>
               </span>
@@ -32,10 +32,10 @@
           <el-button style="margin-left: 10px;" size="small">{{$t('food.common.read_member_card')}}</el-button>
         </el-form-item>
 
-        <el-form-item v-if="form.billingType == 1" :label="$t('shop.yhPrice')+':'">
+        <!-- <el-form-item v-if="form.billingType == 1" :label="$t('shop.yhPrice')+':'">
           <span>￥</span>
           <el-input size="small" type="number" v-model="form.preferentialPrice" :placeholder="$t('shop.yhPrice')" style="width: 180px;"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item :label="$t('food.reset.payPrice')+':'">
           ￥{{numFormate(getPayPrice - num(form.preferentialPrice))}}
         </el-form-item>
@@ -196,15 +196,12 @@ export default {
     },
     //计算价格
     getFee() {
-      if (
-        this.endTime &&
-        this.info.orderSubList &&
-        this.info.orderSubList.length > 0
-      ) {
+      if (this.endTime &&this.info.orderSubList &&this.info.orderSubList.length > 0 ) {
         let list = this.info.orderSubList;
         console.log(list)
         let sum = 0;
         list.forEach((element) => {
+            console.log(element.totalPrice)
           if (element.goods.categoryType == 2) {
             if (element.goods.priceModel == 2) {
               sum += this.getFinalFee(element.goods,this.endTime,this.info.createTime,this.taxInfo,this.outFlag) * element.goodsCount;
@@ -215,11 +212,8 @@ export default {
             sum += parseFloat(element.totalPrice);
           }
         });
-        let total =
-          sum +
-          parseFloat(this.orderTax.taxFee) +
-          parseFloat(this.orderTax.service);
-        // return parseFloat(this.form.preferentialPrice) ? total - parseFloat(this.form.preferentialPrice) : total
+        let total = sum + parseFloat(this.orderTax.taxFee) + parseFloat(this.orderTax.service);
+        console.log(total)
         return parseFloat(total);
       }
     },
@@ -245,7 +239,7 @@ export default {
         signIdcard: "", //签单证件号码   billingType=2必填 String选填
         scoresDiscount: "", //积分抵扣分值  Integer选填
         scoresPrice: "", //积分抵扣额度  Double选填
-        preferentialPrice: "",
+        preferentialPrice: 0,
       };
 
       outFlag: false,
@@ -317,13 +311,8 @@ export default {
     //订单各种税后价格
     getOrderTax() {
       console.log(this.orderSubList);
-      this.orderTax = this.getTaxInfo(
-        this.taxInfo,
-        this.orderSubList,
-        this.outFlag,
-        this.endTime,
-        this.info
-      );
+      this.orderTax = this.getTaxInfo(this.taxInfo,this.orderSubList,this.outFlag,this.endTime,this.info);
+      console.log(this.orderTax)
     },
 
     //获取积分换算查询
@@ -515,7 +504,7 @@ export default {
 
     //提交结账
     submit() {
-        
+
     if (this.form.payType == 5 && !this.form.remark) {
         this.$message({
           message: this.$t('desk.customer_inputRemarkA'),
@@ -523,7 +512,7 @@ export default {
         });
         return
       }
-    
+
 
       let params = this.form;
       console.log(params)
